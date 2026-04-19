@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 4: Window & File Management | SmartKids Learning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .desktop-area { background: #334155; position: relative; overflow: hidden; height: 500px; }
+    .window-sim { position: absolute; min-width: 150px; min-height: 100px; resize: both; overflow: auto; border: 2px solid #94a3b8; }
+    .window-header { cursor: move; height: 30px; background: #e2e8f0; display: flex; align-items: center; justify-content: flex-end; padding: 0 8px; gap: 4px; }
+    .file-icon { width: 60px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; border-radius: 8px; }
+    .file-icon.selected { background-color: rgba(59, 130, 246, 0.3); border: 1px solid #3b82f6; }
+    .selection-box { border: 1px solid #3b82f6; background-color: rgba(59, 130, 246, 0.1); position: absolute; pointer-events: none; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 font-sans min-h-screen">
+
+  <nav class="bg-white border-b py-4 px-6 flex justify-between items-center shadow-sm">
+    <a href="../mouse-practice.html" class="text-blue-600 font-bold flex items-center gap-2">
+      <span>←</span> Back
+    </a>
+    <div class="text-slate-500 font-medium text-sm">Year 4: Window Control & Multi-Select</div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto py-10 px-6">
+    <header class="mb-8">
+      <h1 class="text-3xl font-extrabold text-slate-800">Desktop Mastery 🖥️</h1>
+      <p class="text-slate-600">Learn how to manage multiple files and resize your workspace.</p>
+    </header>
+
+    <div class="grid lg:grid-cols-4 gap-8">
+      
+      <div class="lg:col-span-1 space-y-6">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+          <h3 class="font-bold text-blue-700 text-sm mb-2 uppercase">Task 1: Resize</h3>
+          <p class="text-xs text-slate-600">Grab the bottom-right corner of the "My Notes" window and drag it to make it bigger!</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+          <h3 class="font-bold text-indigo-700 text-sm mb-2 uppercase">Task 2: Select All</h3>
+          <p class="text-xs text-slate-600">Click and drag your mouse on the desktop background to draw a box around all 3 files.</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3 desktop-area rounded-3xl shadow-2xl border-8 border-slate-800" id="desktop">
+        
+        <div class="window-sim bg-white rounded-lg shadow-xl" style="top: 50px; left: 50px; width: 250px;">
+          <div class="window-header">
+            <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+          </div>
+          <div class="p-4">
+            <h4 class="font-bold text-sm">My Notes</h4>
+            <p class="text-[10px] text-slate-400">Resize me from the corner!</p>
+          </div>
+        </div>
+
+        <div class="absolute bottom-10 left-10 flex gap-6">
+          <div class="file-icon" onclick="this.classList.toggle('selected')">
+            <span class="text-3xl">📄</span>
+            <span class="text-[10px] text-white font-bold mt-1">Work.txt</span>
+          </div>
+          <div class="file-icon" onclick="this.classList.toggle('selected')">
+            <span class="text-3xl">🖼️</span>
+            <span class="text-[10px] text-white font-bold mt-1">Photo.png</span>
+          </div>
+          <div class="file-icon" onclick="this.classList.toggle('selected')">
+            <span class="text-3xl">📁</span>
+            <span class="text-[10px] text-white font-bold mt-1">Games</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mt-12 bg-blue-900 text-white p-8 rounded-3xl">
+      <h3 class="text-xl font-bold mb-4">Why this matters?</h3>
+      <p class="opacity-80 text-sm leading-relaxed max-w-2xl">
+        In the professional world, you will often have many programs open at once. Knowing how to quickly resize windows and select groups of files makes you a "Power User." This is a key skill for digital artists, coders, and office experts!
+      </p>
+    </div>
+  </main>
+
+  <footer class="py-10 text-center text-slate-400 text-xs">
+    © 2026 SmartKids Tech Skills • Building African Excellence
+  </footer>
+
+</body>
+</html>
