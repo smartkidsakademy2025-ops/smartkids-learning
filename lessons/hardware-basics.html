@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computer Hardware Basics | SmartKids Learning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+
+  <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+      <a href="../index.html" class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center text-white font-bold">SK</div>
+        <span class="font-bold text-xl tracking-tight">SmartKids</span>
+      </a>
+      <a href="../lessons.html" class="text-sm font-semibold text-green-600 hover:underline">← All Lessons</a>
+    </div>
+  </nav>
+
+  <header class="bg-gradient-to-r from-green-700 to-emerald-500 text-white py-16 px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="bg-white/20 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest text-white">Module 1: Hardware</span>
+      <h1 class="text-4xl md:text-5xl font-extrabold mt-4">Computer Hardware</h1>
+      <p class="mt-4 text-emerald-100 text-lg">If you can touch it, it's hardware! Let's explore the physical parts of a computer.</p>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto py-12 px-6">
+    
+    <section class="mb-12 text-center">
+      <h2 class="text-3xl font-bold mb-4 text-slate-800">Meet the "Big Four"</h2>
+      <p class="text-slate-600">Most desktop computers are made up of these four main components.</p>
+    </section>
+
+    <div class="grid md:grid-cols-2 gap-8 mb-16">
+      
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 hover:border-green-400 transition-colors">
+        <div class="text-4xl mb-4">🖥️</div>
+        <h3 class="text-xl font-bold mb-2">The Monitor</h3>
+        <p class="text-slate-600 text-sm">The "face" of the computer. It displays images, text, and videos so you can see what you are doing.</p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 hover:border-green-400 transition-colors">
+        <div class="text-4xl mb-4">🔌</div>
+        <h3 class="text-xl font-bold mb-2">The System Unit (CPU)</h3>
+        <p class="text-slate-600 text-sm">The "brain" box. It contains the electronic parts that do all the hard work and thinking.</p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 hover:border-green-400 transition-colors">
+        <div class="text-4xl mb-4">⌨️</div>
+        <h3 class="text-xl font-bold mb-2">The Keyboard</h3>
+        <p class="text-slate-600 text-sm">Your main way to "talk" to the computer using letters, numbers, and symbols.</p>
+      </div>
+
+      <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 hover:border-green-400 transition-colors">
+        <div class="text-4xl mb-4">🖱️</div>
+        <h3 class="text-xl font-bold mb-2">The Mouse</h3>
+        <p class="text-slate-600 text-sm">A pointing device that lets you select items on the screen and move things around.</p>
+      </div>
+    </div>
+
+    <div class="bg-emerald-50 border-2 border-dashed border-emerald-200 p-8 rounded-3xl mb-12">
+      <h3 class="text-xl font-bold text-emerald-800 mb-4 flex items-center gap-2"><span>➕</span> What are Peripherals?</h3>
+      <p class="text-slate-700 leading-relaxed">
+        Peripherals are extra parts we plug into the computer to give it more "superpowers." 
+        Common examples include <strong>Printers</strong> (to put work on paper), <strong>Speakers</strong> (to hear sound), and <strong>Webcams</strong> (to see your friends).
+      </p>
+    </div>
+
+    <section class="bg-slate-900 text-white p-8 rounded-3xl">
+      <h2 class="text-xl font-bold mb-4 text-emerald-400">Hardware Challenge</h2>
+      <p class="text-sm mb-6">You want to draw a circle on the computer screen. Which piece of hardware is BEST for this?</p>
+      <div class="space-y-3">
+        <button onclick="alert('The keyboard is better for typing words!')" class="w-full text-left bg-slate-800 p-4 rounded-xl border border-slate-700 hover:bg-slate-700 transition">A) The Keyboard</button>
+        <button onclick="alert('Correct! The mouse is perfect for drawing and moving things.')" class="w-full text-left bg-slate-800 p-4 rounded-xl border border-slate-700 hover:bg-slate-700 transition">B) The Mouse</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-slate-900 text-slate-400 py-12 px-4 mt-20">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-b border-slate-800 pb-8">
+      <div class="text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-2 text-white mb-2">
+          <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold text-xs">SK</div>
+          <span class="font-bold tracking-tight text-lg">SmartKids Learning</span>
+        </div>
+        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold mb-3">
+          Part of the SmartKids Digital Literacy Program
+        </p>
+        <div class="h-5">
+          <p id="footer-typing" class="text-sm font-mono text-blue-400"></p>
+        </div>
+      </div>
+      <nav class="flex gap-8 text-sm font-medium">
+        <a href="../about.html" class="hover:text-white transition-colors">About</a>
+        <a href="../privacy.html" class="hover:text-white transition-colors">Privacy</a>
+      </nav>
+    </div>
+    <p class="text-center mt-8 text-[10px] uppercase tracking-widest text-slate-600">© 2026 SmartKids Tech Skills</p>
+  </footer>
+
+  <script>
+    const footerMsg = "Empowering the next generation of African tech leaders.";
+    let charIdx = 0;
+    function type() {
+      const el = document.getElementById("footer-typing");
+      if (charIdx < footerMsg.length) {
+        el.innerHTML += footerMsg.charAt(charIdx);
+        charIdx++;
+        setTimeout(type, 70);
+      } else {
+        setTimeout(() => { el.innerHTML = ""; charIdx = 0; type(); }, 5000);
+      }
+    }
+    document.addEventListener("DOMContentLoaded", type);
+  </script>
+</body>
+</html>
