@@ -91,8 +91,65 @@
       </div>
     </div>
   </section>
+<footer class="bg-slate-900 text-slate-400 py-12 px-4">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-b border-slate-800 pb-8">
+    <div>
+      <div class="flex items-center gap-2 text-white mb-4">
+        <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold text-xs">SK</div>
+        <span class="font-bold tracking-tight">SmartKids Learning</span>
+      </div>
+      <div class="h-6"> <p id="typing-text" class="text-sm font-mono text-blue-400"></p>
+      </div>
+    </div>
+    
+    <div class="flex gap-8 text-sm font-medium">
+      <a href="about.html" class="hover:text-white transition-colors">About Us</a>
+      <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+      <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
+    </div>
+  </div>
+  
+  <div class="max-w-7xl mx-auto mt-8 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest">
+    <p>© 2026 SmartKids Tech Skills. Built for Future Innovators.</p>
+    <div class="flex gap-4 mt-4 md:mt-0">
+      <span>Nigeria</span>
+      <span class="text-slate-700">|</span>
+      <span>Education Technology</span>
+    </div>
+  </div>
+</footer>
 
-  <footer class="bg-slate-900 text-slate-400 py-12 px-4">
+<script>
+  const text = "Empowering the next generation of African tech leaders.";
+  const speed = 70; // typing speed in milliseconds
+  let i = 0;
+
+  function typeWriter() {
+    if (i < text.length) {
+      document.getElementById("typing-text").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    } else {
+      // Optional: Reset and repeat after 5 seconds
+      setTimeout(() => {
+        document.getElementById("typing-text").innerHTML = "";
+        i = 0;
+        typeWriter();
+      }, 5000);
+    }
+  }
+
+  // Start the animation when the page loads
+  window.onload = typeWriter;
+
+  // Mobile menu logic (Fixed)
+  const menuToggle = document.getElementById('menu-toggle');
+  menuToggle.addEventListener('click', () => {
+    // This will alert until we build the mobile nav drawer
+    alert("Mobile menu coming soon! Ready to link to your navigation drawer.");
+  });
+</script>
+ <!-- <footer class="bg-slate-900 text-slate-400 py-12 px-4">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
       <div>
         <div class="flex items-center gap-2 text-white mb-4">
@@ -108,7 +165,7 @@
       </div>
       <p class="text-xs">© 2026 SmartKids Tech Skills. All rights reserved.</p>
     </div>
-  </footer>
+  </footer>-->
 
   <script>
     // Mobile menu logic
