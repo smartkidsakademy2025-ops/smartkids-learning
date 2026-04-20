@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 10: System Config & Security | SmartKids Learning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Toggle Switch Style */
+    .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .4s; border-radius: 24px; }
+    .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: #10b981; }
+    input:checked + .slider:before { transform: translateX(26px); }
+    input:focus + .slider { box-shadow: 0 0 1px #10b981; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
+
+  <nav class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex justify-between items-center shadow-lg">
+    <a href="../mouse-practice.html" class="text-emerald-400 font-bold flex items-center gap-2">
+      <span>←</span> Level 10 Hub
+    </a>
+    <div class="text-slate-400 font-mono text-xs uppercase tracking-tighter">System Console v2.6</div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto py-12 px-6">
+    <header class="mb-10">
+      <h1 class="text-3xl font-black text-white">Security & UI Management 🔐</h1>
+      <p class="text-slate-400 mt-2 italic text-sm">Triple-Skill Focus: Precision Toggles, Tab Navigation, and Privacy Concepts.</p>
+    </header>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      
+      <section class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+        <h3 class="text-emerald-400 font-bold mb-6 flex items-center gap-2">
+          <span class="text-xl">🖱️</span> 1. Mouse Precision
+        </h3>
+        <div class="space-y-6">
+          <div class="flex justify-between items-center">
+            <span class="text-sm">Firewall Protection</span>
+            <label class="switch">
+              <input type="checkbox" id="firewall">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs text-slate-400">
+              <span>Security Level</span>
+              <span id="level-val">50%</span>
+            </div>
+            <input type="range" min="0" max="100" value="50" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500" oninput="document.getElementById('level-val').innerText = this.value + '%'">
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
+        <h3 class="text-blue-400 font-bold mb-6 flex items-center gap-2">
+          <span class="text-xl">⌨️</span> 2. Tab Navigation
+        </h3>
+        <p class="text-[10px] text-slate-500 mb-4 uppercase font-bold tracking-widest">Challenge: Use ONLY the Tab key and Spacebar</p>
+        <div class="space-y-3">
+          <button class="w-full py-2 bg-slate-700 hover:bg-blue-600 rounded-lg text-xs font-bold transition focus:ring-4 focus:ring-blue-500 outline-none">SAVE SETTINGS</button>
+          <button class="w-full py-2 bg-slate-700 hover:bg-blue-600 rounded-lg text-xs font-bold transition focus:ring-4 focus:ring-blue-500 outline-none">BACKUP DATA</button>
+          <button class="w-full py-2 bg-slate-700 hover:bg-red-600 rounded-lg text-xs font-bold transition focus:ring-4 focus:ring-red-500 outline-none">WIPE CACHE</button>
+        </div>
+      </section>
+
+    </div>
+
+    <section class="mt-8 bg-emerald-950/30 border border-emerald-900/50 p-8 rounded-3xl">
+      <h3 class="text-xl font-bold text-emerald-400 mb-4">Digital Literacy Concept: The Firewall</h3>
+      <p class="text-slate-400 text-sm leading-relaxed">
+        A <strong>Firewall</strong> is like a digital security guard for your computer. It monitors the "traffic" (information) coming in and out. By using <strong>Toggles</strong> and <strong>Sliders</strong>, administrators can decide how strict the security should be. In Year 10, we learn that security is a balance between protection and accessibility.
+      </p>
+    </section>
+
+    <div class="mt-12 text-center">
+        <button onclick="checkStatus()" class="bg-white text-slate-900 px-12 py-4 rounded-full font-black hover:bg-emerald-400 transition shadow-2xl uppercase tracking-tighter">Apply System Updates</button>
+        <p id="msg" class="mt-4 font-mono text-xs"></p>
+    </div>
+
+  </main>
+
+  <script>
+    function checkStatus() {
+      const isFirewallOn = document.getElementById('firewall').checked;
+      const msg = document.getElementById('msg');
+      if (isFirewallOn) {
+        msg.className = "mt-4 font-mono text-xs text-emerald-400";
+        msg.innerText = "> Status: SECURITY VERIFIED. UPDATES APPLIED.";
+      } else {
+        msg.className = "mt-4 font-mono text-xs text-red-400";
+        msg.innerText = "> Warning: ACTIVATE FIREWALL BEFORE UPDATING.";
+      }
+    }
+  </script>
+
+</body>
+</html>
