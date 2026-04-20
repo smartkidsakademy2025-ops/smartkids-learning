@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Year 10: Paragraph Flow | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .word { display: inline-block; margin-right: 8px; font-size: 1.5rem; font-weight: 600; color: #94a3b8; transition: all 0.2s; }
+    .char-correct { color: #0f172a; border-bottom: 2px solid #22c55e; }
+    .char-wrong { color: #ef4444; background: #fee2e2; border-bottom: 2px solid #ef4444; }
+    .char-current { background: #e0f2fe; border-bottom: 2px solid #0ea5e9; animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity: 0.5; } }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen font-sans">
+
+  <nav class="p-6 bg-white border-b flex justify-between items-center">
+    <div class="flex gap-8">
+        <div class="text-center">
+            <p class="text-[10px] font-black uppercase text-slate-400">Speed</p>
+            <p id="stat-wpm" class="text-2xl font-black text-sky-600">0 WPM</p>
+        </div>
+        <div class="text-center">
+            <p class="text-[10px] font-black uppercase text-slate-400">Accuracy</p>
+            <p id="stat-acc" class="text-2xl font-black text-slate-700">100%</p>
+        </div>
+    </div>
+    <h2 class="font-black text-slate-800">YEAR 10: THE FLOW</h2>
+  </nav>
+
+  <main class="max-w-4xl mx-auto py-16 px-6">
+    <div id="text-display" class="bg-white p-12 rounded-[3rem] shadow-xl leading-relaxed mb-10 select-none">
+        </div>
+
+    <input type="text" id="typer-input" class="opacity-0 absolute" autofocus>
+    
+    <div class="text-center text-slate-400 font-medium">
+        <kbd class="px-2 py-1 bg-slate-200 rounded text-xs text-slate-600">Tip</kbd> Keep your eyes on the text, not your fingers!
+    </div>
+  </main>
+
+  <script>
+    const quote = "Technology is a powerful tool for change. When we master the keyboard, we unlock the ability to share our ideas with the entire world quickly and clearly.";
+    const display = document.getElementById('text-display');
+    const input = document.getElementById('typer-input');
+    
+    let chars = quote.split('').map(char => {
+        const span = document.createElement('span');
+        span.innerText = char;
+        span.className = 'text-2xl font-mono text-slate-300';
+        display.appendChild(span);
+        return span;
+    });
+
+    let cursor = 0;
+    let startTime = null;
+    let errors = 0;
+
+    // Focus input whenever user clicks anywhere
+    document.addEventListener('click', () => input.focus());
+
+    input.addEventListener('input', (e) => {
+        if (!startTime) startTime = new Date();
+        
+        const typedChar = e.target.value.split('').pop();
+        if (!typedChar) return; // Handle backspace if needed
+
+        const targetChar = chars[cursor].innerText;
+
+        if (typedChar === targetChar) {
+            chars[cursor].className = 'text-2xl font-mono char-correct';
+        } else {
+            chars[cursor].className = 'text-2xl font-mono char-wrong';
+            errors++;
+        }
+
+        cursor++;
+        e.target.value = ''; // Clear input for next char
+
+        if (cursor < chars.length) {
+            chars[cursor].classList.add('char-current');
+            updateStats();
+        } else {
+            finish();
+        }
+    });
+
+    function updateStats() {
+        const timeElapsed = (new Date() - startTime) / 60000; // in minutes
+        const wpm = Math.round((cursor / 5) / timeElapsed);
+        const acc = Math.round(((cursor - errors) / cursor) * 100);
+        
+        document.getElementById('stat-wpm').innerText = `${wpm} WPM`;
+        document.getElementById('stat-acc').innerText = `${acc}%`;
+    }
+
+    function finish() {
+        const finalWpm = document.getElementById('stat-wpm').innerText;
+        display.innerHTML = `<div class="text-center"><h1 class="text-4xl font-black text-green-600 mb-4">Level Complete!</h1><p class="text-xl">Your speed: ${finalWpm}</p></div>`;
+        // Logic to unlock Year 11...
+    }
+
+    // Initialize cursor
+    chars[0].classList.add('char-current');
+  </script>
+</body>
+</html>
