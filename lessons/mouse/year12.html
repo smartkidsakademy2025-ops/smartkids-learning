@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 12: AI & Web Inspection | SmartKids Learning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .terminal-window { background: #0f172a; border: 1px solid #334155; }
+    .code-hover:hover { outline: 2px dashed #6366f1; background: rgba(99, 102, 241, 0.05); }
+    .ai-bubble { animation: slideIn 0.5s ease-out; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+
+  <nav class="bg-white border-b py-4 px-6 flex justify-between items-center shadow-sm">
+    <a href="../mouse-practice.html" class="text-indigo-600 font-bold flex items-center gap-2">
+      <span>←</span> Level 12 Graduate
+    </a>
+    <div class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Future-Ready Skills</div>
+  </nav>
+
+  <main class="max-w-5xl mx-auto py-12 px-6">
+    <header class="mb-12">
+      <h1 class="text-4xl font-black text-slate-900">The Modern Architect 🤖</h1>
+      <p class="text-slate-600 mt-2 text-lg">Mastering the intersection of Code, UI, and Artificial Intelligence.</p>
+    </header>
+
+    <div class="grid lg:grid-cols-2 gap-10">
+      
+      <section>
+        <h2 class="text-xl font-bold mb-4 text-indigo-700 flex items-center gap-2">
+          <span>🔍</span> 1. Inspecting UI
+        </h2>
+        <p class="text-sm text-slate-600 mb-6">Hover your mouse over the buttons below. In Year 12, we learn that every visual element is actually a <strong>"Box"</strong> of code.</p>
+        
+        <div class="space-y-4">
+          <div class="code-hover p-4 bg-white rounded-xl shadow-sm border border-slate-200 transition-all cursor-help">
+            <span class="text-xs font-mono text-indigo-500 font-bold">&lt;button class="primary"&gt;</span>
+            <div class="py-2 font-bold text-slate-800">Login to Portal</div>
+          </div>
+          <div class="code-hover p-4 bg-white rounded-xl shadow-sm border border-slate-200 transition-all cursor-help">
+            <span class="text-xs font-mono text-emerald-500 font-bold">&lt;div id="user-stats"&gt;</span>
+            <div class="py-2 font-bold text-slate-800">Score: 1,250 XP</div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold mb-4 text-slate-800 flex items-center gap-2">
+          <span>🧠</span> 2. The AI Prompt
+        </h2>
+        <div class="terminal-window rounded-2xl p-6 shadow-2xl">
+          <div class="flex gap-2 mb-4">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          </div>
+          <p class="text-emerald-400 font-mono text-xs mb-4">// SmartKids AI v1.0 Ready</p>
+          <p class="text-slate-400 font-mono text-xs mb-2 italic">Prompt: Ask the AI to write a greeting in Yoruba or Hausa.</p>
+          <input type="text" id="aiInput" placeholder="Type prompt here..." class="w-full bg-slate-800 border-none text-white font-mono text-sm p-3 rounded-lg outline-none focus:ring-1 focus:ring-indigo-500">
+          <button onclick="simulateAI()" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg transition text-sm">GENERATE RESPONSE</button>
+          
+          <div id="aiResponse" class="mt-6 text-indigo-300 font-mono text-xs hidden ai-bubble">
+            </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="mt-16 bg-slate-900 text-white p-10 rounded-[3rem] relative overflow-hidden">
+        <div class="relative z-10">
+            <h3 class="text-2xl font-bold mb-4">The Year 12 Concept: What is an LLM?</h3>
+            <p class="text-slate-400 leading-relaxed text-base max-w-2xl">
+                Large Language Models (LLMs) are AI systems trained on massive amounts of text. They don't "think" like humans, but they use <strong>Probability</strong> to predict the next word in a sentence. By mastering <strong>Prompt Engineering</strong> (giving clear instructions), you can use AI to solve complex problems, write code, or learn new languages like never before.
+            </p>
+        </div>
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-indigo-600/20 blur-[100px] rounded-full"></div>
+    </div>
+  </main>
+
+  <script>
+    function simulateAI() {
+      const input = document.getElementById('aiInput').value.toLowerCase();
+      const responseBox = document.getElementById('aiResponse');
+      
+      responseBox.classList.remove('hidden');
+      responseBox.innerHTML = "> Processing prompt...";
+      
+      setTimeout(() => {
+        if (input.includes('yoruba')) {
+          responseBox.innerHTML = "> AI Response: E nle o! (Hello in Yoruba). How can I assist you today?";
+        } else if (input.includes('hausa')) {
+          responseBox.innerHTML = "> AI Response: Sannu! (Hello in Hausa). I am ready to help.";
+        } else {
+          responseBox.innerHTML = "> AI Response: Analysis complete. Your prompt was received. Be more specific to get better results!";
+        }
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
