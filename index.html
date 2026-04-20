@@ -23,38 +23,35 @@
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
 
   <header class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b z-50">
-    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">SK</div>
-        <span class="font-bold text-xl tracking-tight">SmartKids</span>
-      </a>
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">SK</div>
+      <span class="font-bold text-xl tracking-tight">SmartKids</span>
+    </a>
 
-      <nav class="hidden md:flex gap-8 items-center text-sm font-semibold text-slate-600">
-        <a href="lessons.html" class="hover:text-blue-600 transition">Lessons</a>
-        <a href="lessons/keyboard-practice.html" class="hover:text-blue-600 transition">Typing Drill</a>
-        <a href="morals.html" class="hover:text-blue-600 transition">African Morals</a>
-        <a href="quiz.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md">Start Quiz</a>
-        <button id="authBtn" class="border border-slate-300 px-4 py-2 rounded-full hover:bg-slate-50 transition">Student Login</button>
-      </nav>
+    <nav class="hidden md:flex gap-8 items-center text-sm font-semibold text-slate-600">
+      <a href="lessons.html" class="hover:text-blue-600 transition">Lessons</a>
+      <a href="lessons/keyboard-practice.html" class="hover:text-blue-600 transition">Typing Drill</a>
+      <a href="morals.html" class="hover:text-blue-600 transition">African Morals</a>
+      <a href="quiz.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md">Start Quiz</a>
+      <button id="authBtn" class="border border-slate-300 px-4 py-2 rounded-full hover:bg-slate-50 transition">Student Login</button>
+    </nav>
 
-      <!--<button id="menu-toggle" class="md:hidden p-2 text-slate-600">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-      </button>
-      <button id="menu-toggle" class="md:hidden p-2 text-slate-800">
-  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-  </svg>
-</button>-->
+    <button id="menu-toggle" class="md:hidden p-2 text-slate-800 focus:outline-none">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
 
-<div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-slate-900/95 flex flex-col items-center justify-center space-y-8 text-white text-2xl font-bold">
-    <button id="menu-close" class="absolute top-6 right-6 text-4xl">&times;</button>
-    <a href="index.html" class="hover:text-blue-400">Home</a>
-    <a href="lessons/keyboard.html" class="hover:text-blue-400">Keyboarding</a>
-    <a href="lessons/mouse.html" class="hover:text-blue-400">Mouse Mastery</a>
-    <a href="#about" class="hover:text-blue-400">Our Story</a>
-</div>
+    <div id="mobile-menu" class="hidden fixed inset-0 z-50 bg-slate-900/95 flex flex-col items-center justify-center space-y-8 text-white text-2xl font-bold">
+      <button id="menu-close" class="absolute top-6 right-6 text-4xl">&times;</button>
+      <a href="index.html" class="hover:text-blue-400">Home</a>
+      <a href="lessons/keyboard-practice.html" class="hover:text-blue-400">Typing Drill</a>
+      <a href="lessons/mouse.html" class="hover:text-blue-400">Mouse Mastery</a>
+      <a href="morals.html" class="hover:text-blue-400">African Morals</a>
     </div>
-  </header>
+  </div>
+</header>
 
   <section class="pt-32 pb-20 hero-gradient px-4">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -131,87 +128,62 @@
     </div>
   </div>
 </footer>
-
 <script>
-  const text = "Empowering the next generation of African tech leaders.";
-  const speed = 70; // typing speed in milliseconds
-  let i = 0;
+  /** 1. TYPING ANIMATION LOGIC **/
+  const typeText = "Empowering the next generation of African tech leaders.";
+  const typeSpeed = 70; 
+  let charIndex = 0;
 
   function typeWriter() {
-    if (i < text.length) {
-      document.getElementById("typing-text").innerHTML += text.charAt(i);
-      i++;
-      setTimeout(typeWriter, speed);
-    } else {
-      // Optional: Reset and repeat after 5 seconds
+    const displayElement = document.getElementById("typing-text");
+    if (displayElement && charIndex < typeText.length) {
+      displayElement.innerHTML += typeText.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeWriter, typeSpeed);
+    } else if (displayElement) {
+      // Reset after 5 seconds to keep the landing page dynamic
       setTimeout(() => {
-        document.getElementById("typing-text").innerHTML = "";
-        i = 0;
+        displayElement.innerHTML = "";
+        charIndex = 0;
         typeWriter();
       }, 5000);
     }
   }
 
-  // Start the animation when the page loads
-  window.onload = typeWriter;
-
-  // Mobile menu logic (Fixed)
+  /** 2. MOBILE MENU LOGIC **/
   const menuToggle = document.getElementById('menu-toggle');
-  menuToggle.addEventListener('click', () => {
-    // This will alert until we build the mobile nav drawer
-    alert("Mobile menu coming soon! Ready to link to your navigation drawer.");
-  });
-</script>
- <!-- <footer class="bg-slate-900 text-slate-400 py-12 px-4">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-      <div>
-        <div class="flex items-center gap-2 text-white mb-4">
-          <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold">SK</div>
-          <span class="font-bold">SmartKids Learning</span>
-        </div>
-        <p class="text-sm">Empowering the next generation of African tech leaders.</p>
-      </div>
-      <div class="flex gap-6 text-sm">
-        <a href="about.html" class="hover:text-white">About Us</a>
-        <a href="privacy.html" class="hover:text-white">Privacy Policy</a>
-        <a href="contact.html" class="hover:text-white">Contact</a>
-      </div>
-      <p class="text-xs">© 2026 SmartKids Tech Skills. All rights reserved.</p>
-    </div>
-  </footer>-->
+  const menuClose = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
 
-  <script>
-    // Mobile menu logic
-    const toggle = document.getElementById('menu-toggle');
-    const nav = document.querySelector('nav');
-    toggle.addEventListener('click', () => {
-      // For mobile, you would typically toggle a class that shows the nav as a full-screen overlay
-      alert('Mobile menu clicked! (Connect your mobile nav div here)');
-    });
-  </script>
- <script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const menuClose = document.getElementById('menu-close');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    // 1. Open the menu
+  if (menuToggle && mobileMenu) {
+    // Open Logic
     menuToggle.addEventListener('click', (e) => {
-        e.preventDefault(); // This stops any "Coming Soon" alerts if they are attached to the link
-        mobileMenu.classList.remove('hidden');
+      e.preventDefault(); 
+      mobileMenu.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Stop background scrolling
     });
 
-    // 2. Close the menu
-    menuClose.addEventListener('click', () => {
+    // Close Logic
+    if (menuClose) {
+      menuClose.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
-    });
+        document.body.style.overflow = 'auto'; // Resume scrolling
+      });
+    }
 
-    // 3. Close menu when a link is clicked
+    // Auto-close on link click
     const navLinks = mobileMenu.querySelectorAll('a');
     navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-        });
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+      });
     });
+  }
+
+  // Start everything when the window loads
+  window.onload = typeWriter;
 </script>
+
 </body>
 </html>
