@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 3: Top Row Reach | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .key-cap { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 800; border-bottom: 4px solid #cbd5e1; background: white; transition: all 0.2s; position: relative; }
+    .key-active { background: #f97316 !important; color: white !important; border-color: #ea580c !important; transform: translateY(-5px); box-shadow: 0 10px 15px rgba(249, 115, 22, 0.3); }
+    .key-success { background: #22c55e !important; color: white !important; }
+    
+    .f-pinky { border-top: 5px solid #ec4899; }
+    .f-ring { border-top: 5px solid #a855f7; }
+    .f-middle { border-top: 5px solid #3b82f6; }
+    .f-index { border-top: 5px solid #eab308; }
+
+    .home-indicator { position: absolute; bottom: -20px; font-size: 10px; font-weight: bold; color: #94a3b8; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+
+  <div id="mission-overlay" class="fixed inset-0 z-[100] bg-slate-900/95 flex items-center justify-center p-6">
+    <div class="bg-white max-w-2xl w-full rounded-[2.5rem] p-10 shadow-2xl">
+      <div class="text-6xl mb-4 text-center">🚀</div>
+      <h2 class="text-3xl font-black text-center text-slate-800 mb-4">The Upward Reach</h2>
+      <div class="text-slate-600 leading-relaxed mb-8 space-y-4">
+        <p><strong>Definition:</strong> "Reaching" means moving a finger from its home base to a new key and then <b>immediately</b> moving it back.</p>
+        <div class="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-500 text-sm">
+            <strong>The Trick:</strong> Keep your other fingers resting on the Home Row while one finger reaches up for the Top Row. Don't lift your whole hand!
+        </div>
+        <p class="text-center font-bold">Today we learn: Q W E R T Y U I O P</p>
+      </div>
+      <button onclick="startMission()" class="w-full bg-blue-600 text-white font-bold py-5 rounded-2xl text-xl shadow-lg">Start Reaching! 🚀</button>
+    </div>
+  </div>
+
+  <nav class="bg-white border-b py-4 px-6 flex justify-between items-center sticky top-0 z-50">
+    <a href="../keyboard.html" class="text-orange-600 font-bold">← Hub</a>
+    <span class="font-black text-xs uppercase tracking-widest text-slate-400">Year 3: Top Row Reach</span>
+  </nav>
+
+  <main class="max-w-4xl mx-auto py-10 px-6 text-center">
+    <div class="bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-slate-200 mb-10">
+        <div id="target-box" class="text-8xl font-black text-slate-800 h-24 flex items-center justify-center uppercase">Q</div>
+        <p id="finger-instruction" class="mt-4 font-bold text-orange-600 uppercase tracking-widest text-sm"></p>
+    </div>
+
+    <div class="bg-slate-900 p-12 rounded-[3rem] shadow-2xl">
+        <div class="flex gap-2 justify-center mb-12">
+            <div id="K-Q" class="key-cap f-pinky">Q <span class="home-indicator">Pinky</span></div>
+            <div id="K-W" class="key-cap f-ring">W <span class="home-indicator">Ring</span></div>
+            <div id="K-E" class="key-cap f-middle">E <span class="home-indicator">Middle</span></div>
+            <div id="K-R" class="key-cap f-index">R <span class="home-indicator">Index</span></div>
+            <div id="K-T" class="key-cap f-index">T <span class="home-indicator">Index</span></div>
+            <div id="K-Y" class="key-cap f-index">Y <span class="home-indicator">Index</span></div>
+            <div id="K-U" class="key-cap f-index">U <span class="home-indicator">Index</span></div>
+            <div id="K-I" class="key-cap f-middle">I <span class="home-indicator">Middle</span></div>
+            <div id="K-O" class="key-cap f-ring">O <span class="home-indicator">Ring</span></div>
+            <div id="K-P" class="key-cap f-pinky">P <span class="home-indicator">Pinky</span></div>
+        </div>
+        <p class="text-slate-500 text-xs font-mono">Always return to ASDF JKL; after each press!</p>
+    </div>
+  </main>
+
+  <script>
+    const sequence = ["Q", "P", "W", "O", "E", "I", "R", "U"];
+    const fingers = ["Left Pinky", "Right Pinky", "Left Ring", "Right Ring", "Left Middle", "Right Middle", "Left Index", "Right Index"];
+    
+    let step = 0;
+    let missionActive = false;
+
+    function startMission() {
+        document.getElementById('mission-overlay').classList.add('hidden');
+        missionActive = true;
+        updateUI();
+    }
+
+    function updateUI() {
+        const target = sequence[step];
+        document.getElementById('target-box').innerText = target;
+        document.getElementById('finger-instruction').innerText = `Reach with your ${fingers[step]}!`;
+
+        document.querySelectorAll('.key-cap').forEach(k => k.classList.remove('key-active'));
+        document.getElementById(`K-${target}`).classList.add('key-active');
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if(!missionActive) return;
+        if (e.key.toUpperCase() === sequence[step]) {
+            const el = document.getElementById(`K-${sequence[step]}`);
+            el.classList.replace('key-active', 'key-success');
+            
+            setTimeout(() => {
+                el.classList.remove('key-success');
+                step++;
+                if (step >= sequence.length) {
+                    document.getElementById('target-box').innerText = "🚀🏆";
+                    document.getElementById('finger-instruction').innerText = "Top Row Reaching Mastery!";
+                } else {
+                    updateUI();
+                }
+            }, 300);
+        }
+    });
+  </script>
+</body>
+</html>
