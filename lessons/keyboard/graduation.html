@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Grand Keyboard Final | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .char { font-family: monospace; font-size: 1.8rem; color: #94a3b8; border-bottom: 3px solid transparent; }
+    .char-correct { color: #0f172a; border-bottom-color: #22c55e; }
+    .char-wrong { color: #ef4444; background: #fee2e2; border-bottom-color: #ef4444; }
+    .char-current { background: #e0f2fe; border-bottom-color: #0ea5e9; animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity: 0.4; } }
+    @media print { .no-print { display: none; } }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen font-sans">
+
+  <div id="start-overlay" class="fixed inset-0 z-50 bg-slate-900 flex items-center justify-center p-6 text-center">
+    <div class="bg-white max-w-2xl w-full rounded-[3rem] p-12 shadow-2xl">
+        <h1 class="text-5xl font-black text-slate-800 mb-6">Final Assessment</h1>
+        <div class="space-y-4 mb-10 text-lg text-slate-600">
+            <p>You have 60 seconds to type the text below.</p>
+            <p>Target: <span class="font-bold text-slate-900">30 WPM</span> with <span class="font-bold text-slate-900">95% Accuracy</span>.</p>
+            <p class="text-sm italic">"Precision is the foundation of speed."</p>
+        </div>
+        <button onclick="begin()" class="w-full bg-slate-900 text-white font-black py-6 rounded-2xl text-2xl hover:bg-black transition-all">START EXAM</button>
+    </div>
+  </div>
+
+  <nav class="p-6 bg-white border-b flex justify-between items-center no-print">
+    <div class="flex gap-12">
+        <div><p class="text-[10px] font-black text-slate-400 uppercase">Timer</p><p id="timer" class="text-3xl font-black text-red-600">60s</p></div>
+        <div><p class="text-[10px] font-black text-slate-400 uppercase">Speed</p><p id="wpm" class="text-3xl font-black text-sky-600">0</p></div>
+        <div><p class="text-[10px] font-black text-slate-400 uppercase">Accuracy</p><p id="acc" class="text-3xl font-black text-slate-700">100%</p></div>
+    </div>
+    <div class="text-right">
+        <span class="bg-slate-100 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter">Level: Master</span>
+    </div>
+  </nav>
+
+  <main id="main-content" class="max-w-5xl mx-auto py-16 px-6 no-print">
+    <div id="text-container" class="bg-white p-12 rounded-[3rem] shadow-xl leading-loose select-none mb-8">
+        </div>
+    <input type="text" id="hidden-input" class="opacity-0 absolute" autofocus>
+  </main>
+
+  <div id="cert-container"></div>
+
+  <script>
+    const examText = "The digital age requires us to be fast and accurate with our hands. Mastering the keyboard is more than just a skill; it is a gateway to programming, writing, and professional success. By completing this twelve year journey, you have proven that you have the discipline and the talent to compete in the global technology landscape. Keep practicing, keep typing, and keep building the future.";
+    
+    let cursor = 0;
+    let errors = 0;
+    let startTime = null;
+    let timerVal = 60;
+    let timerId = null;
+    let active = false;
+
+    const container = document.getElementById('text-container');
+    const input = document.getElementById('hidden-input');
+
+    // Create characters
+    const charElements = examText.split('').map(c => {
+        const span = document.createElement('span');
+        span.innerText = c;
+        span.className = 'char';
+        container.appendChild(span);
+        return span;
+    });
+
+    function begin() {
+        document.getElementById('start-overlay').classList.add('hidden');
+        input.focus();
+        active = true;
+        charElements[0].classList.add('char-current');
+        
+        timerId = setInterval(() => {
+            timerVal--;
+            document.getElementById('timer').innerText = timerVal + 's';
+            if(timerVal <= 0) endGame();
+        }, 1000);
+    }
+
+    input.addEventListener('input', (e) => {
+        if(!active) return;
+        if(!startTime) startTime = new Date();
+
+        const typed = e.target.value.split('').pop();
+        if(!typed) return;
+
+        if(typed === charElements[cursor].innerText) {
+            charElements[cursor].className = 'char char-correct';
+        } else {
+            charElements[cursor].className = 'char char-wrong';
+            errors++;
+        }
+
+        cursor++;
+        e.target.value = '';
+
+        if(cursor < charElements.length) {
+            charElements[cursor].classList.add('char-current');
+            calculateStats();
+        } else {
+            endGame();
+        }
+    });
+
+    function calculateStats() {
+        const elapsed = (new Date() - startTime) / 60000;
+        const wpm = Math.round((cursor / 5) / elapsed) || 0;
+        const acc = Math.round(((cursor - errors) / cursor) * 100) || 100;
+        
+        document.getElementById('wpm').innerText = wpm;
+        document.getElementById('acc').innerText = acc + '%';
+        return { wpm, acc };
+    }
+
+    function endGame() {
+        active = false;
+        clearInterval(timerId);
+        const stats = calculateStats();
+
+        if(stats.wpm >= 30 && stats.acc >= 95) {
+            const name = prompt("EXCELLENT! Enter your name for the certificate:");
+            generateCertificate(name || "Student", stats.wpm, stats.acc);
+        } else {
+            alert(`Result: ${stats.wpm} WPM. You need 30 WPM and 95% accuracy to pass. Don't give up!`);
+            location.reload();
+        }
+    }
+
+    function generateCertificate(name, wpm, acc) {
+        document.getElementById('main-content').classList.add('hidden');
+        document.querySelector('nav').classList.add('hidden');
+        
+        document.getElementById('cert-container').innerHTML = `
+            <div class="min-h-screen bg-slate-200 flex items-center justify-center p-10">
+                <div class="bg-white w-full max-w-4xl border-[20px] border-double border-slate-900 p-16 text-center shadow-2xl relative">
+                    <h1 class="text-6xl font-serif text-slate-800 mb-2">SmartKids</h1>
+                    <h2 class="text-xl tracking-[0.4em] uppercase text-slate-500 mb-12">Professional Keyboarding Certificate</h2>
+                    
+                    <p class="text-lg italic text-slate-500 mb-2">This diploma recognizes that</p>
+                    <h3 class="text-6xl font-black text-slate-900 mb-10 decoration-slate-900 underline underline-offset-8">${name}</h3>
+                    
+                    <p class="text-xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed">
+                        has completed the full 12-Year Keyboarding & System Navigation curriculum with distinction.
+                    </p>
+
+                    <div class="flex justify-center gap-20 mb-12 border-y py-8">
+                        <div><p class="text-4xl font-black">${wpm}</p><p class="text-xs font-bold uppercase text-slate-400">Words Per Minute</p></div>
+                        <div><p class="text-4xl font-black">${acc}%</p><p class="text-xs font-bold uppercase text-slate-400">Accuracy Rate</p></div>
+                    </div>
+
+                    <div class="flex justify-between items-end mt-12">
+                        <div class="text-left text-[10px] font-mono text-slate-400 uppercase">
+                            <p>Verify: SK-KB-${Date.now()}</p>
+                            <p>Date: ${new Date().toLocaleDateString()}</p>
+                        </div>
+                        <button onclick="window.print()" class="no-print bg-slate-900 text-white px-8 py-3 rounded-xl font-bold">Print Certificate 🖨️</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+  </script>
+</body>
+</html>
