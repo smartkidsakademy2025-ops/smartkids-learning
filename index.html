@@ -21,8 +21,38 @@
 </head>
 
 <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+<header class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b z-[60]">
+  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">SK</div>
+      <span class="font-bold text-xl tracking-tight">SmartKids</span>
+    </a>
 
-  <header class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b z-[60]">
+    <nav class="hidden md:flex gap-8 items-center text-sm font-semibold text-slate-600">
+      <a href="lessons.html" class="hover:text-blue-600 transition">Lessons</a>
+      <a href="lessons/keyboard-practice.html" class="hover:text-blue-600 transition">Typing Drill</a>
+      <a href="morals.html" class="hover:text-blue-600 transition">African Morals</a>
+      <a href="quiz.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md">Start Quiz</a>
+      <button id="authBtn" class="border border-slate-300 px-4 py-2 rounded-full hover:bg-slate-50 transition">Student Login</button>
+    </nav>
+
+    <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-end w-8 h-8 gap-1.5 z-[100] focus:outline-none group">
+      <span class="w-8 h-1 bg-slate-800 rounded-full transition-all duration-300 origin-center group-[.active]:rotate-45 group-[.active]:translate-y-[10px] group-[.active]:bg-white"></span>
+      <span class="w-8 h-1 bg-slate-800 rounded-full transition-all duration-300 group-[.active]:opacity-0"></span>
+      <span class="w-5 h-1 bg-slate-800 rounded-full transition-all duration-300 origin-center group-[.active]:w-8 group-[.active]:-rotate-45 group-[.active]:-translate-y-[10px] group-[.active]:bg-white"></span>
+    </button>
+
+    <div id="mobile-menu" class="hidden fixed inset-0 z-[90] bg-slate-900 flex flex-col items-center justify-center space-y-8">
+        <a href="index.html" class="text-white text-3xl font-bold hover:text-blue-400 transition">Home</a>
+        <a href="lessons/keyboard-practice.html" class="text-white text-3xl font-bold hover:text-blue-400 transition">Typing Drill</a>
+        <a href="lessons/mouse.html" class="text-white text-3xl font-bold hover:text-blue-400 transition">Mouse Mastery</a>
+        <a href="morals.html" class="text-white text-3xl font-bold hover:text-blue-400 transition">African Morals</a>
+        
+        <button id="menu-close-text" class="text-slate-400 text-sm uppercase tracking-widest mt-12">Close Menu</button>
+    </div>
+  </div>
+</header>
+  <!--<header class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b z-[60]">
   <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2">
       <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">SK</div>
@@ -51,7 +81,7 @@
       <a href="morals.html" class="hover:text-blue-400">African Morals</a>
     </div>
   </div>
-</header>
+</header>-->
 
   <section class="pt-32 pb-20 hero-gradient px-4">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -149,34 +179,27 @@
     }
   }
 
-  /** 2. MOBILE MENU & X TRANSFORMATION **/
+  /** 2. MOBILE MENU LOGIC **/
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
-  const menuClose = document.getElementById('menu-close');
+  const menuCloseBtn = document.getElementById('menu-close-text');
 
   if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', (e) => {
-      e.preventDefault();
+    const toggleAction = () => {
       menuToggle.classList.toggle('active');
       mobileMenu.classList.toggle('hidden');
-      document.body.style.overflow = mobileMenu.classList.contains('hidden') ? 'auto' : 'hidden';
-    });
+      
+      // Toggle body scroll
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    };
 
-    if (menuClose) {
-      menuClose.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        mobileMenu.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-      });
-    }
+    menuToggle.addEventListener('click', toggleAction);
+    if (menuCloseBtn) menuCloseBtn.addEventListener('click', toggleAction);
 
     // Auto-close on link click
     mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menuToggle.classList.remove('active');
-        mobileMenu.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-      });
+      link.addEventListener('click', toggleAction);
     });
   }
 
