@@ -51,6 +51,85 @@
       "Draft_1", "Draft_2", "Secret_Map", "Banana", "Zebra", "Computer_Drawing"
     ];
 
+    // The sequence of targets to find for this session
+    const missionList = ["Gold_Coin", "School_Project", "Family_Photo"];
+    let currentMissionIndex = 0;
+
+    const container = document.getElementById('folderContainer');
+    const searchBar = document.getElementById('searchBar');
+    const instructionText = document.getElementById('instructionText');
+
+    function initGame() {
+      container.innerHTML = '';
+      // Create a fresh shuffle of all files
+      const shuffled = [...files].sort(() => Math.random() - 0.5);
+      
+      shuffled.forEach(name => {
+        const div = document.createElement('div');
+        div.className = 'folder-item flex flex-col items-center text-center p-2';
+        div.setAttribute('data-name', name.toLowerCase());
+        
+        // Use a coin icon only for the Gold_Coin file
+        const icon = name === "Gold_Coin" ? "🪙" : "📁";
+        
+        div.innerHTML = `
+          <div class="text-5xl mb-1">${icon}</div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">${name}</span>
+        `;
+        container.appendChild(div);
+      });
+      updateInstruction();
+    }
+
+    function updateInstruction() {
+        instructionText.innerText = `Find: ${missionList[currentMissionIndex]}`;
+    }
+
+    // Visual filtering while typing
+    searchBar.addEventListener('input', () => {
+        const query = searchBar.value.toLowerCase();
+        document.querySelectorAll('.folder-item').forEach(item => {
+            const name = item.getAttribute('data-name');
+            item.style.display = name.includes(query) ? 'flex' : 'none';
+        });
+    });
+
+    // Handle the ENTER Key for Mission Confirmation
+    searchBar.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const query = searchBar.value.toLowerCase().trim();
+            const target = missionList[currentMissionIndex].toLowerCase();
+
+            if (query === target) {
+                alert(`✅ Correct! You found the ${missionList[currentMissionIndex]}!`);
+                currentMissionIndex++;
+
+                if (currentMissionIndex < missionList.length) {
+                    // Start next mission immediately
+                    searchBar.value = "";
+                    initGame(); // Reshuffles positions for the next target
+                } else {
+                    // Final Win for the session
+                    document.getElementById('winMessage').classList.remove('hidden');
+                }
+            } else {
+                alert("❌ Not quite. Make sure the spelling matches the mission and press Enter!");
+            }
+        }
+    });
+
+    // Start fresh on every page load
+    window.onload = initGame;
+</script>
+  
+  
+  <!--<script>
+    const files = [
+      "Homework", "Family_Photo", "Drum_Beat", "Recipe", "Game_Save", 
+      "Gold_Coin", "School_Project", "Old_Music", "Vacation", "Ideas",
+      "Draft_1", "Draft_2", "Secret_Map", "Banana", "Zebra", "Computer_Drawing"
+    ];
+
     // The sequence of targets to find
     const missionList = ["Gold_Coin", "School_Project", "Family_Photo"];
     let currentMissionIndex = 0;
