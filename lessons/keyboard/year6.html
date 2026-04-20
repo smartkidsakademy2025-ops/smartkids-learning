@@ -30,9 +30,43 @@
   </main>
 
   <script>
-    // Logic: Identify if the target letter is Left-side (QWERT ASDFG ZXCV) 
-    // or Right-side (YUIOP HJKL; NM). 
-    // Force the use of the correct Shift key.
+    const leftSide = "QWERTASDFGZXCVB";
+const rightSide = "YUIOPHJKLNM";
+
+window.addEventListener('keydown', (e) => {
+    if (!missionActive) return;
+    
+    const target = document.getElementById('target-box').innerText;
+    const isLeftTarget = leftSide.includes(target);
+    const pressedKey = e.key.toUpperCase();
+
+    // Check if Shift is held AND the correct letter is pressed
+    if (e.shiftKey && pressedKey === target) {
+        
+        // e.location 1 = Left Shift | 2 = Right Shift
+        let correctShift = false;
+        
+        if (isLeftTarget && e.location === 2) {
+            correctShift = true; // Left letter + Right Shift = SUCCESS
+        } else if (!isLeftTarget && e.location === 1) {
+            correctShift = true; // Right letter + Left Shift = SUCCESS
+        }
+
+        if (correctShift) {
+            handleSuccess(); // Move to next letter
+        } else {
+            // Shake the target box or show a hint
+            showErrorHint("Wrong Shift! Use your OTHER hand for Shift.");
+        }
+    }
+});
+
+function showErrorHint(msg) {
+    const hint = document.getElementById('instruction');
+    hint.innerText = msg;
+    hint.classList.add('text-red-500', 'animate-bounce');
+    setTimeout(() => hint.classList.remove('text-red-500', 'animate-bounce'), 1000);
+}
   </script>
 </body>
 </html>
