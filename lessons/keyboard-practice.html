@@ -69,6 +69,97 @@
   </footer>
 
   <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("accordion");
+  
+  // Updated years array with Row Mastery progression
+  const years = [
+    {id:"year1", name:"Year 1", topics:["Keyboard Geography","Finding Letters","Alphabet Map"]},
+    {id:"year2", name:"Year 2", topics:["Home Row Mastery","ASDF JKL; Keys","Middle Row Reach"]},
+    {id:"year3", name:"Year 3", topics:["Top Row Keys","QWERTY Reach","Upward Finger Stretch"]},
+    {id:"year4", name:"Year 4", topics:["Bottom Row Keys","ZXCVB Reach","Downward Finger Stretch"]},
+    {id:"year5", name:"Year 5", topics:["The Spacebar","Backspace Eraser","The Enter Key"]},
+    {id:"year6", name:"Year 6", topics:["Shift Key Mastery","Capital Letters","Basic Symbols (!@#)"]},
+    {id:"year7", name:"Year 7", topics:["Punctuation Marks","The Number Row","Common Symbols"]},
+    {id:"year8", name:"Year 8", topics:["WPM Speed Intro","Accuracy Drills","Common Word Typing"]},
+    {id:"year9", name:"Year 9", topics:["Keyboard Shortcuts","Ctrl+C / Ctrl+V","Undo & Redo"]},
+    {id:"year10", name:"Year 10", topics:["Paragraph Typing","Text Formatting","High-Speed Focus"]},
+    {id:"year11", name:"Year 11", topics:["System Navigation","Tab & Escape Keys","Alt-Tab Multitasking"]},
+    {id:"year12", name:"Year 12", topics:["Command Line Typing","Developer Symbols","Final Speed Test"]},
+    {id:"graduation", name:"🎓 GRADUATION", topics:["Full Speed Assessment","Certificate Generation","Course Summary"], isSpecial: true}
+  ];
+
+  years.forEach(year => {
+    const card = document.createElement("div");
+    card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-4";
+
+    const header = document.createElement("button");
+    // Change color to gold if it's graduation
+    const iconBg = year.isSpecial ? "bg-amber-100 text-amber-600" : "bg-orange-100 text-orange-600";
+    
+    header.className = "w-full flex justify-between items-center px-6 py-5 text-lg font-bold text-slate-700 hover:bg-slate-50 transition-colors";
+    header.innerHTML = `
+      <span class="flex items-center gap-3">
+        <span class="w-8 h-8 ${iconBg} rounded-full text-xs flex items-center justify-center font-bold">
+          ${year.isSpecial ? '★' : year.id.replace('year','')}
+        </span>
+        ${year.name}
+      </span>
+      <span class="rotate-icon text-slate-400 font-light text-2xl transition-transform duration-300">+</span>
+    `;
+
+    const body = document.createElement("div");
+    // Use max-height for smooth accordion animation if you have the CSS, or just hidden by default
+    body.className = "accordion-body bg-slate-50 px-6 hidden";
+
+    body.innerHTML = `
+      <div class="py-4 grid gap-3">
+        ${year.topics.map(topic => `
+          <a href="keyboard/${year.id === 'graduation' ? 'graduation' : year.id}.html" class="lesson-btn flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:border-orange-300 transition-all group">
+            <span class="text-xl">${year.isSpecial ? '🎓' : '⌨️'}</span>
+            <span class="text-sm font-semibold text-slate-700 group-hover:text-orange-600">${topic}</span>
+          </a>
+        `).join("")}
+      </div>
+    `;
+
+    header.addEventListener("click", () => {
+      const isCurrentlyOpen = !body.classList.contains('hidden');
+      
+      // Close all others
+      document.querySelectorAll('.accordion-body').forEach(b => b.classList.add('hidden'));
+      document.querySelectorAll('.rotate-icon').forEach(i => i.style.transform = 'rotate(0deg)');
+      
+      // Toggle current
+      if (!isCurrentlyOpen) {
+        body.classList.remove('hidden');
+        header.querySelector('.rotate-icon').style.transform = 'rotate(45deg)';
+      }
+    });
+
+    card.appendChild(header);
+    card.appendChild(body);
+    container.appendChild(card);
+  });
+
+  // Footer Typing Animation
+  const footerMsg = "Empowering the next generation of African tech leaders.";
+  let charIdx = 0;
+  const type = () => {
+    const el = document.getElementById("footer-typing");
+    if (!el) return;
+    if (charIdx < footerMsg.length) {
+      el.innerHTML += footerMsg.charAt(charIdx);
+      charIdx++;
+      setTimeout(type, 70);
+    } else {
+      setTimeout(() => { el.innerHTML = ""; charIdx = 0; type(); }, 5000);
+    }
+  };
+  type();
+});
+
+    /*
     document.addEventListener("DOMContentLoaded", () => {
       const container = document.getElementById("accordion");
       const years = [
@@ -142,7 +233,7 @@
         }
       };
       type();
-    });
+    });*/
   </script>
 </body>
 </html>
