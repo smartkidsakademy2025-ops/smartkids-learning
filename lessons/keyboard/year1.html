@@ -6,6 +6,143 @@
   <title>Year 1: Keyboard Geography | SmartKids Learning</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    .key-cap { 
+        width: 55px; height: 55px; 
+        display: flex; align-items: center; justify-content: center; 
+        border-radius: 12px; font-weight: 800; font-family: monospace; 
+        transition: all 0.2s; border-bottom: 4px solid #cbd5e1; 
+        background: white; color: #1e293b;
+    }
+    .key-highlight { 
+        background: #f97316 !important; 
+        color: white !important; 
+        border-color: #ea580c !important; 
+        transform: translateY(2px); 
+        border-bottom-width: 2px;
+        box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+    }
+    .key-success { 
+        background: #22c55e !important; 
+        color: white !important; 
+        border-color: #16a34a !important; 
+    }
+    @keyframes bounce-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .animate-target { animation: bounce-slow 2s infinite; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 font-sans min-h-screen">
+
+  <nav class="bg-white border-b py-4 px-6 flex justify-between items-center shadow-sm">
+    <a href="../keyboard.html" class="text-orange-600 font-bold flex items-center gap-2">
+      <span>←</span> Back to Hub
+    </a>
+    <div class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-black uppercase tracking-tighter">Level 1: Geography</div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto py-12 px-6">
+    <header class="text-center mb-12">
+        <h1 class="text-4xl font-black text-slate-800">Alphabet Hunt 🔍</h1>
+        <p class="text-slate-500 mt-2">Find the <span class="text-orange-600 font-bold italic">Orange Key</span> on your physical keyboard!</p>
+    </header>
+
+    <div class="flex justify-center mb-12">
+        <div class="bg-white p-10 rounded-[3rem] shadow-2xl text-center border-b-8 border-orange-200 animate-target">
+            <span class="text-[8rem] leading-none font-black text-slate-800 uppercase" id="target-char">A</span>
+        </div>
+    </div>
+
+    <div class="bg-slate-900 p-8 rounded-[2.5rem] shadow-2xl overflow-x-auto no-scrollbar">
+        <div class="flex flex-col gap-3 min-w-[650px] items-center">
+            
+            <div class="flex gap-2">
+                <div id="K-Q" class="key-cap">Q</div><div id="K-W" class="key-cap">W</div><div id="K-E" class="key-cap">E</div>
+                <div id="K-R" class="key-cap">R</div><div id="K-T" class="key-cap">T</div><div id="K-Y" class="key-cap">Y</div>
+                <div id="K-U" class="key-cap">U</div><div id="K-I" class="key-cap">I</div><div id="K-O" class="key-cap">O</div>
+                <div id="K-P" class="key-cap">P</div>
+            </div>
+
+            <div class="flex gap-2 ml-6">
+                <div id="K-A" class="key-cap">A</div><div id="K-S" class="key-cap">S</div><div id="K-D" class="key-cap">D</div>
+                <div id="K-F" class="key-cap">F</div><div id="K-G" class="key-cap">G</div><div id="K-H" class="key-cap">H</div>
+                <div id="K-J" class="key-cap">J</div><div id="K-K" class="key-cap">K</div><div id="K-L" class="key-cap">L</div>
+            </div>
+
+            <div class="flex gap-2 ml-12">
+                <div id="K-Z" class="key-cap">Z</div><div id="K-X" class="key-cap">X</div><div id="K-C" class="key-cap">C</div>
+                <div id="K-V" class="key-cap">V</div><div id="K-B" class="key-cap">B</div><div id="K-N" class="key-cap">N</div>
+                <div id="K-M" class="key-cap">M</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="feedback-msg" class="mt-10 text-center font-black text-2xl h-10 text-orange-500">READY? GO!</div>
+  </main>
+
+  <script>
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    let currentIdx = 0;
+
+    function nextLetter() {
+        if(currentIdx >= alphabet.length) {
+            document.getElementById('feedback-msg').innerText = "🏆 GEOGRAPHY MASTERED!";
+            document.getElementById('target-char').innerText = "⭐";
+            return;
+        }
+
+        const char = alphabet[currentIdx];
+        document.getElementById('target-char').innerText = char;
+        
+        // Remove old highlights
+        document.querySelectorAll('.key-cap').forEach(k => k.classList.remove('key-highlight'));
+        
+        // Highlight the one to find
+        const targetKey = document.getElementById('K-' + char);
+        if(targetKey) targetKey.classList.add('key-highlight');
+    }
+
+    window.addEventListener('keydown', (e) => {
+        const pressed = e.key.toUpperCase();
+        const target = alphabet[currentIdx];
+
+        if(pressed === target) {
+            const el = document.getElementById('K-' + pressed);
+            el.classList.replace('key-highlight', 'key-success');
+            
+            document.getElementById('feedback-msg').innerText = "EXCELLENT! 🎉";
+            document.getElementById('feedback-msg').classList.replace('text-orange-500', 'text-green-500');
+
+            setTimeout(() => {
+                el.classList.remove('key-success');
+                document.getElementById('feedback-msg').innerText = "";
+                document.getElementById('feedback-msg').classList.replace('text-green-500', 'text-orange-500');
+                currentIdx++;
+                nextLetter();
+            }, 600);
+        } else {
+            // Shake effect or fail sound logic could go here
+            document.getElementById('feedback-msg').innerText = "LOOK FOR THE ORANGE KEY! 🔍";
+        }
+    });
+
+    // Start
+    nextLetter();
+  </script>
+</body>
+</html>
+
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 1: Keyboard Geography | SmartKids Learning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
     .key { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: bold; font-family: monospace; transition: all 0.2s; border-bottom: 4px solid #cbd5e1; }
     .key-active { background: #f97316; color: white; border-color: #ea580c; transform: translateY(2px); border-bottom-width: 2px; }
     .key-correct { background: #22c55e; color: white; border-color: #16a34a; }
