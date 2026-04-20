@@ -3,47 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Year 4: Bottom Row Reach | SmartKids</title>
+  <title>Year 4: Bottom Row Mastery | SmartKids</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .key-cap { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 800; border-bottom: 4px solid #cbd5e1; background: white; transition: all 0.2s; position: relative; }
-    .key-active { background: #8b5cf6 !important; color: white !important; border-color: #7c3aed !important; transform: translateY(5px); }
-    .key-success { background: #22c55e !important; color: white !important; }
+    .key-cap { width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 12px; font-weight: 800; border-bottom: 5px solid #cbd5e1; background: white; transition: all 0.1s; position: relative; }
+    /* Visual "Curl" - the key moves down and slightly back */
+    .key-active { background: #8b5cf6 !important; color: white !important; border-color: #7c3aed !important; transform: translateY(6px); border-bottom-width: 2px; box-shadow: inset 0 4px 6px rgba(0,0,0,0.2); }
+    .key-success { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
     
     .f-pinky { border-top: 5px solid #ec4899; }
     .f-ring { border-top: 5px solid #a855f7; }
     .f-middle { border-top: 5px solid #3b82f6; }
     .f-index { border-top: 5px solid #eab308; }
+
+    .timer-bar { transition: width 0.1s linear; }
+    .ghost-row { opacity: 0.15; filter: blur(0.5px); }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
 
-  <div id="mission-overlay" class="fixed inset-0 z-[100] bg-slate-900/95 flex items-center justify-center p-6">
-    <div class="bg-white max-w-2xl w-full rounded-[2.5rem] p-10 shadow-2xl">
-      <div class="text-6xl mb-4 text-center">⚓</div>
-      <h2 class="text-3xl font-black text-center text-slate-800 mb-4">The Downward Curl</h2>
-      <div class="text-slate-600 leading-relaxed mb-8 space-y-4 text-center">
-        <p>The Bottom Row is the hardest to reach! You have to <b>curl</b> your fingers inward toward your palm.</p>
-        <p class="font-bold bg-purple-50 p-3 rounded-lg border border-purple-100">Practice: Z X C V B N M</p>
-        <p class="text-sm italic">Challenge: Can you reach down without moving your wrist?</p>
+  <div id="mission-overlay" class="fixed inset-0 z-[100] bg-slate-900/95 flex items-center justify-center p-6 text-center">
+    <div class="bg-white max-w-xl w-full rounded-[2.5rem] p-10 shadow-2xl">
+      <div class="text-6xl mb-4">⚓</div>
+      <h2 class="text-3xl font-black text-slate-800 mb-4">Bottom Row: The Curl</h2>
+      <div class="text-slate-600 space-y-4 mb-8 text-lg">
+        <p><strong>The Final Frontier:</strong> This is the hardest row! You must <b>curl</b> your fingers inward without moving your wrists.</p>
+        <p class="font-bold text-purple-600">Keep your palms still. Only the fingers move!</p>
       </div>
-      <button onclick="startMission()" class="w-full bg-purple-600 text-white font-bold py-5 rounded-2xl text-xl">Start Curling! ⚓</button>
+      <button onclick="startMission()" class="w-full bg-purple-600 text-white font-bold py-5 rounded-2xl text-xl shadow-lg hover:bg-purple-700 transition-all">
+        Accept Challenge ⚓
+      </button>
     </div>
   </div>
 
   <nav class="bg-white border-b py-4 px-6 flex justify-between items-center sticky top-0 z-50">
-    <a href="../keyboard.html" class="text-orange-600 font-bold">← Hub</a>
-    <span class="font-black text-xs uppercase tracking-widest text-slate-400 text-center">Year 4: Bottom Row</span>
+    <a href="../keyboard.html" class="text-purple-600 font-bold flex items-center gap-2">← Hub</a>
+    <div id="phase-badge" class="bg-purple-100 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-purple-600">Phase 1: Coordination</div>
   </nav>
 
-  <main class="max-w-4xl mx-auto py-10 px-6 text-center">
-    <div class="bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-slate-200 mb-10">
-        <div id="target-box" class="text-8xl font-black text-slate-800 h-24 flex items-center justify-center uppercase">Z</div>
-        <p id="finger-instruction" class="mt-4 font-bold text-purple-600 uppercase tracking-widest text-sm"></p>
+  <main class="max-w-4xl mx-auto py-10 px-6">
+    <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-slate-200 mb-8 text-center relative overflow-hidden">
+        <div id="timer-container" class="absolute top-0 left-0 w-full h-2 bg-slate-100 hidden">
+            <div id="timer-progress" class="h-full bg-purple-500 timer-bar" style="width: 100%"></div>
+        </div>
+        <div id="target-box" class="text-9xl font-black text-slate-800 h-32 flex items-center justify-center uppercase">Z</div>
+        <p id="finger-instruction" class="mt-4 font-bold text-slate-500 uppercase tracking-widest text-sm"></p>
     </div>
 
-    <div class="bg-slate-900 p-12 rounded-[3rem] shadow-2xl">
-        <div class="flex gap-2 justify-center mb-8">
+    <div class="bg-slate-900 p-12 rounded-[3.5rem] shadow-2xl mb-8">
+         <div class="flex gap-2 justify-center mb-12 ghost-row">
+            <div class="key-cap border-t-2 border-pink-400">A</div>
+            <div class="key-cap border-t-2 border-purple-400">S</div>
+            <div class="key-cap border-t-2 border-blue-400">D</div>
+            <div class="key-cap border-t-2 border-yellow-400">F</div>
+            <div class="w-8"></div>
+            <div class="key-cap border-t-2 border-yellow-400">J</div>
+            <div class="key-cap border-t-2 border-blue-400">K</div>
+            <div class="key-cap border-t-2 border-purple-400">L</div>
+        </div>
+        <div class="flex gap-2 justify-center ml-12">
             <div id="K-Z" class="key-cap f-pinky">Z</div>
             <div id="K-X" class="key-cap f-ring">X</div>
             <div id="K-C" class="key-cap f-middle">C</div>
@@ -53,14 +71,26 @@
             <div id="K-M" class="key-cap f-index">M</div>
         </div>
     </div>
+
+    <div class="text-center">
+        <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Accuracy Streak</span>
+        <span id="stat-streak" class="text-4xl font-black text-slate-800">0</span>
+    </div>
   </main>
 
   <script>
-    const sequence = ["Z", "M", "X", "N", "C", "B", "V"];
-    const fingers = ["Left Pinky", "Right Index", "Left Ring", "Right Index", "Left Middle", "Right Index", "Left Index"];
-    
+    const sequence = ["Z", "X", "C", "V", "M", "N", "B"];
+    const fingers = {
+        "Z": "Left Pinky", "X": "Left Ring", "C": "Left Middle", "V": "Left Index", 
+        "B": "Left Index", "N": "Right Index", "M": "Right Index"
+    };
+
     let step = 0;
+    let phase = 1;
+    let randomCount = 0;
     let missionActive = false;
+    let streak = 0;
+    let timerId = null;
 
     function startMission() {
         document.getElementById('mission-overlay').classList.add('hidden');
@@ -69,32 +99,81 @@
     }
 
     function updateUI() {
-        const target = sequence[step];
-        document.getElementById('target-box').innerText = target;
-        document.getElementById('finger-instruction').innerText = `Curl your ${fingers[step]} down!`;
+        let target;
+        if (phase === 1) {
+            target = sequence[step];
+        } else {
+            const allKeys = Object.keys(fingers);
+            target = allKeys[Math.floor(Math.random() * allKeys.length)];
+            document.getElementById('phase-badge').innerText = `Phase 2: Reflex Trial (${randomCount + 1}/10)`;
+            document.getElementById('phase-badge').className = "bg-purple-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white";
+            startTimer();
+        }
 
+        document.getElementById('target-box').innerText = target;
+        document.getElementById('finger-instruction').innerText = `Curl your ${fingers[target]} down!`;
+        
         document.querySelectorAll('.key-cap').forEach(k => k.classList.remove('key-active'));
         document.getElementById(`K-${target}`).classList.add('key-active');
     }
 
+    function startTimer() {
+        clearInterval(timerId);
+        document.getElementById('timer-container').classList.remove('hidden');
+        let timeLeft = 5000; 
+        timerId = setInterval(() => {
+            timeLeft -= 100;
+            const percent = (timeLeft / 5000) * 100;
+            document.getElementById('timer-progress').style.width = percent + "%";
+            if (timeLeft <= 0) { clearInterval(timerId); resetChallenge(); }
+        }, 100);
+    }
+
+    function resetChallenge() {
+        streak = 0;
+        document.getElementById('stat-streak').innerText = streak;
+        document.getElementById('target-box').classList.add('text-red-500');
+        setTimeout(() => {
+            document.getElementById('target-box').classList.remove('text-red-500');
+            updateUI();
+        }, 400);
+    }
+
     window.addEventListener('keydown', (e) => {
-        if(!missionActive) return;
-        if (e.key.toUpperCase() === sequence[step]) {
-            const el = document.getElementById(`K-${sequence[step]}`);
+        if (!missionActive) return;
+        const pressed = e.key.toUpperCase();
+        const target = document.getElementById('target-box').innerText;
+
+        if (pressed === target) {
+            const el = document.getElementById(`K-${target}`);
             el.classList.add('key-success');
-            
+            streak++;
+            document.getElementById('stat-streak').innerText = streak;
+
             setTimeout(() => {
                 el.classList.remove('key-success');
-                step++;
-                if (step >= sequence.length) {
-                    document.getElementById('target-box').innerText = "⚓🏅";
-                    document.getElementById('finger-instruction').innerText = "Full Keyboard Access Achieved!";
-                } else {
+                if (phase === 1) {
+                    step++;
+                    if (step >= sequence.length) phase = 2;
                     updateUI();
+                } else {
+                    randomCount++;
+                    if (randomCount >= 10) victory();
+                    else updateUI();
                 }
-            }, 300);
+            }, 150);
+        } else {
+            resetChallenge();
         }
     });
+
+    function victory() {
+        missionActive = false;
+        clearInterval(timerId);
+        document.getElementById('target-box').innerText = "🏆";
+        document.getElementById('finger-instruction').innerText = "FULL ALPHABET UNLOCKED!";
+        setTimeout(() => window.location.href = '../keyboard.html', 3000);
+    }
   </script>
 </body>
 </html>
