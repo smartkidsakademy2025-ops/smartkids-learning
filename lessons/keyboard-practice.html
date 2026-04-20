@@ -3,6 +3,195 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyboarding Hub | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .year-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .locked { filter: grayscale(1); opacity: 0.6; cursor: not-allowed; }
+    .unlocked:hover { transform: translateY(-10px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+
+  <header class="py-12 px-6 text-center bg-white border-b-4 border-slate-100">
+    <h1 class="text-4xl font-black text-slate-800 mb-2">Keyboarding Academy</h1>
+    <p class="text-slate-500 font-medium">Master the keys, unlock your future.</p>
+  </header>
+
+  <main class="max-w-6xl mx-auto py-16 px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      
+      <a href="keyboard/year1.html" class="year-card unlocked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-orange-500 text-center">
+        <span class="text-5xl block mb-4">🗺️</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 1</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Geography</p>
+      </a>
+
+      <div id="y2-gate" class="year-card locked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-green-500 text-center">
+        <span class="text-5xl block mb-4">🏠</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 2</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Home Row</p>
+      </div>
+
+      <div id="y3-gate" class="year-card locked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-blue-500 text-center">
+        <span class="text-5xl block mb-4">🚀</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 3</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Top Reach</p>
+      </div>
+
+      <div id="y4-gate" class="year-card locked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-purple-500 text-center">
+        <span class="text-5xl block mb-4">⚓</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 4</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Bottom Curl</p>
+      </div>
+
+      <div id="y5-gate" class="year-card locked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-sky-500 text-center">
+        <span class="text-5xl block mb-4">⚡</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 5</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Power Keys</p>
+      </div>
+
+    </div>
+
+    <div class="mt-20 p-8 bg-slate-800 rounded-[3rem] text-white flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="text-center md:text-left">
+            <h2 class="text-2xl font-black mb-2 italic">Ready for Certification?</h2>
+            <p class="text-slate-400 max-w-md">Complete all 5 years with 95% accuracy to receive your SmartKids Junior Tech Certificate.</p>
+        </div>
+        <button onclick="resetProgress()" class="text-xs font-bold text-slate-500 hover:text-white underline">Reset All Progress</button>
+    </div>
+  </main>
+
+  <script>
+    // Logic to unlock cards based on performance
+    function checkProgress() {
+        const progress = JSON.parse(localStorage.getItem('smartkids_typing_progress')) || { year: 1 };
+        
+        for (let i = 2; i <= 5; i++) {
+            const gate = document.getElementById(`y${i}-gate`);
+            if (progress.year >= i) {
+                gate.classList.remove('locked');
+                gate.classList.add('unlocked');
+                gate.innerHTML = gate.innerHTML; // Refresh HTML to enable pointer events if needed
+                // Wrap in anchor tag
+                const link = `keyboard/year${i}.html`;
+                gate.onclick = () => window.location.href = link;
+            }
+        }
+    }
+
+    function resetProgress() {
+        if(confirm("Are you sure? This will lock all years again!")) {
+            localStorage.setItem('smartkids_typing_progress', JSON.stringify({ year: 1 }));
+            location.reload();
+        }
+    }
+
+    checkProgress();
+  </script>
+</body>
+</html>
+
+
+
+
+<!--<!DOCTY<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keyboarding Hub | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .year-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .locked { filter: grayscale(1); opacity: 0.6; cursor: not-allowed; }
+    .unlocked:hover { transform: translateY(-10px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+
+  <header class="py-12 px-6 text-center bg-white border-b-4 border-slate-100">
+    <h1 class="text-4xl font-black text-slate-800 mb-2">Keyboarding Academy</h1>
+    <p class="text-slate-500 font-medium">Master the keys, unlock your future.</p>
+  </header>
+
+  <main class="max-w-6xl mx-auto py-16 px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      
+      <a href="keyboard/year1.html" class="year-card unlocked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-orange-500 text-center">
+        <span class="text-5xl block mb-4">🗺️</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 1</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Geography</p>
+      </a>
+
+      <div id="y2-gate" class="year-card locked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-green-500 text-center">
+        <span class="text-5xl block mb-4">🏠</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 2</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Home Row</p>
+      </div>
+
+      <div id="y3-gate" class="year-card locked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-blue-500 text-center">
+        <span class="text-5xl block mb-4">🚀</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 3</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Top Reach</p>
+      </div>
+
+      <div id="y4-gate" class="year-card locked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-purple-500 text-center">
+        <span class="text-5xl block mb-4">⚓</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 4</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Bottom Curl</p>
+      </div>
+
+      <div id="y5-gate" class="year-card locked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-sky-500 text-center">
+        <span class="text-5xl block mb-4">⚡</span>
+        <h3 class="font-black text-xl mb-2 text-slate-800">Year 5</h3>
+        <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Power Keys</p>
+      </div>
+
+    </div>
+
+    <div class="mt-20 p-8 bg-slate-800 rounded-[3rem] text-white flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="text-center md:text-left">
+            <h2 class="text-2xl font-black mb-2 italic">Ready for Certification?</h2>
+            <p class="text-slate-400 max-w-md">Complete all 5 years with 95% accuracy to receive your SmartKids Junior Tech Certificate.</p>
+        </div>
+        <button onclick="resetProgress()" class="text-xs font-bold text-slate-500 hover:text-white underline">Reset All Progress</button>
+    </div>
+  </main>
+
+  <script>
+    // Logic to unlock cards based on performance
+    function checkProgress() {
+        const progress = JSON.parse(localStorage.getItem('smartkids_typing_progress')) || { year: 1 };
+        
+        for (let i = 2; i <= 5; i++) {
+            const gate = document.getElementById(`y${i}-gate`);
+            if (progress.year >= i) {
+                gate.classList.remove('locked');
+                gate.classList.add('unlocked');
+                gate.innerHTML = gate.innerHTML; // Refresh HTML to enable pointer events if needed
+                // Wrap in anchor tag
+                const link = `keyboard/year${i}.html`;
+                gate.onclick = () => window.location.href = link;
+            }
+        }
+    }
+
+    function resetProgress() {
+        if(confirm("Are you sure? This will lock all years again!")) {
+            localStorage.setItem('smartkids_typing_progress', JSON.stringify({ year: 1 }));
+            location.reload();
+        }
+    }
+
+    checkProgress();
+  </script>
+</body>
+</html>PE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Keyboard Practice Hub | SmartKids Learning</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
