@@ -60,16 +60,20 @@
             </div>
     </div>
   </main>
-
   <script>
     let draggedType = '';
+    let currentRound = 1;
+    const totalRounds = 3;
     let scores = { photo: 0, doc: 0, music: 0 };
-    const totalItems = 3; // Update this as you add more items
+    const itemsPerRound = 3; 
+
+    // Helper to identify which specific element is being dragged
+    let draggedElement = null;
 
     function handleDragStart(e, type) {
         draggedType = type;
+        draggedElement = e.target; // Capture the actual element
         e.target.style.opacity = '0.4';
-        // Store the ID of the element so we can remove it on drop
         e.dataTransfer.setData("text", e.target.innerHTML);
     }
 
@@ -78,31 +82,61 @@
         const folder = e.currentTarget;
         
         if (draggedType === folderType) {
-            // SUCCESS
+            // SUCCESS logic
             scores[folderType]++;
             document.getElementById(`count-${folderType}`).innerText = `${scores[folderType]} Items`;
-            folder.classList.add('bg-green-100', 'border-green-500');
-            setTimeout(() => folder.classList.remove('bg-green-100', 'border-green-500'), 500);
+            folder.classList.add('bg-green-100', 'border-green-500', 'scale-105');
             
-            // Remove the item from desktop (In a real app, we'd hide the specific dragged element)
-            alert("Correct! It's in the folder.");
-            checkWin();
+            // Hide the item from the desktop
+            if (draggedElement) draggedElement.classList.add('hidden');
+            
+            setTimeout(() => {
+                folder.classList.remove('bg-green-100', 'border-green-500', 'scale-105');
+                checkWin();
+            }, 500);
         } else {
-            // WRONG FOLDER
+            // ERROR logic
+            if (draggedElement) draggedElement.style.opacity = '1';
             folder.classList.add('bg-red-100', 'border-red-500');
             setTimeout(() => folder.classList.remove('bg-red-100', 'border-red-500'), 500);
-            alert("Oops! That doesn't belong there.");
+            alert("Oops! That doesn't belong there. Try again!");
         }
     }
 
-function checkWin() {
-    const currentTotal = scores.photo + scores.doc + scores.music;
-    if (currentTotal === totalItems) {
-        alert("Year 1 Complete! You are a master organizer.");
-        // CHANGE THIS LINE:
-        window.location.href = 'year2.html'; 
+    function checkWin() {
+        const roundTotal = scores.photo + scores.doc + scores.music;
+        
+        if (roundTotal === itemsPerRound) {
+            if (currentRound < totalRounds) {
+                // MOVE TO NEXT ROUND
+                alert(`Round ${currentRound} Complete! The desktop is getting messy again...`);
+                currentRound++;
+                resetRound();
+            } else {
+                // FINISH GAME
+                alert("Master Organizer Status Achieved! Moving to Year 2: The Search Hunt.");
+                window.location.href = 'year2.html'; 
+            }
+        }
     }
-}
-  </script>
+
+    function resetRound() {
+        // 1. Reset scores for the internal round
+        scores = { photo: 0, doc: 0, music: 0 };
+        
+        // 2. Reshow all hidden files
+        const files = document.querySelectorAll('.file-icon');
+        files.forEach(file => {
+            file.classList.remove('hidden');
+            file.style.opacity = '1';
+        });
+
+        // 3. SHUFFLE: Randomize the order of files on the desktop
+        const desktop = document.getElementById('desktop');
+        for (let i = desktop.children.length; i >= 0; i--) {
+            desktop.appendChild(desktop.children[Math.random() * i | 0]);
+        }
+    }
+</script>
 </body>
 </html>
