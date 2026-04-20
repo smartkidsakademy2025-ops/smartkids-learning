@@ -18,7 +18,78 @@
     <p class="text-slate-500 font-medium">Master the keys, unlock your future.</p>
   </header>
 
-  <main class="max-w-6xl mx-auto py-16 px-6">
+ <main class="max-w-6xl mx-auto py-12 px-6">
+    
+    <h2 class="text-xl font-black text-slate-400 mb-6 uppercase tracking-widest">Foundations</h2>
+    <div id="tier-foundations" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        </div>
+
+    <h2 class="text-xl font-black text-slate-400 mb-6 uppercase tracking-widest">Professional</h2>
+    <div id="tier-professional" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        </div>
+
+    <h2 class="text-xl font-black text-slate-400 mb-6 uppercase tracking-widest">Expert & Graduation</h2>
+    <div id="tier-expert" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        </div>
+
+</main>
+
+<script>
+    const years = [
+        { id: 1, name: "Geography", icon: "🗺️" },
+        { id: 2, name: "Home Row", icon: "🏠" },
+        { id: 3, name: "Top Reach", icon: "🚀" },
+        { id: 4, name: "Bottom Curl", icon: "⚓" },
+        { id: 5, name: "Power Keys", icon: "⚡" },
+        { id: 6, name: "Shift Rule", icon: "⬆️" },
+        { id: 7, name: "Symbols", icon: "⌨️" },
+        { id: 8, name: "Common Words", icon: "📝" },
+        { id: 9, name: "Shortcuts", icon: "✂️" },
+        { id: 10, name: "The Flow", icon: "🌊" },
+        { id: 11, name: "Navigation", icon: "🧭" },
+        { id: 12, name: "Dev Mode", icon: "💻" }
+    ];
+
+    function loadHub() {
+        // We get the current saved progress (Default to Year 1)
+        const progress = parseInt(localStorage.getItem('typing_progress')) || 1;
+
+        years.forEach(year => {
+            const isLocked = year.id > progress;
+            const card = document.createElement('div');
+            
+            // Determine which tier it belongs to
+            let tierId = "tier-foundations";
+            if (year.id > 4) tierId = "tier-professional";
+            if (year.id > 8) tierId = "tier-expert";
+
+            card.className = `p-6 rounded-[2rem] text-center border-b-4 transition-all ${isLocked ? 'bg-slate-100 border-slate-200 grayscale opacity-50 cursor-not-allowed' : 'bg-white border-blue-500 shadow-xl cursor-pointer hover:-translate-y-2'}`;
+            
+            card.innerHTML = `
+                <div class="text-4xl mb-2">${year.icon}</div>
+                <h3 class="font-black text-slate-800">Year ${year.id}</h3>
+                <p class="text-[10px] uppercase font-bold text-slate-400">${year.name}</p>
+                ${isLocked ? '🔒' : ''}
+            `;
+
+            if (!isLocked) {
+                card.onclick = () => window.location.href = `keyboard/year${year.id}.html`;
+            }
+
+            document.getElementById(tierId).appendChild(card);
+        });
+
+        // Special logic for Graduation Button
+        if (progress > 12) {
+            addGraduationButton();
+        }
+    }
+
+    loadHub();
+</script>
+  
+  
+  <!--<main class="max-w-6xl mx-auto py-16 px-6">
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
       
       <a href="keyboard/year1.html" class="year-card unlocked bg-white p-8 rounded-[2.5rem] shadow-xl border-b-8 border-orange-500 text-center">
@@ -88,7 +159,7 @@
     }
 
     checkProgress();
-  </script>
+  </script>-->
 </body>
 </html>
 
