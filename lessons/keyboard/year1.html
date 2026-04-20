@@ -3,6 +3,150 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 1: Keyboard Mastery | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .key-cap { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-weight: 800; border-bottom: 4px solid #cbd5e1; background: white; transition: all 0.15s; font-size: 0.9rem; }
+    .key-active { background: #f97316 !important; color: white !important; border-color: #ea580c !important; transform: translateY(2px); border-bottom-width: 2px; }
+    .key-success { background: #22c55e !important; color: white !important; border-color: #16a34a !important; }
+    .mission-tab { border-bottom: 4px solid transparent; transition: all 0.3s; opacity: 0.4; }
+    .mission-tab.active { border-color: #f97316; opacity: 1; color: #f97316; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+
+  <nav class="bg-white border-b py-4 px-6 flex justify-between items-center sticky top-0 z-50">
+    <a href="../keyboard.html" class="text-orange-600 font-bold flex items-center gap-2"><span>←</span> Hub</a>
+    <div class="flex gap-6">
+        <div id="tab-0" class="mission-tab active font-black text-[10px] uppercase tracking-widest">1. Geography</div>
+        <div id="tab-1" class="mission-tab font-black text-[10px] uppercase tracking-widest">2. Finding Letters</div>
+        <div id="tab-2" class="mission-tab font-black text-[10px] uppercase tracking-widest">3. Alphabet Map</div>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto py-10 px-6">
+    <div class="bg-white p-8 rounded-[2rem] shadow-xl text-center border-b-8 border-slate-200 mb-8">
+        <h2 id="mission-title" class="text-orange-500 font-black uppercase text-sm mb-2 tracking-tighter">Mission: Keyboard Geography</h2>
+        <p id="mission-desc" class="text-slate-500 text-sm mb-6">Explore the rows! Press any key in the highlighted row.</p>
+        <div id="target-box" class="text-7xl font-black text-slate-800 h-24 flex items-center justify-center italic">
+            READY?
+        </div>
+    </div>
+
+    <div class="bg-slate-900 p-6 rounded-[2rem] shadow-2xl overflow-x-auto">
+        <div class="flex flex-col gap-2 min-w-[600px] items-center" id="kb-container">
+            </div>
+    </div>
+  </main>
+
+  <script>
+    const kbLayout = [
+        ["Q","W","E","R","T","Y","U","I","O","P"],
+        ["A","S","D","F","G","H","J","K","L"],
+        ["Z","X","C","V","B","N","M"]
+    ];
+
+    let currentMission = 0;
+    let step = 0;
+
+    // Mission Data
+    const missions = [
+        { title: "Keyboard Geography", desc: "Explore the Rows! Press the highlighted keys.", targets: ["TOP ROW", "MIDDLE ROW", "BOTTOM ROW"] },
+        { title: "Finding Letters", desc: "Can you find these specific letters?", targets: ["S", "K", "I", "L", "Z"] },
+        { title: "Alphabet Map", desc: "Type the alphabet in order (A-Z).", targets: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("") }
+    ];
+
+    function buildKeyboard() {
+        const container = document.getElementById('kb-container');
+        container.innerHTML = '';
+        kbLayout.forEach((row, rIdx) => {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = `flex gap-2 ${rIdx === 1 ? 'ml-4' : (rIdx === 2 ? 'ml-8' : '')}`;
+            rowDiv.id = `row-${rIdx}`;
+            row.forEach(key => {
+                const k = document.createElement('div');
+                k.id = `K-${key}`;
+                k.className = "key-cap";
+                k.innerText = key;
+                rowDiv.appendChild(k);
+            });
+            container.appendChild(rowDiv);
+        });
+    }
+
+    function runMission() {
+        const m = missions[currentMission];
+        document.getElementById('mission-title').innerText = `Mission: ${m.title}`;
+        document.getElementById('mission-desc').innerText = m.desc;
+        
+        const target = m.targets[step];
+        document.getElementById('target-box').innerText = target;
+
+        // Visual Highlighting Logic
+        document.querySelectorAll('.key-cap').forEach(k => k.classList.remove('key-active'));
+        
+        if (currentMission === 0) { // Geography logic: highlight whole rows
+            document.querySelectorAll(`#row-${step} .key-cap`).forEach(k => k.classList.add('key-active'));
+        } else { // Letter finding logic
+            const keyEl = document.getElementById(`K-${target}`);
+            if(keyEl) keyEl.classList.add('key-active');
+        }
+    }
+
+    window.addEventListener('keydown', (e) => {
+        const pressed = e.key.toUpperCase();
+        const m = missions[currentMission];
+        const target = m.targets[step];
+        let correct = false;
+
+        if (currentMission === 0) { // Geography check: is key in the active row?
+            correct = kbLayout[step].includes(pressed);
+        } else { // Direct key check
+            correct = (pressed === target);
+        }
+
+        if (correct) {
+            const el = document.getElementById(`K-${pressed}`);
+            if(el) el.classList.add('key-success');
+            
+            setTimeout(() => {
+                if(el) el.classList.remove('key-success');
+                step++;
+                if (step >= m.targets.length) {
+                    advanceMission();
+                } else {
+                    runMission();
+                }
+            }, 300);
+        }
+    });
+
+    function advanceMission() {
+        document.getElementById(`tab-${currentMission}`).classList.remove('active');
+        currentMission++;
+        step = 0;
+        if (currentMission < missions.length) {
+            document.getElementById(`tab-${currentMission}`).classList.add('active');
+            runMission();
+        } else {
+            document.getElementById('target-box').innerText = "🏆 COMPLETE";
+            document.getElementById('mission-desc').innerText = "You have mastered Year 1!";
+        }
+    }
+
+    buildKeyboard();
+    runMission();
+  </script>
+</body>
+</html>
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Year 1: Keyboard Geography | SmartKids Learning</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
