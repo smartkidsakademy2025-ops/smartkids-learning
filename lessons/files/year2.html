@@ -15,33 +15,108 @@
 <body class="bg-slate-100 min-h-screen p-8 font-sans">
 
   <div class="max-w-4xl mx-auto">
-    <header class="text-center mb-10">
-      <h1 class="text-4xl font-black text-slate-800 tracking-tight">The Search Treasure Hunt</h1>
-      <p class="text-slate-500 mt-2">Don't click every folder! Type "Gold" in the search bar to find the treasure.</p>
-    </header>
+  <header class="text-center mb-10">
+    <h1 class="text-4xl font-black text-slate-800 tracking-tight">The Search Mission</h1>
+    
+    <div id="missionBox" class="mt-6 inline-block bg-amber-100 border-2 border-amber-400 p-4 rounded-2xl shadow-sm">
+        <p class="text-amber-700 font-bold uppercase tracking-tighter text-[10px]">Current Mission:</p>
+        <h2 id="instructionText" class="text-2xl font-black text-slate-800">Find: Gold_Coin</h2>
+    </div>
+  </header>
 
-    <div class="bg-white p-6 rounded-[2rem] shadow-sm mb-8 flex items-center gap-4 border-2 border-blue-500">
-      <span class="text-2xl">🔍</span>
-      <input type="text" id="searchBar" placeholder="Search for your file here..." 
-             class="w-full text-xl outline-none font-semibold text-slate-700"
-             onkeyup="filterFolders()">
+  <div class="bg-white p-6 rounded-[2rem] shadow-sm mb-8 flex items-center gap-4 border-2 border-blue-500">
+    <span class="text-2xl">🔍</span>
+    <input type="text" id="searchBar" placeholder="Type name and press ENTER..." 
+           class="w-full text-xl outline-none font-semibold text-slate-700">
+  </div>
+
+  <div id="folderContainer" class="folder-grid bg-white p-10 rounded-[3rem] shadow-inner min-h-[400px]">
     </div>
 
-    <div id="folderContainer" class="folder-grid bg-white p-10 rounded-[3rem] shadow-inner min-h-[400px]">
-      </div>
-
-    <div id="winMessage" class="hidden fixed inset-0 bg-blue-600/90 flex items-center justify-center z-50">
-      <div class="bg-white p-12 rounded-[3rem] text-center shadow-2xl">
-        <div class="text-7xl mb-4 found-animation">🏆</div>
-        <h2 class="text-3xl font-black mb-2">Treasure Found!</h2>
-        <p class="text-slate-500 mb-6">You used the Search Tool like a pro.</p>
-        <button onclick="window.location.href='year3.html'" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold">
-    Next Year: The Rescue
-</button>
-      </div>
+  <div id="winMessage" class="hidden fixed inset-0 bg-blue-600/90 flex items-center justify-center z-50">
+    <div class="bg-white p-12 rounded-[3rem] text-center shadow-2xl">
+      <div class="text-7xl mb-4 found-animation">🏆</div>
+      <h2 class="text-3xl font-black mb-2">Search Master!</h2>
+      <p class="text-slate-500 mb-6">You found all the missing files using the search tool.</p>
+      <button onclick="window.location.href='year3.html'" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition">
+        Next Year: The Rescue
+      </button>
     </div>
   </div>
+</div>
 <script>
+    const files = [
+      "Homework", "Family_Photo", "Drum_Beat", "Recipe", "Game_Save", 
+      "Gold_Coin", "School_Project", "Old_Music", "Vacation", "Ideas",
+      "Draft_1", "Draft_2", "Secret_Map", "Banana", "Zebra", "Computer_Drawing"
+    ];
+
+    // The sequence of targets to find
+    const missionList = ["Gold_Coin", "School_Project", "Family_Photo"];
+    let currentMissionIndex = 0;
+
+    const container = document.getElementById('folderContainer');
+    const searchBar = document.getElementById('searchBar');
+    const instructionText = document.getElementById('instructionText');
+
+    function initGame() {
+      container.innerHTML = '';
+      // Shuffle files so they move every time
+      const shuffled = [...files].sort(() => Math.random() - 0.5);
+      
+      shuffled.forEach(name => {
+        const div = document.createElement('div');
+        div.className = 'folder-item flex flex-col items-center text-center p-2';
+        div.setAttribute('data-name', name.toLowerCase());
+        const icon = name === "Gold_Coin" ? "🪙" : "📁";
+        div.innerHTML = `
+          <div class="text-5xl mb-1">${icon}</div>
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">${name}</span>
+        `;
+        container.appendChild(div);
+      });
+      updateInstruction();
+    }
+
+    function updateInstruction() {
+        instructionText.innerText = `Find: ${missionList[currentMissionIndex]}`;
+    }
+
+    // Handle the Search Filtering (Visual only)
+    searchBar.addEventListener('input', () => {
+        const query = searchBar.value.toLowerCase();
+        document.querySelectorAll('.folder-item').forEach(item => {
+            item.style.display = item.getAttribute('data-name').includes(query) ? 'flex' : 'none';
+        });
+    });
+
+    // Handle the ENTER Key
+    searchBar.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const query = searchBar.value.toLowerCase();
+            const target = missionList[currentMissionIndex].toLowerCase();
+
+            if (query === target) {
+                alert(`✅ Correct! You found the ${missionList[currentMissionIndex]}!`);
+                currentMissionIndex++;
+
+                if (currentMissionIndex < missionList.length) {
+                    // Next Level
+                    searchBar.value = "";
+                    initGame(); // Reshuffle
+                } else {
+                    // Complete Game
+                    document.getElementById('winMessage').classList.remove('hidden');
+                }
+            } else {
+                alert("❌ Not quite. Make sure your spelling is perfect and try again!");
+            }
+        }
+    });
+
+    initGame();
+</script>
+  <!--<script>
     const files = [
       "Homework", "Family_Photo", "Drum_Beat", "Recipe", "Game_Save", 
       "Gold_Coin", "School_Project", "Old_Music", "Vacation", "Ideas",
@@ -112,6 +187,6 @@
     }
 
     initGame();
-</script>
+</script>-->
   </body>
 </html>
