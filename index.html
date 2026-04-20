@@ -176,5 +176,16 @@
       alert('Mobile menu clicked! (Connect your mobile nav div here)');
     });
   </script>
+  <script>
+    const menuBtn = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+            // This toggles the 'hidden' class common in Tailwind/CSS
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+</script>
 </body>
 </html>
