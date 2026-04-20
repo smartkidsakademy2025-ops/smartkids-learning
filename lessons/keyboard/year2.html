@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 2: Home Row Mastery | SmartKids Learning</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .finger-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+    .key-box { border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; font-weight: 800; font-size: 1.5rem; transition: all 0.2s; background: white; }
+    .active-target { border-color: #f97316; box-shadow: 0 0 15px rgba(249, 115, 22, 0.3); transform: scale(1.1); color: #f97316; }
+    .success-pulse { animation: pulse 0.5s ease-out; }
+    @keyframes pulse { 0% { background: #22c55e; } 100% { background: white; } }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+
+  <nav class="bg-white border-b py-4 px-6 flex justify-between items-center shadow-sm">
+    <a href="../keyboard.html" class="text-orange-600 font-bold flex items-center gap-2">
+      <span>←</span> Keyboard Hub
+    </a>
+    <div class="text-slate-400 font-bold text-xs uppercase tracking-widest">Level 2: The Resting Row</div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto py-12 px-6">
+    <header class="text-center mb-10">
+      <h1 class="text-4xl font-black text-slate-800">Home Row Mastery 🏠</h1>
+      <p class="text-slate-600 mt-2 italic">Rest your left fingers on <span class="text-orange-600 font-bold">ASDF</span> and right on <span class="text-blue-600 font-bold">JKL;</span></p>
+    </header>
+
+    <div class="grid grid-cols-4 sm:grid-cols-8 gap-3 mb-12">
+        <div id="target-A" class="key-box">A</div>
+        <div id="target-S" class="key-box">S</div>
+        <div id="target-D" class="key-box">D</div>
+        <div id="target-F" class="key-box">F</div>
+        <div id="target-J" class="key-box">J</div>
+        <div id="target-K" class="key-box">K</div>
+        <div id="target-L" class="key-box">L</div>
+        <div id="target-SEMICOLON" class="key-box">;</div>
+    </div>
+
+    <input type="text" id="type-trigger" class="opacity-0 absolute" autofocus>
+    
+    <div class="bg-slate-900 rounded-3xl p-8 text-center text-white shadow-2xl">
+        <p id="instruction" class="text-xl font-mono mb-4 text-orange-400 font-bold">Press [A] to begin</p>
+        <div class="flex justify-center gap-2">
+            <span class="finger-dot bg-slate-700" id="dot-0"></span>
+            <span class="finger-dot bg-slate-700" id="dot-1"></span>
+            <span class="finger-dot bg-slate-700" id="dot-2"></span>
+            <span class="finger-dot bg-slate-700" id="dot-3"></span>
+            <span class="mx-4 text-slate-600">|</span>
+            <span class="finger-dot bg-slate-700" id="dot-4"></span>
+            <span class="finger-dot bg-slate-700" id="dot-5"></span>
+            <span class="finger-dot bg-slate-700" id="dot-6"></span>
+            <span class="finger-dot bg-slate-700" id="dot-7"></span>
+        </div>
+    </div>
+
+    <section class="mt-12 bg-white p-8 rounded-3xl border border-slate-200">
+        <h3 class="text-xl font-bold mb-4 text-slate-800">The "F" and "J" Secret</h3>
+        <p class="text-slate-600 leading-relaxed text-sm">
+            Look closely at your keyboard. Do you see the tiny bumps on the <strong>F</strong> and <strong>J</strong> keys? Those are there so you can find your "Home" without ever looking down. In Year 2, we practice keeping our fingers on these bumps at all times!
+        </p>
+    </section>
+  </main>
+
+  <script>
+    const sequence = ["A", "S", "D", "F", "J", "K", "L", ";"];
+    const ids = ["A", "S", "D", "F", "J", "K", "L", "SEMICOLON"];
+    let step = 0;
+
+    function init() {
+        document.getElementById('target-' + ids[step]).classList.add('active-target');
+        document.getElementById('type-trigger').focus();
+    }
+
+    window.addEventListener('keydown', (e) => {
+        const pressed = e.key.toUpperCase();
+        const currentTarget = sequence[step];
+
+        if (pressed === currentTarget) {
+            const keyEl = document.getElementById('target-' + ids[step]);
+            keyEl.classList.remove('active-target');
+            keyEl.classList.add('success-pulse', 'bg-green-100', 'border-green-500', 'text-green-600');
+            
+            document.getElementById('dot-' + step).classList.replace('bg-slate-700', 'bg-green-500');
+
+            step++;
+
+            if (step < sequence.length) {
+                document.getElementById('target-' + ids[step]).classList.add('active-target');
+                document.getElementById('instruction').innerText = `Now press [${sequence[step]}]`;
+            } else {
+                document.getElementById('instruction').innerText = "HOME ROW MASTERED! 🎉";
+                document.getElementById('instruction').classList.replace('text-orange-400', 'text-green-400');
+                // Reset for loop or move to next
+                setTimeout(() => { location.reload(); }, 3000);
+            }
+        }
+    });
+
+    // Handle clicking anywhere to focus
+    document.addEventListener('click', () => document.getElementById('type-trigger').focus());
+
+    init();
+  </script>
+</body>
+</html>
