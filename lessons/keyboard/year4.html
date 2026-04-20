@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Year 4: Bottom Row Reach | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .key-cap { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: 800; border-bottom: 4px solid #cbd5e1; background: white; transition: all 0.2s; position: relative; }
+    .key-active { background: #8b5cf6 !important; color: white !important; border-color: #7c3aed !important; transform: translateY(5px); }
+    .key-success { background: #22c55e !important; color: white !important; }
+    
+    .f-pinky { border-top: 5px solid #ec4899; }
+    .f-ring { border-top: 5px solid #a855f7; }
+    .f-middle { border-top: 5px solid #3b82f6; }
+    .f-index { border-top: 5px solid #eab308; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
+
+  <div id="mission-overlay" class="fixed inset-0 z-[100] bg-slate-900/95 flex items-center justify-center p-6">
+    <div class="bg-white max-w-2xl w-full rounded-[2.5rem] p-10 shadow-2xl">
+      <div class="text-6xl mb-4 text-center">⚓</div>
+      <h2 class="text-3xl font-black text-center text-slate-800 mb-4">The Downward Curl</h2>
+      <div class="text-slate-600 leading-relaxed mb-8 space-y-4 text-center">
+        <p>The Bottom Row is the hardest to reach! You have to <b>curl</b> your fingers inward toward your palm.</p>
+        <p class="font-bold bg-purple-50 p-3 rounded-lg border border-purple-100">Practice: Z X C V B N M</p>
+        <p class="text-sm italic">Challenge: Can you reach down without moving your wrist?</p>
+      </div>
+      <button onclick="startMission()" class="w-full bg-purple-600 text-white font-bold py-5 rounded-2xl text-xl">Start Curling! ⚓</button>
+    </div>
+  </div>
+
+  <nav class="bg-white border-b py-4 px-6 flex justify-between items-center sticky top-0 z-50">
+    <a href="../keyboard.html" class="text-orange-600 font-bold">← Hub</a>
+    <span class="font-black text-xs uppercase tracking-widest text-slate-400 text-center">Year 4: Bottom Row</span>
+  </nav>
+
+  <main class="max-w-4xl mx-auto py-10 px-6 text-center">
+    <div class="bg-white p-8 rounded-[2rem] shadow-xl border-b-8 border-slate-200 mb-10">
+        <div id="target-box" class="text-8xl font-black text-slate-800 h-24 flex items-center justify-center uppercase">Z</div>
+        <p id="finger-instruction" class="mt-4 font-bold text-purple-600 uppercase tracking-widest text-sm"></p>
+    </div>
+
+    <div class="bg-slate-900 p-12 rounded-[3rem] shadow-2xl">
+        <div class="flex gap-2 justify-center mb-8">
+            <div id="K-Z" class="key-cap f-pinky">Z</div>
+            <div id="K-X" class="key-cap f-ring">X</div>
+            <div id="K-C" class="key-cap f-middle">C</div>
+            <div id="K-V" class="key-cap f-index">V</div>
+            <div id="K-B" class="key-cap f-index">B</div>
+            <div id="K-N" class="key-cap f-index">N</div>
+            <div id="K-M" class="key-cap f-index">M</div>
+        </div>
+    </div>
+  </main>
+
+  <script>
+    const sequence = ["Z", "M", "X", "N", "C", "B", "V"];
+    const fingers = ["Left Pinky", "Right Index", "Left Ring", "Right Index", "Left Middle", "Right Index", "Left Index"];
+    
+    let step = 0;
+    let missionActive = false;
+
+    function startMission() {
+        document.getElementById('mission-overlay').classList.add('hidden');
+        missionActive = true;
+        updateUI();
+    }
+
+    function updateUI() {
+        const target = sequence[step];
+        document.getElementById('target-box').innerText = target;
+        document.getElementById('finger-instruction').innerText = `Curl your ${fingers[step]} down!`;
+
+        document.querySelectorAll('.key-cap').forEach(k => k.classList.remove('key-active'));
+        document.getElementById(`K-${target}`).classList.add('key-active');
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if(!missionActive) return;
+        if (e.key.toUpperCase() === sequence[step]) {
+            const el = document.getElementById(`K-${sequence[step]}`);
+            el.classList.add('key-success');
+            
+            setTimeout(() => {
+                el.classList.remove('key-success');
+                step++;
+                if (step >= sequence.length) {
+                    document.getElementById('target-box').innerText = "⚓🏅";
+                    document.getElementById('finger-instruction').innerText = "Full Keyboard Access Achieved!";
+                } else {
+                    updateUI();
+                }
+            }, 300);
+        }
+    });
+  </script>
+</body>
+</html>
