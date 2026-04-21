@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Keyboard Kingdom | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .item-open .accordion-content { max-height: 300px; padding: 20px; }
+    .item-open .chevron { transform: rotate(180deg); }
+    .key-highlight { background: #fee2e2; border-color: #ef4444; color: #b91c1c; transform: scale(1.1); }
+  </style>
+</head>
+<body class="bg-rose-50 min-h-screen p-6 md:p-12 font-sans">
+
+  <div class="max-w-5xl mx-auto">
+    <header class="mb-12 text-center">
+        <span class="bg-rose-100 text-rose-700 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest">Module 2: The Keyboard</span>
+        <h1 class="text-5xl font-black text-slate-800 mt-4">The Keyboard Kingdom ⌨️</h1>
+        <p class="text-slate-500 mt-2 italic">Your fingers are the ten knights of the realm. Let's give them homes!</p>
+    </header>
+
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      
+      <div class="bg-white p-8 rounded-[3rem] shadow-xl border-2 border-slate-100 text-center">
+        <h3 class="font-black text-slate-400 uppercase text-xs mb-6 tracking-widest text-left">Royal Finger Placement</h3>
+        
+        <div class="flex flex-col gap-2 mb-6">
+            <div class="flex justify-center gap-1">
+                <div class="w-10 h-10 border-2 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-400">Q</div>
+                <div class="w-10 h-10 border-2 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-400">W</div>
+                <div class="w-10 h-10 border-2 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-400">E</div>
+                <div class="w-10 h-10 border-2 rounded-lg bg-slate-100 flex items-center justify-center font-bold text-slate-400">R</div>
+            </div>
+            <div class="flex justify-center gap-1">
+                <div id="key-A" class="w-10 h-10 border-2 rounded-lg flex items-center justify-center font-bold transition-all">A</div>
+                <div id="key-S" class="w-10 h-10 border-2 rounded-lg flex items-center justify-center font-bold transition-all">S</div>
+                <div id="key-D" class="w-10 h-10 border-2 rounded-lg flex items-center justify-center font-bold transition-all">D</div>
+                <div id="key-F" class="w-10 h-10 border-2 rounded-lg flex items-center justify-center font-bold transition-all border-rose-500 text-rose-600">F</div>
+                <div class="w-10 h-10"></div>
+                <div id="key-J" class="w-10 h-10 border-2 rounded-lg flex items-center justify-center font-bold transition-all border-rose-500 text-rose-600">J</div>
+                <div id="key-K" class="w-10 h-10 border-2 rounded-lg flex items-center justify-center font-bold transition-all">K</div>
+                <div id="key-L" class="w-10 h-10 border-2 rounded-lg flex items-center justify-center font-bold transition-all">L</div>
+            </div>
+        </div>
+        
+        <p class="text-xs text-slate-400 font-medium">Feel the tiny bumps on the <b class="text-rose-500">F</b> and <b class="text-rose-500">J</b> keys! That's where your "index knights" rest.</p>
+      </div>
+
+      <div class="space-y-4">
+        <div id="acc-1" class="bg-white rounded-3xl border-2 border-slate-100 overflow-hidden">
+          <button onclick="toggleAcc(1)" class="w-full p-6 text-left flex justify-between items-center group">
+            <span class="font-black text-xl text-slate-700">1. The Home Row</span>
+            <span class="chevron text-slate-300 transition-transform">▼</span>
+          </button>
+          <div class="accordion-content text-slate-600 leading-relaxed">
+            The middle row of keys is the <b>Home Row</b>. Your fingers always start here! Imagine they are in their beds, ready to jump up or down to hit other keys.
+          </div>
+        </div>
+
+        <div id="acc-2" class="bg-white rounded-3xl border-2 border-slate-100 overflow-hidden">
+          <button onclick="toggleAcc(2)" class="w-full p-6 text-left flex justify-between items-center group">
+            <span class="font-black text-xl text-slate-700">2. Magic Shift & Space</span>
+            <span class="chevron text-slate-300 transition-transform">▼</span>
+          </button>
+          <div class="accordion-content text-slate-600 leading-relaxed">
+            Use your <b>Thumbs</b> for the Space Bar. Use the <b>Pinky</b> for the Shift Key when you want to make a letter big (Capital) or use a symbol!
+          </div>
+        </div>
+
+        <div id="acc-3" class="bg-white rounded-3xl border-2 border-slate-100 overflow-hidden">
+          <button onclick="toggleAcc(3)" class="w-full p-6 text-left flex justify-between items-center group">
+            <span class="font-black text-xl text-slate-700">3. The Enter Command</span>
+            <span class="chevron text-slate-300 transition-transform">▼</span>
+          </button>
+          <div class="accordion-content text-slate-600 leading-relaxed">
+            The <b>Enter Key</b> is the "Go" button. Use it to send messages, finish a line, or start a new paragraph in your digital stories.
+          </div>
+        </div>
+
+        <button onclick="window.location.href='keyboard-practice.html'" class="w-full bg-rose-600 text-white py-6 rounded-[2rem] font-black text-2xl shadow-xl hover:bg-rose-700 hover:scale-105 transition-all mt-4">
+            Enter the Kingdom 🏰
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleAcc(id) {
+        document.querySelectorAll('[id^="acc-"]').forEach(el => el.classList.remove('item-open', 'border-rose-400'));
+        const active = document.getElementById('acc-' + id);
+        active.classList.add('item-open', 'border-rose-400');
+        
+        // Highlight keys based on section
+        const keys = ['A','S','D','F','J','K','L'];
+        keys.forEach(k => document.getElementById('key-'+k).classList.remove('key-highlight'));
+        if(id === 1) keys.forEach(k => document.getElementById('key-'+k).classList.add('key-highlight'));
+    }
+  </script>
+</body>
+</html>
