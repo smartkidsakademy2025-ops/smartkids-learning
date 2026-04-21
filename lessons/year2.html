@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Year 2: Word Weaver | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .word-box { letter-spacing: 0.5rem; transition: all 0.3s; }
+    .char-correct { color: #f43f5e; border-bottom: 4px solid #f43f5e; }
+    .char-current { animation: blink 1s infinite; border-bottom: 4px solid #94a3b8; }
+    @keyframes blink { 50% { border-color: transparent; } }
+    
+    @keyframes slideUp {
+      0% { transform: translateY(100%); opacity: 0; }
+      10% { transform: translateY(0); opacity: 1; }
+      90% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100%); opacity: 0; }
+    }
+    .feedback-overlay { animation: slideUp 2s forwards; }
+  </style>
+</head>
+<body class="bg-rose-50 min-h-screen flex flex-col items-center justify-center font-sans overflow-hidden">
+
+  <div id="diy-manual" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[100] flex items-center justify-center p-6">
+    <div class="bg-white max-w-md rounded-[3rem] p-10 shadow-2xl border-4 border-rose-400">
+      <div class="text-5xl mb-4">🧵</div>
+      <h2 class="text-3xl font-black mb-4 text-slate-800">Mission: Word Weaver</h2>
+      <div class="space-y-4 mb-8 text-slate-600">
+        <p>It's time to weave letters into words! Your fingers must stay on the <b>Home Row</b>.</p>
+        <ul class="space-y-2 font-medium">
+            <li class="flex gap-2"><span>⌨️</span> Type the words as they appear.</li>
+            <li class="flex gap-2"><span>🎯</span> Accuracy is better than speed!</li>
+            <li class="flex gap-2"><span>🧼</span> Keep your wrists lifted like a pro.</li>
+        </ul>
+      </div>
+      <button onclick="startGame()" class="w-full bg-rose-600 text-white py-4 rounded-2xl font-bold text-xl hover:scale-105 transition-all">Begin Weaving</button>
+    </div>
+  </div>
+
+  <div class="text-center bg-white p-16 rounded-[4rem] shadow-2xl border-b-8 border-rose-200">
+    <div id="word-display" class="word-box text-7xl font-black text-slate-300 mb-8 uppercase"></div>
+    <div class="text-slate-400 font-bold uppercase tracking-tighter text-sm">
+        Words Completed: <span id="word-count" class="text-rose-500">0</span> / 10
+    </div>
+  </div>
+
+  <div id="feedback-container" class="fixed inset-x-0 bottom-10 flex justify-center pointer-events-none z-50"></div>
+
+  <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/95 flex items-center justify-center z-50 p-6 text-center">
+    <div class="bg-white p-12 rounded-[3.5rem] max-w-sm border-b-8 border-rose-600">
+        <div class="text-7xl mb-4">📜</div>
+        <h2 class="text-3xl font-black mb-2 text-slate-800">Expert Weaver!</h2>
+        <p class="text-slate-500 mb-8">You can now form words without looking at the keys. Final mission ahead!</p>
+        <button onclick="window.location.href='keyboard-practice.html?unlocked=3'" class="w-full bg-rose-600 text-white py-4 rounded-2xl font-bold text-xl">Go to Year 3</button>
+    </div>
+  </div>
+
+  <script>
+    const dictionary = ['AS', 'ASK', 'DAD', 'SAD', 'FALL', 'LAD', 'ADD', 'ALL', 'ALAS', 'FLASK'];
+    let currentWord = '';
+    let charIndex = 0;
+    let wordsDone = 0;
+
+    function startGame() {
+        document.getElementById('diy-manual').remove();
+        nextWord();
+        
+        window.addEventListener('keydown', (e) => {
+            const key = e.key.toUpperCase();
+            if (key === 'SHIFT' || key === 'CONTROL' || key === 'ALT') return;
+
+            if (key === currentWord[charIndex]) {
+                const spans = document.querySelectorAll('.word-char');
+                spans[charIndex].classList.remove('text-slate-300', 'char-current');
+                spans[charIndex].classList.add('char-correct');
+                charIndex++;
+
+                if (charIndex === currentWord.length) {
+                    wordsDone++;
+                    document.getElementById('word-count').innerText = wordsDone;
+                    showFeedback("🔥 Great Weaving!", true);
+                    
+                    if (wordsDone >= 10) {
+                        document.getElementById('success-modal').classList.remove('hidden');
+                    } else {
+                        setTimeout(nextWord, 300);
+                    }
+                } else {
+                    spans[charIndex].classList.add('char-current');
+                }
+            } else {
+                showFeedback("❌ Oops! Wrong key.", false);
+            }
+        });
+    }
+
+    function nextWord() {
+        currentWord = dictionary[Math.floor(Math.random() * dictionary.length)];
+        charIndex = 0;
+        const display = document.getElementById('word-display');
+        display.innerHTML = '';
+        
+        currentWord.split('').forEach((char, i) => {
+            const span = document.createElement('span');
+            span.innerText = char;
+            span.className = 'word-char' + (i === 0 ? ' char-current' : '');
+            display.appendChild(span);
+        });
+    }
+
+    function showFeedback(text, isSuccess) {
+        const container = document.getElementById('feedback-container');
+        container.innerHTML = '';
+        const div = document.createElement('div');
+        div.className = `feedback-overlay px-8 py-3 rounded-full text-white font-bold bg-rose-600 shadow-xl`;
+        div.innerHTML = text;
+        container.appendChild(div);
+    }
+  </script>
+</body>
+</html>
