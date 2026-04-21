@@ -1,150 +1,3 @@
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Keyboard Roadmap | SmartKids</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-    .item-open .accordion-content { max-height: 500px; padding: 20px; }
-    .item-open .chevron { transform: rotate(180deg); }
-    .locked-phase { opacity: 0.6; filter: grayscale(1); cursor: not-allowed; }
-    .phase-badge { font-size: 10px; padding: 2px 8px; border-radius: 99px; font-weight: 800; }
-  </style>
-</head>
-<body class="bg-slate-50 min-h-screen p-4 md:p-12 font-sans">
-
-  <div class="max-w-4xl mx-auto">
-    <header class="bg-white p-8 rounded-[3rem] shadow-xl border-b-8 border-rose-200 mb-10 flex justify-between items-center">
-      <div>
-        <h1 class="text-3xl font-black text-slate-800">Keyboard Kingdom Roadmap ⌨️</h1>
-        <p class="text-slate-500">Master the art of touch-typing and speed.</p>
-      </div>
-      <div class="text-right">
-        <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">24hr Mastery Progress</div>
-        <div class="w-32 h-4 bg-slate-100 rounded-full overflow-hidden border">
-            <div id="prog-bar" class="bg-rose-500 h-full transition-all duration-1000" style="width: 5%"></div>
-        </div>
-      </div>
-    </header>
-
-    <div class="space-y-4" id="roadmap">
-      
-      <div id="phase-1" class="bg-white rounded-[2rem] shadow-sm border-2 border-rose-400 overflow-hidden">
-        <button onclick="togglePhase(1)" class="w-full p-6 text-left flex justify-between items-center group">
-          <div class="flex items-center gap-4">
-            <span class="w-10 h-10 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-black text-sm">01</span>
-            <div>
-              <h3 class="font-black text-xl text-slate-800">Phase 1: Home Row Knights</h3>
-              <span class="phase-badge bg-green-100 text-green-700">UNLOCKED</span>
-            </div>
-          </div>
-          <span class="chevron transition-transform">▼</span>
-        </button>
-        <div class="accordion-content bg-rose-50/30 border-t border-rose-100">
-          <div class="grid gap-4">
-            <a href="lessons/keyboard/year1.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border hover:border-rose-400 transition-all">
-                <span class="font-bold">Year 1: Finger Homes (A-S-D-F J-K-L)</span>
-                <span class="text-rose-500 font-black">START →</span>
-            </a>
-            <a id="link-y2" href="lessons/keyboard/year2.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
-                <span class="font-bold">Year 2: Word Weaver (Basic Words)</span>
-                <span id="lock-y2">🔒 Locked</span>
-            </a>
-            <a id="link-y3" href="year3.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
-                <span class="font-bold">Year 3: The Captain (Shift & Enter)</span>
-                <span id="lock-y3">🔒 Locked</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      </div>
-
-    <div id="grad-box" class="hidden mt-10 bg-rose-900 text-white p-10 rounded-[3rem] text-center shadow-2xl">
-        <h2 class="text-3xl font-black mb-4">👑 Keyboard King/Queen!</h2>
-        <button class="bg-rose-400 text-black px-10 py-4 rounded-full font-black">Claim Royal Seal</button>
-    </div>
-  </div>
-<script>
-    function setCookie(name, value) {
-        const d = new Date();
-        d.setTime(d.getTime() + (24*60*60*1000));
-        // GitHub Pages specific: setting path to the root of your project
-        document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/smartkids-learning/;SameSite=Lax";
-    }
-
-    function getCookie(name) {
-        let nameEQ = name + "=";
-        let ca = document.cookie.split(';');
-        for(let i=0; i < ca.length; i++) {
-            let c = ca[i].trim();
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
-    }
-
-    function togglePhase(id) { 
-        const el = document.getElementById(`phase-${id}`);
-        if(el) el.classList.toggle('item-open'); 
-    }
-
-    // This runs the moment the page is ready
-    document.addEventListener('DOMContentLoaded', () => {
-        // Tiny pause to ensure IDs are ready in the browser memory
-        setTimeout(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            let unlocked = urlParams.get('unlocked');
-            
-            if(unlocked) {
-                setCookie('smartkids_kb', unlocked);
-                const p1 = document.getElementById('phase-1');
-                if(p1) p1.classList.add('item-open');
-            } else {
-                unlocked = getCookie('smartkids_kb');
-            }
-
-            const level = parseInt(unlocked) || 1;
-            const progBar = document.getElementById('prog-bar');
-
-            // Year 2 Logic
-            if(level >= 2) {
-                const y2 = document.getElementById('link-y2');
-                const l2 = document.getElementById('lock-y2');
-                if(y2) y2.classList.remove('opacity-50', 'pointer-events-none');
-                if(l2) l2.innerHTML = '<span class="text-green-500 font-bold">START →</span>';
-                if(progBar) progBar.style.width = '15%';
-            }
-
-            // Year 3 Logic
-            if(level >= 3) {
-                const y3 = document.getElementById('link-y3');
-                const l3 = document.getElementById('lock-y3');
-                if(y3) y3.classList.remove('opacity-50', 'pointer-events-none');
-                if(l3) l3.innerHTML = '<span class="text-green-500 font-bold">START →</span>';
-                if(progBar) progBar.style.width = '25%';
-            }
-
-            // Phase 1 Graduation
-            if(level >= 13) {
-                const grad = document.getElementById('grad-box');
-                if(grad) grad.classList.remove('hidden');
-                if(progBar) {
-                    progBar.style.width = '100%';
-                    progBar.classList.add('bg-green-500');
-                }
-            }
-        }, 100); 
-    });
-</script>
-</body>
-</html>
--->
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -168,16 +21,19 @@
  <main class="max-w-6xl mx-auto py-12 px-6">
     
     <h2 class="text-xl font-black text-slate-400 mb-6 uppercase tracking-widest">Foundations</h2>
-    <div id="tier-foundations" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-        </div>
+    <div id="tier-foundations" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12"></div>
 
     <h2 class="text-xl font-black text-slate-400 mb-6 uppercase tracking-widest">Professional</h2>
-    <div id="tier-professional" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-        </div>
+    <div id="tier-professional" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12"></div>
 
     <h2 class="text-xl font-black text-slate-400 mb-6 uppercase tracking-widest">Expert & Graduation</h2>
-    <div id="tier-expert" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-        </div>
+    <div id="tier-expert" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12"></div>
+
+    <div id="grad-container" class="mt-12 text-center hidden">
+        <button class="bg-amber-400 text-black px-12 py-6 rounded-[2rem] font-black text-2xl shadow-2xl hover:scale-105 transition-all">
+            🎓 CLAIM YOUR DIPLOMA
+        </button>
+    </div>
 
 </main>
 
@@ -197,15 +53,44 @@
         { id: 12, name: "Dev Mode", icon: "💻" }
     ];
 
+    // --- COOKIE HELPERS ---
+    function setCookie(name, value) {
+        const d = new Date();
+        d.setTime(d.getTime() + (24*60*60*1000)); // 24 Hours
+        document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/;SameSite=Lax";
+    }
+
+    function getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for(let i=0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
     function loadHub() {
-        // We get the current saved progress (Default to Year 1)
-        const progress = parseInt(localStorage.getItem('typing_progress')) || 1;
+        const urlParams = new URLSearchParams(window.location.search);
+        let unlockedParam = urlParams.get('unlocked');
+        
+        // 1. If URL has it, save it (instant unlock)
+        if (unlockedParam) {
+            setCookie('typing_progress', unlockedParam);
+        }
+
+        // 2. Get current progress from Cookie or default to 1
+        const progress = parseInt(unlockedParam || getCookie('typing_progress')) || 1;
+
+        // Clear tiers before loading (prevents double-loading)
+        document.getElementById('tier-foundations').innerHTML = '';
+        document.getElementById('tier-professional').innerHTML = '';
+        document.getElementById('tier-expert').innerHTML = '';
 
         years.forEach(year => {
             const isLocked = year.id > progress;
             const card = document.createElement('div');
             
-            // Determine which tier it belongs to
             let tierId = "tier-foundations";
             if (year.id > 4) tierId = "tier-professional";
             if (year.id > 8) tierId = "tier-expert";
@@ -216,29 +101,25 @@
                 <div class="text-4xl mb-2">${year.icon}</div>
                 <h3 class="font-black text-slate-800">Year ${year.id}</h3>
                 <p class="text-[10px] uppercase font-bold text-slate-400">${year.name}</p>
-                ${isLocked ? '🔒' : ''}
+                ${isLocked ? '<div class="mt-2 text-xs text-slate-300">🔒 Locked</div>' : ''}
             `;
 
             if (!isLocked) {
-                card.onclick = () => window.location.href = `keyboard/year${year.id}.html`;
+                // Ensure link points to the same folder or root
+                card.onclick = () => window.location.href = `year${year.id}.html`;
             }
 
             document.getElementById(tierId).appendChild(card);
         });
 
-        // Special logic for Graduation Button
         if (progress > 12) {
-            addGraduationButton();
+            document.getElementById('grad-container').classList.remove('hidden');
         }
     }
 
-    loadHub();
+    // Run on load
+    window.onload = loadHub;
 </script>
  
 </body>
 </html>
-
-
-
-
-
