@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mouse Roadmap | SmartKids</title>
+  <title>Keyboard Roadmap | SmartKids</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
@@ -15,44 +15,44 @@
 <body class="bg-slate-50 min-h-screen p-4 md:p-12 font-sans">
 
   <div class="max-w-4xl mx-auto">
-    <header class="bg-white p-8 rounded-[3rem] shadow-xl border-b-8 border-amber-200 mb-10 flex justify-between items-center">
+    <header class="bg-white p-8 rounded-[3rem] shadow-xl border-b-8 border-rose-200 mb-10 flex justify-between items-center">
       <div>
-        <h1 class="text-3xl font-black text-slate-800">Mouse Mastery Roadmap 🖱️</h1>
-        <p class="text-slate-500">From Clicker Rookie to Interface Architect.</p>
+        <h1 class="text-3xl font-black text-slate-800">Keyboard Kingdom Roadmap ⌨️</h1>
+        <p class="text-slate-500">Master the art of touch-typing and speed.</p>
       </div>
       <div class="text-right">
-        <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Graduation Progress</div>
+        <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">24hr Mastery Progress</div>
         <div class="w-32 h-4 bg-slate-100 rounded-full overflow-hidden border">
-            <div id="prog-bar" class="bg-amber-400 h-full transition-all duration-1000" style="width: 8%"></div>
+            <div id="prog-bar" class="bg-rose-500 h-full transition-all duration-1000" style="width: 5%"></div>
         </div>
       </div>
     </header>
 
     <div class="space-y-4" id="roadmap">
       
-      <div id="phase-1" class="bg-white rounded-[2rem] shadow-sm border-2 border-amber-400 overflow-hidden">
+      <div id="phase-1" class="bg-white rounded-[2rem] shadow-sm border-2 border-rose-400 overflow-hidden">
         <button onclick="togglePhase(1)" class="w-full p-6 text-left flex justify-between items-center group">
           <div class="flex items-center gap-4">
-            <span class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-black text-sm">01</span>
+            <span class="w-10 h-10 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-black text-sm">01</span>
             <div>
-              <h3 class="font-black text-xl text-slate-800">Phase 1: Basic Coordination</h3>
+              <h3 class="font-black text-xl text-slate-800">Phase 1: Home Row Knights</h3>
               <span class="phase-badge bg-green-100 text-green-700">UNLOCKED</span>
             </div>
           </div>
           <span class="chevron transition-transform">▼</span>
         </button>
-        <div class="accordion-content bg-amber-50/30 border-t border-amber-100">
+        <div class="accordion-content bg-rose-50/30 border-t border-rose-100">
           <div class="grid gap-4">
-            <a href="year1.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border hover:border-amber-400 transition-all">
-                <span class="font-bold">Year 1: Balloon Pop (Clicking)</span>
-                <span class="text-amber-500 font-black">PLAY →</span>
+            <a href="year1.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border hover:border-rose-400 transition-all">
+                <span class="font-bold">Year 1: Finger Homes (A-S-D-F J-K-L)</span>
+                <span class="text-rose-500 font-black">START →</span>
             </a>
-            <a href="year2.html" id="link-y2" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
-                <span class="font-bold">Year 2: Scroll Racer (Control)</span>
+            <a id="link-y2" href="year2.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
+                <span class="font-bold">Year 2: Word Weaver (Basic Words)</span>
                 <span id="lock-y2">🔒 Locked</span>
             </a>
-            <a href="year3.html" id="link-y3" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
-                <span class="font-bold">Year 3: Menu Rescue (Right-Click)</span>
+            <a id="link-y3" href="year3.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
+                <span class="font-bold">Year 3: The Captain (Shift & Enter)</span>
                 <span id="lock-y3">🔒 Locked</span>
             </a>
           </div>
@@ -64,8 +64,7 @@
           <div class="flex items-center gap-4">
             <span class="w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-black text-sm">02</span>
             <div>
-              <h3 class="font-black text-xl text-slate-400">Phase 2: Speed & Dragging</h3>
-              <span class="phase-badge bg-slate-100 text-slate-400">LOCKED</span>
+              <h3 class="font-black text-xl text-slate-400">Phase 2: Upper & Lower Rows</h3>
             </div>
           </div>
           <span>🔒</span>
@@ -76,48 +75,61 @@
         <button class="w-full p-6 text-left flex justify-between items-center">
             <div class="flex items-center gap-4">
               <span class="w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-black text-sm">03</span>
-              <h3 class="font-black text-xl text-slate-400">Phase 3: The Graduation Project</h3>
+              <h3 class="font-black text-xl text-slate-400">Phase 3: Speed Graduation</h3>
             </div>
             <span>🔒</span>
         </button>
       </div>
-
     </div>
 
-    <div id="grad-box" class="hidden mt-10 bg-slate-900 text-white p-10 rounded-[3rem] text-center shadow-2xl">
-        <h2 class="text-3xl font-black mb-4">🎓 Ready to Graduate?</h2>
-        <p class="text-slate-400 mb-6 italic">"You have mastered the hand-eye coordination required to navigate any professional software."</p>
-        <button class="bg-amber-400 text-black px-10 py-4 rounded-full font-black hover:scale-105 transition-all">Claim Your Certificate</button>
+    <div id="grad-box" class="hidden mt-10 bg-rose-900 text-white p-10 rounded-[3rem] text-center shadow-2xl">
+        <h2 class="text-3xl font-black mb-4">👑 Keyboard King/Queen!</h2>
+        <p class="text-rose-200 mb-6 italic">"Your fingers move like magic across the keys."</p>
+        <button class="bg-rose-400 text-black px-10 py-4 rounded-full font-black hover:scale-105">Claim Royal Seal</button>
     </div>
   </div>
 
   <script>
-    function togglePhase(id) {
-        const el = document.getElementById(`phase-${id}`);
-        el.classList.toggle('item-open');
+    function setCookie(name, value) {
+        const d = new Date();
+        d.setTime(d.getTime() + (24*60*60*1000)); // 24 hours
+        document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
     }
 
-    // LOCKING LOGIC BASED ON URL
+    function getCookie(name) {
+        let dc = document.cookie.split(';');
+        for(let i = 0; i < dc.length; i++) {
+            let c = dc[i].trim();
+            if (c.indexOf(name+'=') == 0) return c.substring(name.length+1);
+        }
+        return null;
+    }
+
+    function togglePhase(id) { document.getElementById(`phase-${id}`).classList.toggle('item-open'); }
+
+    // --- PROGRESS LOGIC ---
     const urlParams = new URLSearchParams(window.location.search);
-    const unlocked = urlParams.get('unlocked');
-
-    if (unlocked >= 2) {
-        const y2 = document.getElementById('link-y2');
-        y2.classList.remove('opacity-50', 'pointer-events-none');
-        y2.classList.add('border-amber-400');
-        document.getElementById('lock-y2').innerHTML = '<span class="text-green-500">PLAY →</span>';
-        document.getElementById('prog-bar').style.width = '16%';
-    }
+    let unlocked = urlParams.get('unlocked');
     
-    if (unlocked >= 3) {
-        const y3 = document.getElementById('link-y3');
-        y3.classList.remove('opacity-50', 'pointer-events-none');
-        y3.classList.add('border-amber-400');
-        document.getElementById('lock-y3').innerHTML = '<span class="text-green-500">PLAY →</span>';
+    if(unlocked) setCookie('smartkids_kb', unlocked);
+    else unlocked = getCookie('smartkids_kb');
+
+    const level = parseInt(unlocked) || 1;
+
+    if(level >= 2) {
+        document.getElementById('link-y2').classList.remove('opacity-50', 'pointer-events-none');
+        document.getElementById('lock-y2').innerHTML = '<span class="text-green-500">START →</span>';
+        document.getElementById('prog-bar').style.width = '15%';
+    }
+    if(level >= 3) {
+        document.getElementById('link-y3').classList.remove('opacity-50', 'pointer-events-none');
+        document.getElementById('lock-y3').innerHTML = '<span class="text-green-500">START →</span>';
         document.getElementById('prog-bar').style.width = '25%';
     }
-
-    // Logic for Graduation would trigger when unlocked === '13'
+    if(level >= 13) {
+        document.getElementById('grad-box').classList.remove('hidden');
+        document.getElementById('prog-bar').style.width = '100%';
+    }
   </script>
 </body>
 </html>
