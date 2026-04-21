@@ -88,49 +88,74 @@
         <button class="bg-rose-400 text-black px-10 py-4 rounded-full font-black hover:scale-105">Claim Royal Seal</button>
     </div>
   </div>
-
-  <script>
+<script>
+    // --- 1. THE STORAGE ENGINE ---
     function setCookie(name, value) {
         const d = new Date();
-        d.setTime(d.getTime() + (24*60*60*1000)); // 24 hours
-        document.cookie = `${name}=${value};expires=${d.toUTCString()};path=/`;
+        d.setTime(d.getTime() + (24*60*60*1000)); // 24 Hours
+        // Using path=/ is critical so all subfolders can see the progress
+        document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
     }
 
     function getCookie(name) {
-        let dc = document.cookie.split(';');
-        for(let i = 0; i < dc.length; i++) {
-            let c = dc[i].trim();
-            if (c.indexOf(name+'=') == 0) return c.substring(name.length+1);
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for(let i=0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
         }
         return null;
     }
 
-    function togglePhase(id) { document.getElementById(`phase-${id}`).classList.toggle('item-open'); }
-
-    // --- PROGRESS LOGIC ---
-    const urlParams = new URLSearchParams(window.location.search);
-    let unlocked = urlParams.get('unlocked');
-    
-    if(unlocked) setCookie('smartkids_kb', unlocked);
-    else unlocked = getCookie('smartkids_kb');
-
-    const level = parseInt(unlocked) || 1;
-
-    if(level >= 2) {
-        document.getElementById('link-y2').classList.remove('opacity-50', 'pointer-events-none');
-        document.getElementById('lock-y2').innerHTML = '<span class="text-green-500">START →</span>';
-        document.getElementById('prog-bar').style.width = '15%';
+    function togglePhase(id) { 
+        document.getElementById(`phase-${id}`).classList.toggle('item-open'); 
     }
-    if(level >= 3) {
-        document.getElementById('link-y3').classList.remove('opacity-50', 'pointer-events-none');
-        document.getElementById('lock-y3').innerHTML = '<span class="text-green-500">START →</span>';
-        document.getElementById('prog-bar').style.width = '25%';
-    }
-    if(level >= 13) {
-        document.getElementById('grad-box').classList.remove('hidden');
-        document.getElementById('prog-bar').style.width = '100%';
-    }
-  </script>
+
+    // --- 2. THE AUTOMATIC UNLOCKER ---
+    window.onload = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let unlocked = urlParams.get('unlocked');
+        
+        // Priority 1: Check the URL (Just finished a game)
+        if(unlocked) {
+            setCookie('smartkids_kb', unlocked);
+            // Automatically open the Phase 1 accordion so they see their progress
+            document.getElementById('phase-1').classList.add('item-open');
+        } else {
+            // Priority 2: Check the Cookie (Returning from earlier)
+            unlocked = getCookie('smartkids_kb');
+        }
+
+        const level = parseInt(unlocked) || 1;
+        const progBar = document.getElementById('prog-bar');
+
+        // YEAR 2 UNLOCK
+        if(level >= 2) {
+            const y2 = document.getElementById('link-y2');
+            y2.classList.remove('opacity-50', 'pointer-events-none');
+            y2.classList.add('border-rose-400');
+            document.getElementById('lock-y2').innerHTML = '<span class="text-green-500 font-bold text-sm">START →</span>';
+            progBar.style.width = '15%';
+        }
+
+        // YEAR 3 UNLOCK
+        if(level >= 3) {
+            const y3 = document.getElementById('link-y3');
+            y3.classList.remove('opacity-50', 'pointer-events-none');
+            y3.classList.add('border-rose-400');
+            document.getElementById('lock-y3').innerHTML = '<span class="text-green-500 font-bold text-sm">START →</span>';
+            progBar.style.width = '25%';
+        }
+
+        // GRADUATION
+        if(level >= 13) {
+            document.getElementById('grad-box').classList.remove('hidden');
+            progBar.style.width = '100%';
+            progBar.classList.add('bg-green-500'); // Celebration color!
+        }
+    };
+</script>
+  
 </body>
 </html>
 
