@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Year 2: Search Scout | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .search-result:hover { border-color: #3b82f6; background-color: #f8fafc; }
+    .ad-badge { border: 1px solid #059669; color: #059669; padding: 1px 4px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-6 font-sans">
+
+  <div class="max-w-3xl mx-auto">
+    <div class="bg-blue-600 text-white p-6 rounded-3xl mb-8 shadow-lg">
+      <p class="text-xs font-bold uppercase tracking-widest opacity-80">Your Scout Mission:</p>
+      <h1 id="missionText" class="text-2xl font-black italic">Find "Facts about Blue Whales"</h1>
+    </div>
+
+    <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-200">
+      <div class="p-6 border-b bg-slate-50 flex items-center gap-4">
+        <div class="text-2xl font-black text-blue-600">Goggle</div>
+        <div class="flex-1 bg-white border-2 border-slate-200 rounded-full py-2 px-5 flex items-center shadow-inner">
+            <span id="currentSearch" class="font-bold text-slate-700">Blue Whales</span>
+        </div>
+      </div>
+
+      <div id="resultsArea" class="p-8 space-y-8">
+        </div>
+    </div>
+  </div>
+
+  <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/90 flex items-center justify-center z-50 p-6">
+    <div class="bg-white p-12 rounded-[3rem] text-center max-w-sm">
+        <div class="text-7xl mb-4">🔍</div>
+        <h2 class="text-3xl font-black mb-2">Expert Scout!</h2>
+        <p class="text-slate-500 mb-8">You learned how to ignore Ads and Clickbait to find the real facts.</p>
+        <button onclick="window.location.href='year3.html'" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold">Year 3: The Email Rescue</button>
+    </div>
+  </div>
+
+  <script>
+    const levels = [
+        {
+            goal: 'Find "Facts about Blue Whales"',
+            searchTerm: 'Blue Whales',
+            results: [
+                { type: 'ad', title: 'Buy Whale Toys - 50% Off!', desc: 'Huge sale on plush whales and toys. Click here to buy now!', link: 'www.toys-store.com' },
+                { type: 'real', title: 'Blue Whale: The Largest Animal on Earth', desc: 'National Geographic: Learn about habitat, diet, and size of the blue whale.', link: 'www.natgeo.org/blue-whale' },
+                { type: 'fake', title: 'I saw a Flying Whale! (CLICK HERE)', desc: 'You won\'t believe this video of a whale flying in the sky!', link: 'www.clicky-links.net' }
+            ]
+        },
+        {
+            goal: 'Find "The History of Robots"',
+            searchTerm: 'Robots History',
+            results: [
+                { type: 'fake', title: 'Robots are taking over the world!', desc: 'Read the scary truth about robots from outer space.', link: 'www.weird-news.com' },
+                { type: 'ad', title: 'Cheap Robots for Sale', desc: 'The best robot vacuum for your home. Order today!', link: 'www.vacuum-shop.biz' },
+                { type: 'real', title: 'Timeline of Robotics', desc: 'Britannica: Exploring the invention of robots from ancient times to today.', link: 'www.britannica.com/technology/robotics' }
+            ]
+        }
+    ];
+
+    let currentLevel = 0;
+
+    function renderLevel() {
+        const level = levels[currentLevel];
+        document.getElementById('missionText').innerText = level.goal;
+        document.getElementById('currentSearch').innerText = level.searchTerm;
+        
+        const area = document.getElementById('resultsArea');
+        area.innerHTML = '';
+
+        // Shuffle results
+        const shuffledResults = [...level.results].sort(() => Math.random() - 0.5);
+
+        shuffledResults.forEach(res => {
+            const div = document.createElement('div');
+            div.className = "search-result border-2 border-transparent p-4 rounded-2xl cursor-pointer transition-all";
+            
+            const adTag = res.type === 'ad' ? '<span class="ad-badge mr-2">Ad</span>' : '';
+            
+            div.innerHTML = `
+                <p class="text-xs text-slate-500 mb-1">${res.link}</p>
+                <h3 class="text-xl font-bold text-blue-700 hover:underline mb-1">${adTag}${res.title}</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">${res.desc}</p>
+            `;
+
+            div.onclick = () => handleChoice(res.type, div);
+            area.appendChild(div);
+        });
+    }
+
+    function handleChoice(type, element) {
+        if (type === 'real') {
+            alert("✅ Excellent! That is a trustworthy source of information.");
+            currentLevel++;
+            if (currentLevel < levels.length) {
+                renderLevel();
+            } else {
+                document.getElementById('success-modal').classList.remove('hidden');
+            }
+        } else if (type === 'ad') {
+            element.classList.add('border-green-500', 'bg-green-50');
+            alert("💰 This is an AD. It wants your money, not to teach you facts! Try again.");
+        } else {
+            element.classList.add('border-red-500', 'bg-red-50');
+            alert("⚠️ This is CLICKBAIT. It's a silly story that isn't true. Try again!");
+        }
+    }
+
+    renderLevel();
+</script>
+</body>
+</html>
