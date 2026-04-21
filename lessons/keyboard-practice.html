@@ -43,15 +43,15 @@
         </button>
         <div class="accordion-content bg-rose-50/30 border-t border-rose-100">
           <div class="grid gap-4">
-            <a href="keyboard/year1.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border hover:border-rose-400 transition-all">
+            <a href="year1.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border hover:border-rose-400 transition-all">
                 <span class="font-bold">Year 1: Finger Homes (A-S-D-F J-K-L)</span>
                 <span class="text-rose-500 font-black">START →</span>
             </a>
-            <a id="link-y2" href="lessons/keyboard/year2.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
+            <a id="link-y2" href="year2.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
                 <span class="font-bold">Year 2: Word Weaver (Basic Words)</span>
                 <span id="lock-y2">🔒 Locked</span>
             </a>
-            <a id="link-y3" href="keyboard/year3.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
+            <a id="link-y3" href="year3.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
                 <span class="font-bold">Year 3: The Captain (Shift & Enter)</span>
                 <span id="lock-y3">🔒 Locked</span>
             </a>
@@ -59,41 +59,18 @@
         </div>
       </div>
 
-      <div id="phase-2" class="locked-phase bg-white rounded-[2rem] shadow-sm border-2 border-slate-100 overflow-hidden">
-        <button class="w-full p-6 text-left flex justify-between items-center">
-          <div class="flex items-center gap-4">
-            <span class="w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-black text-sm">02</span>
-            <div>
-              <h3 class="font-black text-xl text-slate-400">Phase 2: Upper & Lower Rows</h3>
-            </div>
-          </div>
-          <span>🔒</span>
-        </button>
       </div>
-
-      <div id="phase-3" class="locked-phase bg-white rounded-[2rem] shadow-sm border-2 border-slate-100 overflow-hidden">
-        <button class="w-full p-6 text-left flex justify-between items-center">
-            <div class="flex items-center gap-4">
-              <span class="w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-black text-sm">03</span>
-              <h3 class="font-black text-xl text-slate-400">Phase 3: Speed Graduation</h3>
-            </div>
-            <span>🔒</span>
-        </button>
-      </div>
-    </div>
 
     <div id="grad-box" class="hidden mt-10 bg-rose-900 text-white p-10 rounded-[3rem] text-center shadow-2xl">
         <h2 class="text-3xl font-black mb-4">👑 Keyboard King/Queen!</h2>
-        <p class="text-rose-200 mb-6 italic">"Your fingers move like magic across the keys."</p>
-        <button class="bg-rose-400 text-black px-10 py-4 rounded-full font-black hover:scale-105">Claim Royal Seal</button>
+        <button class="bg-rose-400 text-black px-10 py-4 rounded-full font-black">Claim Royal Seal</button>
     </div>
   </div>
+
 <script>
-    // --- 1. THE STORAGE ENGINE ---
     function setCookie(name, value) {
         const d = new Date();
-        d.setTime(d.getTime() + (24*60*60*1000)); // 24 Hours
-        // Using path=/ is critical so all subfolders can see the progress
+        d.setTime(d.getTime() + (24*60*60*1000));
         document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
     }
 
@@ -111,25 +88,21 @@
         document.getElementById(`phase-${id}`).classList.toggle('item-open'); 
     }
 
-    // --- 2. THE AUTOMATIC UNLOCKER ---
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
-        let unlocked = urlParams.get('unlocked');
+        let unlockedFromUrl = urlParams.get('unlocked');
         
-        // Priority 1: Check the URL (Just finished a game)
-        if(unlocked) {
-            setCookie('smartkids_kb', unlocked);
-            // Automatically open the Phase 1 accordion so they see their progress
+        if(unlockedFromUrl) {
+            setCookie('smartkids_kb', unlockedFromUrl);
             document.getElementById('phase-1').classList.add('item-open');
-        } else {
-            // Priority 2: Check the Cookie (Returning from earlier)
-            unlocked = getCookie('smartkids_kb');
         }
 
-        const level = parseInt(unlocked) || 1;
+        // Get value from cookie and ensure it is a valid number
+        let savedLevel = getCookie('smartkids_kb');
+        let level = parseInt(unlockedFromUrl || savedLevel) || 1;
+
         const progBar = document.getElementById('prog-bar');
 
-        // YEAR 2 UNLOCK
         if(level >= 2) {
             const y2 = document.getElementById('link-y2');
             y2.classList.remove('opacity-50', 'pointer-events-none');
@@ -138,7 +111,6 @@
             progBar.style.width = '15%';
         }
 
-        // YEAR 3 UNLOCK
         if(level >= 3) {
             const y3 = document.getElementById('link-y3');
             y3.classList.remove('opacity-50', 'pointer-events-none');
@@ -147,15 +119,13 @@
             progBar.style.width = '25%';
         }
 
-        // GRADUATION
         if(level >= 13) {
             document.getElementById('grad-box').classList.remove('hidden');
             progBar.style.width = '100%';
-            progBar.classList.add('bg-green-500'); // Celebration color!
+            progBar.classList.add('bg-green-500');
         }
     };
 </script>
-  
 </body>
 </html>
 
