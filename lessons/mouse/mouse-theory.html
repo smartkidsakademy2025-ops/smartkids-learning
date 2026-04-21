@@ -5,97 +5,113 @@
   <title>Mouse Mastery | SmartKids</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .locked { opacity: 0.5; pointer-events: none; filter: grayscale(1); }
-    .unlocked-pulse { border-color: #fbbf24 !important; animation: pulse-border 2s infinite; }
-    @keyframes pulse-border {
-      0% { border-color: #fbbf24; }
-      50% { border-color: #fef3c7; }
-      100% { border-color: #fbbf24; }
-    }
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    .accordion-open .accordion-content { max-height: 200px; }
+    .accordion-open .chevron { transform: rotate(180deg); }
+    .mouse-part-label { display: none; }
+    .active-part { display: block; animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
-<body class="bg-amber-50 min-h-screen p-8 md:p-12 font-sans">
+<body class="bg-slate-50 min-h-screen p-6 md:p-12 font-sans">
 
   <div class="max-w-5xl mx-auto">
-    <a href="../../lessons.html" class="inline-flex items-center gap-2 text-amber-600 font-bold mb-8 hover:underline">
-      <span>🏠</span> Back to All Lessons
-    </a>
-
-    <header class="bg-white p-10 rounded-[3rem] shadow-xl border-b-8 border-amber-200 mb-12">
-      <div class="flex flex-col md:flex-row gap-10 items-center">
-        <div class="flex-1">
-          <span class="bg-amber-100 text-amber-600 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest">Module 1: Mouse Skills</span>
-          <h1 class="text-4xl font-black text-slate-800 mt-4 mb-6">The Magic of the Mouse 🖱️</h1>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-600 text-lg leading-relaxed">
-            <div class="bg-white p-4 rounded-2xl border-2 border-slate-100">
-               <b class="text-amber-600">Left Click:</b> The "Do It" button. Use this to select items and open apps.
-            </div>
-            <div class="bg-white p-4 rounded-2xl border-2 border-slate-100">
-               <b class="text-amber-600">Right Click:</b> The "Secret Menu." It shows you extra options you can't see!
-            </div>
-            <div class="bg-white p-4 rounded-2xl border-2 border-slate-100">
-               <b class="text-amber-600">Scroll Wheel:</b> The "Elevator." Use it to move up and down long pages.
-            </div>
-             <div class="bg-white p-4 rounded-2xl border-2 border-slate-100">
-               <b class="text-amber-600">Drag & Drop:</b> The "Grabber." Pick up an item and move it to a new home.
-            </div>
-          </div>
-        </div>
-        <div class="w-56 h-56 bg-amber-100 rounded-full flex items-center justify-center text-[100px] shadow-inner">
-          🖱️
-        </div>
-      </div>
+    <header class="mb-12 text-center">
+        <span class="bg-amber-100 text-amber-700 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest">Module 1: Input Devices</span>
+        <h1 class="text-5xl font-black text-slate-800 mt-4">The Mouse Manual 🖱️</h1>
+        <p class="text-slate-500 mt-2 italic">Master your "Third Hand" to control the digital world.</p>
     </header>
 
-    <h2 class="text-2xl font-black text-slate-800 mb-6 flex items-center gap-3">
-      <span>🎯</span> Training Missions:
-    </h2>
-
-    <div class="grid md:grid-cols-3 gap-6">
-      <div id="card-1" class="bg-white p-8 rounded-[2.5rem] shadow-md border-4 border-amber-200 flex flex-col">
-        <div class="text-4xl mb-4">🎈</div>
-        <h3 class="text-xl font-black text-slate-800 mb-2">Year 1: Clicker</h3>
-        <p class="text-slate-500 text-sm mb-8 flex-grow">Practice clicking moving targets to build your speed and accuracy.</p>
-        <a href="year1.html" class="block text-center bg-amber-500 text-white py-4 rounded-2xl font-bold hover:bg-amber-600">Start Mission</a>
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      
+      <div class="bg-white p-10 rounded-[3rem] shadow-xl border-2 border-slate-100 relative">
+        <h3 class="font-black text-slate-400 uppercase text-xs mb-6 tracking-widest">Mouse Anatomy</h3>
+        
+        <div class="relative flex justify-center py-10">
+            <div class="text-[180px] leading-none select-none">🖱️</div>
+            
+            <div id="label-left" class="mouse-part-label absolute top-10 left-0 bg-amber-500 text-white px-4 py-2 rounded-xl font-bold shadow-lg">
+                ⬅️ Left Click (Action!)
+            </div>
+            <div id="label-right" class="mouse-part-label absolute top-10 right-0 bg-amber-500 text-white px-4 py-2 rounded-xl font-bold shadow-lg">
+                Right Click (Menu) ➡️
+            </div>
+            <div id="label-scroll" class="mouse-part-label absolute -bottom-4 bg-blue-500 text-white px-4 py-2 rounded-xl font-bold shadow-lg">
+                ⬇️ Scroll Wheel (Elevator)
+            </div>
+        </div>
+        
       </div>
 
-      <div id="card-2" class="locked bg-white p-8 rounded-[2.5rem] shadow-md border-4 border-transparent flex flex-col">
-        <div class="text-4xl mb-4" id="icon-2">🔒</div>
-        <h3 class="text-xl font-black text-slate-800 mb-2">Year 2: Scroller</h3>
-        <p class="text-slate-500 text-sm mb-8 flex-grow">Use the scroll wheel to navigate a deep-sea race track.</p>
-        <a href="year2.html" class="block text-center bg-amber-600 text-white py-4 rounded-2xl font-bold">Locked</a>
-      </div>
+      <div class="space-y-4">
+        
+        <div class="accordion-item bg-white rounded-3xl shadow-sm border-2 border-slate-100 overflow-hidden" onclick="toggleAccordion(0, 'left')">
+          <button class="w-full p-6 text-left flex justify-between items-center group">
+            <span class="font-black text-xl text-slate-700 group-hover:text-amber-600 transition-colors">1. The Left Click</span>
+            <span class="chevron transition-transform text-slate-400">▼</span>
+          </button>
+          <div class="accordion-content px-6 pb-6 text-slate-600">
+            The left button is your primary tool. Think of it as your <b>index finger</b> pointing at something and saying "I want that!" You use it for 90% of your work.
+          </div>
+        </div>
 
-      <div id="card-3" class="locked bg-white p-8 rounded-[2.5rem] shadow-md border-4 border-transparent flex flex-col">
-        <div class="text-4xl mb-4" id="icon-3">🔒</div>
-        <h3 class="text-xl font-black text-slate-800 mb-2">Year 3: Pro</h3>
-        <p class="text-slate-500 text-sm mb-8 flex-grow">Master Right-Click menus and Drag & Drop file moves.</p>
-        <a href="year3.html" class="block text-center bg-amber-700 text-white py-4 rounded-2xl font-bold">Locked</a>
+        <div class="accordion-item bg-white rounded-3xl shadow-sm border-2 border-slate-100 overflow-hidden" onclick="toggleAccordion(1, 'right')">
+          <button class="w-full p-6 text-left flex justify-between items-center group">
+            <span class="font-black text-xl text-slate-700 group-hover:text-amber-600 transition-colors">2. The Right Click</span>
+            <span class="chevron transition-transform text-slate-400">▼</span>
+          </button>
+          <div class="accordion-content px-6 pb-6 text-slate-600">
+            The right button opens the <b>"Secret Menu"</b> (Context Menu). It shows you hidden options like <i>Copy, Paste,</i> or <i>Delete</i> based on where you click!
+          </div>
+        </div>
+
+        <div class="accordion-item bg-white rounded-3xl shadow-sm border-2 border-slate-100 overflow-hidden" onclick="toggleAccordion(2, 'scroll')">
+          <button class="w-full p-6 text-left flex justify-between items-center group">
+            <span class="font-black text-xl text-slate-700 group-hover:text-amber-600 transition-colors">3. The Scroll Wheel</span>
+            <span class="chevron transition-transform text-slate-400">▼</span>
+          </button>
+          <div class="accordion-content px-6 pb-6 text-slate-600">
+            The wheel in the middle is like an <b>elevator</b>. Roll it forward to go up, and backward to go down. Great for long stories or big websites!
+          </div>
+        </div>
+
+        <div id="action-zone" class="pt-6 opacity-0 transition-opacity duration-1000">
+            <button onclick="window.location.href='mouse-practice.html'" 
+                    class="w-full bg-amber-500 text-white py-6 rounded-[2rem] font-black text-2xl shadow-xl hover:bg-amber-600 hover:scale-105 transition-all flex items-center justify-center gap-4">
+                Enter Practice Zone 🎮
+            </button>
+        </div>
+
       </div>
     </div>
   </div>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const unlockLevel = urlParams.get('unlocked');
+    let clicks = new Set();
 
-    if (unlockLevel === '2') {
-        unlock(2, '🌊', 'Start Racing');
-    } else if (unlockLevel === '3') {
-        unlock(2, '🌊', 'Completed');
-        unlock(3, '🖱️', 'Start Pro');
-    }
+    function toggleAccordion(index, part) {
+      const items = document.querySelectorAll('.accordion-item');
+      const labels = document.querySelectorAll('.mouse-part-label');
+      
+      // Toggle the Accordion
+      items.forEach((item, i) => {
+        if(i === index) {
+            item.classList.toggle('accordion-open');
+            item.classList.add('border-amber-400');
+        } else {
+            item.classList.remove('accordion-open');
+        }
+      });
 
-    function unlock(level, icon, btnText) {
-        const card = document.getElementById(`card-${level}`);
-        const btn = card.querySelector('a');
-        const iconEl = document.getElementById(`icon-${level}`);
+      // Show the corresponding label on the mouse
+      labels.forEach(label => label.classList.remove('active-part'));
+      document.getElementById(`label-${part}`).classList.add('active-part');
 
-        card.classList.remove('locked');
-        card.classList.add('unlocked-pulse');
-        iconEl.innerText = icon;
-        btn.innerText = btnText;
+      // Track progress
+      clicks.add(index);
+      if(clicks.size >= 1) {
+          document.getElementById('action-zone').classList.remove('opacity-0');
+      }
     }
   </script>
 </body>
