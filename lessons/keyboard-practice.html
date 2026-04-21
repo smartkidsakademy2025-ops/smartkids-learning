@@ -66,8 +66,80 @@
         <button class="bg-rose-400 text-black px-10 py-4 rounded-full font-black">Claim Royal Seal</button>
     </div>
   </div>
-
 <script>
+    function setCookie(name, value) {
+        const d = new Date();
+        d.setTime(d.getTime() + (24*60*60*1000));
+        // GitHub Pages specific: setting path to the root of your project
+        document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/smartkids-learning/;SameSite=Lax";
+    }
+
+    function getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for(let i=0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    function togglePhase(id) { 
+        const el = document.getElementById(`phase-${id}`);
+        if(el) el.classList.toggle('item-open'); 
+    }
+
+    // This runs the moment the page is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        // Tiny pause to ensure IDs are ready in the browser memory
+        setTimeout(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            let unlocked = urlParams.get('unlocked');
+            
+            if(unlocked) {
+                setCookie('smartkids_kb', unlocked);
+                const p1 = document.getElementById('phase-1');
+                if(p1) p1.classList.add('item-open');
+            } else {
+                unlocked = getCookie('smartkids_kb');
+            }
+
+            const level = parseInt(unlocked) || 1;
+            const progBar = document.getElementById('prog-bar');
+
+            // Year 2 Logic
+            if(level >= 2) {
+                const y2 = document.getElementById('link-y2');
+                const l2 = document.getElementById('lock-y2');
+                if(y2) y2.classList.remove('opacity-50', 'pointer-events-none');
+                if(l2) l2.innerHTML = '<span class="text-green-500 font-bold">START →</span>';
+                if(progBar) progBar.style.width = '15%';
+            }
+
+            // Year 3 Logic
+            if(level >= 3) {
+                const y3 = document.getElementById('link-y3');
+                const l3 = document.getElementById('lock-y3');
+                if(y3) y3.classList.remove('opacity-50', 'pointer-events-none');
+                if(l3) l3.innerHTML = '<span class="text-green-500 font-bold">START →</span>';
+                if(progBar) progBar.style.width = '25%';
+            }
+
+            // Phase 1 Graduation
+            if(level >= 13) {
+                const grad = document.getElementById('grad-box');
+                if(grad) grad.classList.remove('hidden');
+                if(progBar) {
+                    progBar.style.width = '100%';
+                    progBar.classList.add('bg-green-500');
+                }
+            }
+        }, 100); 
+    });
+</script>
+
+  
+  <!--<script>
     function setCookie(name, value) {
         const d = new Date();
         d.setTime(d.getTime() + (24*60*60*1000));
@@ -125,7 +197,7 @@
             progBar.classList.add('bg-green-500');
         }
     };
-</script>
+</script>-->
 </body>
 </html>
 
