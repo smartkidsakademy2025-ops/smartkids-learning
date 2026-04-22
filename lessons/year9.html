@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Year 9: Shortcuts | SmartKids</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .spell-effect { animation: spark 0.5s ease-out; }
+    @keyframes spark {
+      0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+      100% { box-shadow: 0 0 40px 20px rgba(139, 92, 246, 0); }
+    }
+    .ghost-text { opacity: 0.3; filter: blur(1px); }
+  </style>
+</head>
+<body class="bg-slate-950 min-h-screen flex flex-col items-center justify-center font-sans p-6 overflow-hidden">
+
+  <div id="diy-manual" class="fixed inset-0 bg-slate-900/98 z-[100] flex items-center justify-center p-6">
+    <div class="bg-white max-w-md rounded-[3rem] p-10 shadow-[0_0_50px_rgba(139,92,246,0.5)] border-4 border-violet-500 text-center">
+      <div class="text-6xl mb-4">🧙‍♂️</div>
+      <h2 class="text-3xl font-black mb-4 text-slate-800">Shortcut Sorcery</h2>
+      <div class="space-y-4 mb-8 text-slate-600 text-left text-sm">
+        <p>Shortcuts are the magic spells of the digital world. Hold <b>Ctrl</b> and tap the key!</p>
+        <ul class="space-y-3 font-medium">
+            <li class="flex gap-3 text-violet-600"><span>✂️</span> <b>Ctrl + C:</b> Copy (Store in memory)</li>
+            <li class="flex gap-3 text-violet-600"><span>📋</span> <b>Ctrl + V:</b> Paste (Release memory)</li>
+            <li class="flex gap-3 text-violet-600"><span>⏪</span> <b>Ctrl + Z:</b> Undo (Reverse time)</li>
+            <li class="flex gap-3 text-violet-600"><span>🌟</span> <b>Ctrl + A:</b> Select All (Massive power)</li>
+        </ul>
+      </div>
+      <button onclick="startGame()" class="w-full bg-violet-600 text-white py-4 rounded-2xl font-black text-xl hover:bg-violet-500 shadow-xl">Begin Training</button>
+    </div>
+  </div>
+
+  <div class="w-full max-w-xl bg-slate-900 rounded-[2.5rem] p-12 border border-violet-500/30 text-center relative shadow-2xl">
+    <div id="spell-name" class="text-violet-400 font-black tracking-widest text-xs mb-8 uppercase">Cast Your Spell</div>
+    
+    <div class="mb-12 h-24 flex flex-col items-center justify-center">
+        <div id="target-shortcut" class="text-6xl font-black text-white tracking-tighter mb-2">Ctrl + C</div>
+        <div id="action-hint" class="text-slate-500 text-sm italic italic">"Copy the magic crystal"</div>
+    </div>
+
+    <div class="grid grid-cols-4 gap-2 opacity-50">
+        <div id="light-a" class="h-1 bg-slate-700 rounded"></div>
+        <div id="light-c" class="h-1 bg-slate-700 rounded"></div>
+        <div id="light-v" class="h-1 bg-slate-700 rounded"></div>
+        <div id="light-z" class="h-1 bg-slate-700 rounded"></div>
+    </div>
+  </div>
+
+  <div id="success-modal" class="hidden fixed inset-0 bg-slate-950 flex items-center justify-center z-50 p-6 text-center">
+    <div class="bg-white p-12 rounded-[3.5rem] max-w-sm border-b-8 border-violet-600 shadow-[0_0_100px_rgba(255,255,255,0.1)]">
+        <div class="text-7xl mb-4">🔮</div>
+        <h2 class="text-3xl font-black mb-2 text-slate-800">Spell Master!</h2>
+        <p class="text-slate-500 mb-8">You can now manipulate digital energy with just two fingers. You are truly powerful.</p>
+        <button onclick="window.location.href='keyboard-practice.html?unlocked=10'" class="w-full bg-violet-600 text-white py-4 rounded-2xl font-bold text-xl shadow-lg">Enter Phase 3: Expert</button>
+    </div>
+  </div>
+
+  <script>
+    const spells = [
+        { key: 'c', label: 'Ctrl + C', hint: 'Copy the crystal', light: 'light-c' },
+        { key: 'v', label: 'Ctrl + V', hint: 'Paste the duplicate', light: 'light-v' },
+        { key: 'z', label: 'Ctrl + Z', hint: 'Undo the damage', light: 'light-z' },
+        { key: 'a', label: 'Ctrl + A', hint: 'Select every atom', light: 'light-a' }
+    ];
+
+    let currentSpell = null;
+    let score = 0;
+
+    function startGame() {
+        document.getElementById('diy-manual').remove();
+        nextSpell();
+        
+        window.addEventListener('keydown', (e) => {
+            // Prevent browser default shortcuts (like Ctrl+C or Ctrl+A)
+            if (e.ctrlKey) e.preventDefault();
+
+            if (e.ctrlKey && e.key.toLowerCase() === currentSpell.key) {
+                castSpell();
+            }
+        });
+    }
+
+    function castSpell() {
+        score++;
+        const target = document.getElementById('target-shortcut');
+        target.classList.add('spell-effect');
+        setTimeout(() => target.classList.remove('spell-effect'), 500);
+
+        if (score >= 12) {
+            document.getElementById('success-modal').classList.remove('hidden');
+        } else {
+            nextSpell();
+        }
+    }
+
+    function nextSpell() {
+        currentSpell = spells[Math.floor(Math.random() * spells.length)];
+        document.getElementById('target-shortcut').innerText = currentSpell.label;
+        document.getElementById('action-hint').innerText = `"${currentSpell.hint}"`;
+        
+        // Reset lights
+        document.querySelectorAll('[id^="light-"]').forEach(el => el.classList.replace('bg-violet-500', 'bg-slate-700'));
+        document.getElementById(currentSpell.light).classList.replace('bg-slate-700', 'bg-violet-500');
+    }
+  </script>
+</body>
+</html>
