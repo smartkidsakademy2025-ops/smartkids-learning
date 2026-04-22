@@ -137,5 +137,34 @@
 
     window.onload = initHub;
 </script>
+  <script>
+    // This goes in your Roadmap page!
+    function initHub() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let unlocked = urlParams.get('unlocked');
+
+        // Check for Graduation
+        if (unlocked === '13') {
+            // setProgress is defined in your roadmap's cookie logic
+            if (typeof setProgress === "function") setProgress('13');
+            
+            document.body.innerHTML = `
+                <div class="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white font-sans">
+                    <div class="text-9xl animate-bounce">🎓</div>
+                    <h1 class="text-4xl font-black mt-8 tracking-tighter">GENERATING DIPLOMA...</h1>
+                    <p class="text-slate-400 mt-2">Preparing your graduation ceremony!</p>
+                </div>
+            `;
+
+            setTimeout(() => {
+                // Since we are in lessons/, we go into mouse/summary.html
+                window.location.href = "mouse/summary.html"; 
+            }, 1500);
+            return;
+        }
+
+        // ... existing level 1, 2, 3 unlock logic ...
+    }
+</script>
 </body>
 </html>
