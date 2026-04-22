@@ -2,301 +2,105 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Year 3: Pro Mastery | SmartKids</title>
+  <title>Year 3: Cargo Master | SmartKids</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .tray-slot { border: 4px dashed #cbd5e1; transition: all 0.3s; position: relative; }
-    .tray-slot.drag-over { border-color: #6366f1; background: #e0e7ff; }
-    .food-item { cursor: grab; transition: transform 0.2s; user-select: none; z-index: 10; }
-    .food-item.selected { outline: 4px solid #6366f1; outline-offset: 4px; border-radius: 1rem; background: #e0e7ff; }
-    
-    /* The Highlighting Box */
-    #selection-marquee {
-        position: absolute; border: 2px solid #6366f1; background: rgba(99, 102, 241, 0.2);
-        pointer-events: none; display: none; z-index: 100;
-    }
-
-    #custom-menu { position: absolute; display: none; z-index: 100; }
-    
-    @keyframes slideUp {
-      0% { transform: translateY(100%); opacity: 0; }
-      10% { transform: translateY(0); opacity: 1; }
-      90% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100%); opacity: 0; }
-    }
-    .feedback-overlay { animation: slideUp 3s forwards; }
+    .warehouse { height: 200vh; background: linear-gradient(#cbd5e1, #94a3b8); }
+    .package { width: 100px; height: 100px; cursor: grab; transition: transform 0.2s; z-index: 40; }
+    .package:active { cursor: grabbing; transform: scale(1.1); }
+    .truck { border: 6px dashed #475569; transition: all 0.3s; }
+    .truck.over { background: #fef3c7; border-color: #f59e0b; scale: 1.05; }
   </style>
 </head>
-<body class="bg-indigo-50 min-h-screen p-6 font-sans select-none overflow-hidden">
+<body class="bg-slate-300 font-sans">
 
   <div id="diy-manual" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[100] flex items-center justify-center p-6">
     <div class="bg-white max-w-md rounded-[3rem] p-10 shadow-2xl border-4 border-indigo-500 text-center">
-      <div class="text-5xl mb-4">🤖</div>
-      <h2 class="text-3xl font-black mb-4 text-slate-800">Final Exam: Pro Skills</h2>
+      <div class="text-6xl mb-4">📦</div>
+      <h2 class="text-3xl font-black mb-4 text-slate-800">Mission: Cargo Master</h2>
       <div class="space-y-4 mb-8 text-slate-600 text-left">
-        <p class="font-bold">Master these 3 techniques to Graduate:</p>
-        <ul class="space-y-3">
-            <li><span>🖱️</span> <b>Right-Click:</b> Wash the Fruit.</li>
-            <li><span>🖱️</span> <b>Drag & Drop:</b> Move items to slots.</li>
-            <li><span>🟦</span> <b>Highlight:</b> Click and drag a box over all 3 Napkins to select them at once!</li>
+        <p>This is the final test! You must use all your skills:</p>
+        <ul class="space-y-2">
+            <li>1. 🖱️ <b>Scroll Down</b> to the bottom of the warehouse.</li>
+            <li>2. 👈 <b>Hold the Click</b> to grab the Golden Package.</li>
+            <li>3. 🚚 <b>Drag & Scroll</b> back up to the delivery truck!</li>
         </ul>
       </div>
-      <button onclick="document.getElementById('diy-manual').remove()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold text-xl shadow-lg">Start Graduation Test</button>
+      <button onclick="document.getElementById('diy-manual').remove()" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold text-xl hover:scale-105 transition-all">Accept Mission</button>
     </div>
   </div>
 
-  <div class="max-w-4xl mx-auto">
-    <h1 class="text-3xl font-black text-slate-800 mb-4 text-center">Phase 1 Final: Robo's Party Tray</h1>
-    
-    <div class="bg-white p-10 rounded-[4rem] shadow-2xl border-b-8 border-slate-200 grid grid-cols-3 gap-6 relative" id="tray-area">
-        <div id="slot-fruit" class="tray-slot h-40 rounded-3xl flex items-center justify-center text-slate-300 font-bold text-xs uppercase text-center p-2" ondrop="drop(event)" ondragover="allowDrop(event)">Fruit Slot</div>
-        <div id="slot-juice" class="tray-slot h-40 rounded-3xl flex items-center justify-center text-slate-300 font-bold text-xs uppercase text-center p-2" ondrop="drop(event)" ondragover="allowDrop(event)">Juice Slot</div>
-        <div id="slot-napkins" class="tray-slot h-40 rounded-3xl flex items-center justify-center text-slate-300 font-bold text-xs uppercase text-center p-2" ondrop="drop(event)" ondragover="allowDrop(event)">Napkin Stack</div>
-        
-        <div class="col-span-3 flex justify-center items-center gap-8 mt-4 p-6 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
-            <div id="apple" class="food-item text-7xl" draggable="true" ondragstart="drag(event)" oncontextmenu="showMenu(event)">🍎</div>
-            <div id="juice" class="food-item text-7xl opacity-30 pointer-events-none" draggable="true" ondragstart="drag(event)">🧃</div>
-            
-            <div class="flex gap-2 p-4 border border-indigo-100 rounded-2xl bg-white" id="napkin-group">
-                <div id="n1" class="napkin food-item text-5xl">🧻</div>
-                <div id="n2" class="napkin food-item text-5xl">🧻</div>
-                <div id="n3" class="napkin food-item text-5xl">🧻</div>
-            </div>
+  <div class="warehouse relative">
+    <div class="h-screen flex flex-col items-center justify-start pt-20">
+        <div id="drop-zone" class="truck w-80 h-48 rounded-[2rem] flex flex-col items-center justify-center text-slate-400">
+            <span class="text-6xl mb-2">🚚</span>
+            <p class="font-black uppercase tracking-widest text-sm">Drop Cargo Here</p>
+        </div>
+        <div class="mt-20 text-center animate-bounce">
+            <p class="text-slate-600 font-bold text-xl">Scroll Down to find the package! ⬇️</p>
         </div>
     </div>
+
+    <div class="h-screen flex items-center justify-center">
+        <div id="cargo" draggable="true" class="package bg-amber-400 rounded-2xl shadow-2xl flex items-center justify-center text-5xl border-4 border-white">📦</div>
+    </div>
   </div>
 
-  <div id="selection-marquee"></div>
-
-  <div id="custom-menu" class="bg-white shadow-2xl rounded-2xl border border-slate-200 overflow-hidden w-40">
-    <button onclick="washApple()" class="w-full text-left px-4 py-3 hover:bg-indigo-50 text-indigo-600 font-bold flex items-center gap-2"><span>🧼</span> Wash Apple</button>
-  </div>
-
-  <div id="feedback-container" class="fixed inset-x-0 bottom-10 flex justify-center pointer-events-none z-50"></div>
-
-  <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/95 flex items-center justify-center z-50 p-6 text-center">
-    <div class="bg-white p-12 rounded-[4.5rem] max-w-md border-b-8 border-indigo-600">
-        <div class="text-8xl mb-4">🎓🏅</div>
-        <h2 class="text-4xl font-black mb-2 text-slate-800">Master Graduated!</h2>
-        <p class="text-slate-500 mb-8 text-lg">You can click, scroll, right-click, and highlight. You are a <b>Mouse Architect!</b></p>
-        <button onclick="window.location.href='mouse-practice.html?unlocked=13'" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold text-xl">Finish Module</button>
+  <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/95 flex items-center justify-center z-[110] p-6 text-center">
+    <div class="bg-white p-12 rounded-[3.5rem] max-w-sm border-b-8 border-indigo-500">
+        <div class="text-7xl mb-4">🎓🐭</div>
+        <h2 class="text-3xl font-black mb-2 text-slate-800">Mouse Academy Graduate!</h2>
+        <p class="text-slate-500 mb-8">You can click, scroll, and drag like a pro. You've conquered the mouse!</p>
+        <button onclick="window.location.href='../mouse-practice.html?unlocked=13'" 
+                class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-xl hover:scale-105 transition-all">
+            COLLECT DIPLOMA 🎓
+        </button>
     </div>
   </div>
 
   <script>
-    let isWashed = false;
-    let itemsPlaced = 0;
-    let selectedNapkins = new Set();
+    const cargo = document.getElementById('cargo');
+    const dropZone = document.getElementById('drop-zone');
 
-    // 1. RIGHT CLICK LOGIC
-    window.oncontextmenu = (e) => e.preventDefault();
-    function showMenu(e) {
+    // Drag Logic
+    cargo.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', 'cargo');
+        cargo.classList.add('opacity-50');
+    });
+
+    cargo.addEventListener('dragend', () => {
+        cargo.classList.remove('opacity-50');
+    });
+
+    // Drop Zone Logic
+    dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        const menu = document.getElementById('custom-menu');
-        menu.style.display = 'block'; menu.style.left = e.pageX + 'px'; menu.style.top = e.pageY + 'px';
-        showFeedback("🖱️ Menu opened! Click 'Wash'.", true);
-    }
-    window.onclick = () => { document.getElementById('custom-menu').style.display = 'none'; }
-    function washApple() {
-        isWashed = true;
-        document.getElementById('apple').innerHTML = '✨🍎';
-        document.getElementById('juice').classList.remove('opacity-30', 'pointer-events-none');
-        showFeedback("🧼 Clean! Now move the Fruit and Juice.", true);
-    }
+        dropZone.classList.add('over');
+    });
 
-    // 2. HIGHLIGHT SELECTION LOGIC
-    let startX, startY;
-    let isSelecting = false;
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('over');
+    });
 
-    window.onmousedown = (e) => {
-        if (e.button !== 0 || e.target.closest('.food-item')) return;
-        isSelecting = true;
-        startX = e.pageX; startY = e.pageY;
-        const marquee = document.getElementById('selection-marquee');
-        marquee.style.display = 'block'; marquee.style.width = '0px'; marquee.style.height = '0px';
-    };
-
-    window.onmousemove = (e) => {
-        if (!isSelecting) return;
-        const marquee = document.getElementById('selection-marquee');
-        const x = Math.min(e.pageX, startX); const y = Math.min(e.pageY, startY);
-        const w = Math.abs(e.pageX - startX); const h = Math.abs(e.pageY - startY);
-        marquee.style.left = x + 'px'; marquee.style.top = y + 'px'; marquee.style.width = w + 'px'; marquee.style.height = h + 'px';
-
-        document.querySelectorAll('.napkin').forEach(n => {
-            const r1 = marquee.getBoundingClientRect(); const r2 = n.getBoundingClientRect();
-            const overlap = !(r1.right < r2.left || r1.left > r2.right || r1.bottom < r2.top || r1.top > r2.bottom);
-            if(overlap) { n.classList.add('selected'); selectedNapkins.add(n.id); }
-            else { n.classList.remove('selected'); selectedNapkins.delete(n.id); }
-        });
-    };
-
-    window.onmouseup = () => {
-        isSelecting = false;
-        document.getElementById('selection-marquee').style.display = 'none';
-        if(selectedNapkins.size === 3) showFeedback("🟦 All napkins selected! Now Drag them.", true);
-    };
-
-    // 3. DRAG & DROP LOGIC
-    function allowDrop(ev) { ev.preventDefault(); ev.target.classList.add('drag-over'); }
-    function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
-    function drop(ev) {
-        ev.preventDefault();
-        ev.target.classList.remove('drag-over');
-        const id = ev.dataTransfer.getData("text");
-
-        if (id === 'apple' && ev.target.id === 'slot-fruit' && isWashed) {
-            completeMove(id, ev.target);
-        } else if (id === 'juice' && ev.target.id === 'slot-juice') {
-            completeMove(id, ev.target);
-        } else if (selectedNapkins.size === 3 && ev.target.id === 'slot-napkins') {
-            document.getElementById('napkin-group').style.visibility = 'hidden';
-            ev.target.innerHTML = '<div class="text-5xl">🧻🧻🧻</div>';
-            itemsPlaced++;
-            checkWin();
-        } else {
-            showFeedback("❌ Check your mission instructions!", false);
-        }
-    }
-
-    function completeMove(id, target) {
-        const el = document.getElementById(id);
-        target.innerHTML = `<div class="text-6xl">${el.innerHTML}</div>`;
-        el.style.visibility = 'hidden';
-        itemsPlaced++;
-        checkWin();
-    }
-
-    function checkWin() {
-        if(itemsPlaced === 3) {
-            setTimeout(() => { document.getElementById('success-modal').classList.remove('hidden'); }, 1000);
-        }
-    }
-
-    function showFeedback(text, isSuccess) {
-        const container = document.getElementById('feedback-container');
-        container.innerHTML = '';
-        const div = document.createElement('div');
-        div.className = `feedback-overlay px-8 py-3 rounded-full text-white font-bold bg-indigo-600 shadow-xl`;
-        div.innerHTML = text;
-        container.appendChild(div);
-    }
-  </script>
-</body>
-</html>
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Year 3: Scrolling & Selecting | SmartKids Learning</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    ::selection { background-color: #fbbf24; color: #000; }
-    .scroll-box::-webkit-scrollbar { width: 12px; }
-    .scroll-box::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
-    .scroll-box::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; border: 3px solid #f1f5f9; }
-    .scroll-box::-webkit-scrollbar-thumb:hover { background: #64748b; }
-    .hidden-message { opacity: 0.1; transition: opacity 0.3s; }
-    .hidden-message:hover { opacity: 1; }
-  </style>
-</head>
-<body class="bg-slate-50 text-slate-900 font-sans min-h-screen">
-
-  <nav class="bg-white border-b py-4 px-6 flex justify-between items-center shadow-sm sticky top-0 z-50">
-    <a href="../mouse-practice.html" class="text-indigo-600 font-bold flex items-center gap-2">
-      <span>←</span> Back to Hub
-    </a>
-    <div class="text-slate-500 font-medium text-sm">Year 3: Scrolling & Highlighting</div>
-  </nav>
-
-  <main class="max-w-4xl mx-auto py-12 px-6">
-    <header class="text-center mb-12">
-      <h1 class="text-4xl font-extrabold text-slate-800">Precision Skills 🎯</h1>
-      <p class="text-slate-600 mt-2">Learn to move through long pages and pick out important words.</p>
-    </header>
-
-    <div class="grid md:grid-cols-2 gap-12">
-      
-      <section>
-        <h2 class="text-xl font-bold mb-4 text-indigo-700 flex items-center gap-2">
-          <span>🖱️</span> 1. The Scroll Race
-        </h2>
-        <p class="text-sm text-slate-600 mb-4">Use the <strong>wheel</strong> on your mouse (or two fingers on a touchpad) to scroll to the bottom of this box to find the secret code!</p>
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('over');
         
-        <div class="scroll-box h-64 overflow-y-scroll bg-white border-2 border-slate-200 rounded-2xl p-6 shadow-inner">
-          <p class="mb-4">Keep going...</p>
-          <p class="mb-4">Not there yet...</p>
-          <div class="h-64 flex items-center justify-center text-slate-300">--- Still Scrolling ---</div>
-          <p class="mb-4">Almost there...</p>
-          <div class="h-64 flex items-center justify-center text-slate-300">--- Almost there ---</div>
-          <div class="bg-indigo-100 p-4 rounded-xl text-center border-2 border-dashed border-indigo-300">
-            <span class="text-xs uppercase font-bold text-indigo-500 block mb-1">Secret Code:</span>
-            <span class="text-2xl font-black text-indigo-700 tracking-widest">SCROLL-MASTER</span>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold mb-4 text-amber-600 flex items-center gap-2">
-          <span>✍️</span> 2. Highlight the Hero
-        </h2>
-        <p class="text-sm text-slate-600 mb-4">Click and drag your mouse across the text below to "paint" it. Can you highlight the word <strong>"SUCCESS"</strong>?</p>
+        // Success!
+        dropZone.innerHTML = '<span class="text-6xl mb-2">✅</span><p class="text-emerald-600 font-black">DELIVERED!</p>';
+        cargo.style.display = 'none';
         
-        <div class="bg-white border-2 border-slate-200 rounded-2xl p-8 shadow-sm text-lg leading-relaxed select-text">
-          "The secret to <span class="font-bold">SUCCESS</span> is to never give up. Computers are tools that help us achieve our goals."
-        </div>
+        setTimeout(() => {
+            document.getElementById('success-modal').classList.remove('hidden');
+        }, 500);
+    });
 
-        <div class="mt-6 p-4 bg-amber-50 rounded-xl border border-amber-100">
-          <h4 class="font-bold text-amber-800 text-xs uppercase mb-1">Smart Tip:</h4>
-          <p class="text-[11px] text-amber-700 leading-tight">
-            Double-click a word to select just that word. Triple-click (click 3 times fast) to select the whole paragraph!
-          </p>
-        </div>
-      </section>
-
-    </div>
-
-    <section class="mt-16 bg-slate-900 text-white p-8 rounded-3xl shadow-xl">
-      <h3 class="text-xl font-bold mb-6">Double-Click Challenge</h3>
-      <p class="text-slate-400 mb-6 italic">In a CBT exam, you often have to select an answer. Try to double-click the correct option below:</p>
-      
-      <div class="grid gap-4">
-        <div class="p-4 bg-slate-800 rounded-xl border border-slate-700 hover:border-indigo-500 transition cursor-text">
-          Option A: I use the right-click to highlight text.
-        </div>
-        <div class="p-4 bg-slate-800 rounded-xl border border-slate-700 hover:border-green-500 transition cursor-text">
-          Option B: I use the left-click and drag to highlight text.
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="bg-slate-900 text-slate-400 py-12 px-4 mt-20 border-t border-slate-800">
-    <div class="max-w-5xl mx-auto text-center">
-        <p id="footer-typing" class="text-sm font-mono text-indigo-400 h-6"></p>
-        <p class="text-[10px] uppercase tracking-widest mt-4">© 2026 SmartKids Tech Skills • Nigeria</p>
-    </div>
-  </footer>
-
-  <script>
-    const footerMsg = "Great precision leads to great coding skills...";
-    let charIdx = 0;
-    function type() {
-      const el = document.getElementById("footer-typing");
-      if (charIdx < footerMsg.length) {
-        el.innerHTML += footerMsg.charAt(charIdx);
-        charIdx++;
-        setTimeout(type, 70);
-      }
-    }
-    document.addEventListener("DOMContentLoaded", type);
+    // AUTO-SCROLL logic (Crucial for dragging back up)
+    document.addEventListener('dragover', (e) => {
+        if (e.clientY < 100) {
+            window.scrollBy(0, -10); // Scroll up if dragging near the top
+        }
+    });
   </script>
 </body>
 </html>
