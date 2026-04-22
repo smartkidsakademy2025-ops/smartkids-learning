@@ -92,27 +92,29 @@
         const urlParams = new URLSearchParams(window.location.search);
         let unlocked = urlParams.get('unlocked');
 
+        // 1. Determine current level from URL or Cookie
         if (unlocked) {
             setProgress(unlocked);
         } else {
             unlocked = getProgress();
         }
 
-        const level = parseInt(unlocked);
+        const level = parseInt(unlocked) || 1;
 
-        // Update UI based on level
-        // In mouse-practice.html
-function initHub() {
-    // ... existing logic to get 'level' ...
-
-    // We use "./" to explicitly say "look in the current folder for the mouse directory"
-    if (level >= 2) unlockLevel(2, '🔍', './mouse/year2.html');
-    if (level >= 3) unlockLevel(3, '🎯', './mouse/year3.html');
-}
+        // 2. Update UI based on level (Corrected logic)
+        // We use "./" to explicitly look in the current folder for the mouse directory
+        if (level >= 2) {
+            unlockLevel(2, '🔍', './mouse/year2.html');
+        }
+        if (level >= 3) {
+            unlockLevel(3, '🎯', './mouse/year3.html');
+        }
         
-        // Update Progress Bar
+        // 3. Update Progress Bar
         const bar = document.getElementById('progress-bar');
-        bar.style.width = (level === 1 ? '33%' : level === 2 ? '66%' : '100%');
+        if (bar) {
+            bar.style.width = (level === 1 ? '33%' : level === 2 ? '66%' : '100%');
+        }
     }
 
     function unlockLevel(id, icon, url) {
@@ -120,17 +122,20 @@ function initHub() {
         const btn = document.getElementById(`btn-${id}`);
         const iconEl = document.getElementById(`icon-${id}`);
 
-        card.classList.remove('locked', 'bg-slate-50', 'border-slate-200');
-        card.classList.add('bg-white', 'border-amber-400', 'shadow-xl', 'hover:-translate-y-2');
-        iconEl.innerText = icon;
-        btn.disabled = false;
-        btn.innerText = "START MISSION";
-        btn.classList.remove('bg-slate-300', 'cursor-not-allowed');
-        btn.classList.add('bg-slate-800', 'hover:bg-amber-500');
-        btn.onclick = () => window.location.href = url;
+        // Safety check to ensure elements exist
+        if (card && btn && iconEl) {
+            card.classList.remove('locked', 'bg-slate-50', 'border-slate-200');
+            card.classList.add('bg-white', 'border-amber-400', 'shadow-xl', 'hover:-translate-y-2');
+            iconEl.innerText = icon;
+            btn.disabled = false;
+            btn.innerText = "START MISSION";
+            btn.classList.remove('bg-slate-300', 'cursor-not-allowed');
+            btn.classList.add('bg-slate-800', 'hover:bg-amber-500');
+            btn.onclick = () => window.location.href = url;
+        }
     }
 
     window.onload = initHub;
-  </script>
+</script>
 </body>
 </html>
