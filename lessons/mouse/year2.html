@@ -2,121 +2,118 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Year 2: Ocean Scroller | SmartKids</title>
+  <title>Year 2: Double-Click Master | SmartKids</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { scroll-behavior: smooth; }
-    .ocean-layer { height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; }
-    #sub { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: transform 0.2s; z-index: 50; pointer-events: none; }
-    
-    @keyframes slideUp {
-      0% { transform: translateY(100%); opacity: 0; }
-      10% { transform: translateY(0); opacity: 1; }
-      90% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(100%); opacity: 0; }
+    .hole { background: #3d2b1f; border-radius: 50%; box-shadow: inset 0 10px 0 rgba(0,0,0,0.5); }
+    .mole { transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translateY(100%); cursor: pointer; user-select: none; }
+    .mole.up { transform: translateY(0); }
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
-    .feedback-overlay { animation: slideUp 2.5s forwards; }
+    .score-pop { animation: pop 0.3s ease; }
   </style>
 </head>
-<body class="bg-slate-900 overflow-x-hidden">
+<body class="bg-emerald-500 min-h-screen overflow-hidden font-sans">
 
   <div id="diy-manual" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-[100] flex items-center justify-center p-6">
-    <div class="bg-white max-w-md rounded-[3rem] p-10 shadow-2xl border-4 border-blue-500">
-      <div class="text-4xl mb-4">🌊</div>
-      <h2 class="text-3xl font-black mb-4 text-slate-800">Mission: Ocean Elevator</h2>
+    <div class="bg-white max-w-md rounded-[3rem] p-10 shadow-2xl border-4 border-amber-400 text-center">
+      <div class="text-6xl mb-4">🐭</div>
+      <h2 class="text-3xl font-black mb-4 text-slate-800">Double-Click Master</h2>
       <div class="space-y-4 mb-8 text-slate-600">
-        <p>Your mouse wheel is like an <b>elevator</b> for the screen!</p>
-        <ul class="space-y-2 font-medium">
-            <li class="flex gap-2"><span>🖱️</span> <b>Roll Down:</b> To dive deeper.</li>
-            <li class="flex gap-2"><span>🖱️</span> <b>Roll Up:</b> To return to the surface.</li>
-            <li class="flex gap-2 text-rose-500 font-bold"><span>🚫</span> No clicking until you find the treasure!</li>
-        </ul>
+        <p>A single click won't work here! You must click <b>twice very fast</b> to catch the moles.</p>
+        <div class="bg-slate-100 p-4 rounded-2xl font-mono text-sm">Click-Click! 🖱️🖱️</div>
       </div>
-      <button onclick="document.getElementById('diy-manual').remove()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-xl hover:scale-105 transition-all">Dive In!</button>
+      <button onclick="startGame()" class="w-full bg-emerald-600 text-white py-4 rounded-2xl font-bold text-xl hover:scale-105 transition-all">Start Hunting!</button>
     </div>
   </div>
 
-  <div id="sub" class="text-7xl">🚢</div>
-
-  <div class="ocean-layer bg-sky-400">
-    <div class="text-white text-center">
-        <h3 class="text-3xl font-black">Sunlight Zone</h3>
-        <p class="font-bold">Scroll DOWN to dive!</p>
-        <div class="text-6xl mt-4 animate-bounce">⬇️</div>
-    </div>
+  <div class="absolute top-10 left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md px-10 py-4 rounded-full border border-white/30 text-white font-black text-2xl flex gap-8">
+    <div>MOLES: <span id="score" class="text-amber-300">0</span> / 10</div>
   </div>
 
-  <div class="ocean-layer bg-blue-600">
-    <div class="text-white text-center">
-        <h3 class="text-3xl font-black">Twilight Zone</h3>
-        <p>Keep scrolling... it's getting dark!</p>
-        <div class="text-7xl mt-4">🐟</div>
-    </div>
+  <div class="grid grid-cols-3 gap-12 max-w-4xl mx-auto mt-40 px-6">
+    <div class="hole h-32 md:h-48 relative overflow-hidden"><div class="mole text-7xl md:text-9xl absolute inset-0 flex justify-center items-center">🐹</div></div>
+    <div class="hole h-32 md:h-48 relative overflow-hidden"><div class="mole text-7xl md:text-9xl absolute inset-0 flex justify-center items-center">🐹</div></div>
+    <div class="hole h-32 md:h-48 relative overflow-hidden"><div class="mole text-7xl md:text-9xl absolute inset-0 flex justify-center items-center">🐹</div></div>
+    <div class="hole h-32 md:h-48 relative overflow-hidden"><div class="mole text-7xl md:text-9xl absolute inset-0 flex justify-center items-center">🐹</div></div>
+    <div class="hole h-32 md:h-48 relative overflow-hidden"><div class="mole text-7xl md:text-9xl absolute inset-0 flex justify-center items-center">🐹</div></div>
+    <div class="hole h-32 md:h-48 relative overflow-hidden"><div class="mole text-7xl md:text-9xl absolute inset-0 flex justify-center items-center">🐹</div></div>
   </div>
 
-  <div class="ocean-layer bg-blue-900">
-    <div class="text-white text-center">
-        <h3 class="text-3xl font-black">Midnight Zone</h3>
-        <p>Almost there! Watch for the treasure.</p>
-        <div class="text-7xl mt-4">🐙</div>
-    </div>
-  </div>
-
-  <div id="goal-zone" class="ocean-layer bg-slate-950">
-    <div class="text-center">
-        <div id="treasure" class="text-[120px] cursor-pointer hover:scale-110 transition-transform active:scale-95">🎁</div>
-        <p class="text-amber-400 font-black text-2xl mt-4 uppercase tracking-tighter">Treasure Detected!</p>
-        <p class="text-white text-sm opacity-50">Click once to open!</p>
-    </div>
-  </div>
-
-  <div id="feedback-container" class="fixed inset-x-0 bottom-10 flex justify-center pointer-events-none z-50"></div>
-
-  <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/95 flex items-center justify-center z-50 p-6 text-center">
-    <div class="bg-white p-12 rounded-[3.5rem] max-w-sm border-b-8 border-blue-500">
-        <div class="text-7xl mb-4">💎🏆</div>
-        <h2 class="text-3xl font-black mb-2 text-slate-800">Deep Sea Master!</h2>
-        <p class="text-slate-500 mb-8">You controlled the scroll wheel perfectly. Year 3 is now unlocked!</p>
-        
+  <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/95 flex items-center justify-center z-[110] p-6 text-center">
+    <div class="bg-white p-12 rounded-[3.5rem] max-w-sm border-b-8 border-emerald-500">
+        <div class="text-7xl mb-4">👑🐭</div>
+        <h2 class="text-3xl font-black mb-2 text-slate-800">Double-Click Master!</h2>
+        <p class="text-slate-500 mb-8">Your fingers are lightning fast. Year 3 is waiting for you!</p>
         <button onclick="window.location.href='../mouse-practice.html?unlocked=3'" 
-                class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-lg">
+                class="w-full bg-emerald-600 text-white py-4 rounded-2xl font-black text-xl hover:scale-105 transition-all">
             BACK TO ROADMAP 🚀
         </button>
     </div>
   </div>
 
   <script>
-    let feedbackGiven = false;
+    const moles = document.querySelectorAll('.mole');
+    const scoreBoard = document.getElementById('score');
+    let score = 0;
+    let lastMole;
+    let timeUp = false;
 
-    window.onscroll = function() {
-        const scrollPos = window.scrollY;
-        const sub = document.getElementById('sub');
-        
-        // Visual submarine tilt
-        sub.style.transform = `translate(-50%, -50%) rotate(${scrollPos * 0.05}deg)`;
-
-        if(scrollPos > 500 && !feedbackGiven) {
-            showFeedback("✨ Great scrolling! Keep going deeper.", true);
-            feedbackGiven = true;
-        }
-    };
-
-    document.getElementById('treasure').onclick = function() {
-        this.innerHTML = '💎';
-        this.style.filter = "drop-shadow(0 0 20px #fbbf24)";
-        setTimeout(() => {
-            document.getElementById('success-modal').classList.remove('hidden');
-        }, 800);
-    };
-
-    function showFeedback(text, isSuccess) {
-        const container = document.getElementById('feedback-container');
-        container.innerHTML = '';
-        const div = document.createElement('div');
-        div.className = `feedback-overlay px-8 py-3 rounded-full text-white font-bold bg-blue-500 shadow-xl border-2 border-white/20`;
-        div.innerHTML = text;
-        container.appendChild(div);
+    function startGame() {
+        document.getElementById('diy-manual').remove();
+        score = 0;
+        scoreBoard.innerText = 0;
+        peep();
     }
+
+    function randomTime(min, max) {
+        return Math.round(Math.random() * (max - min) + min);
+    }
+
+    function randomMole(moles) {
+        const idx = Math.floor(Math.random() * moles.length);
+        const mole = moles[idx];
+        if (mole === lastMole) return randomMole(moles);
+        lastMole = mole;
+        return mole;
+    }
+
+    function peep() {
+        const time = randomTime(800, 1500);
+        const mole = randomMole(moles);
+        mole.classList.add('up');
+        setTimeout(() => {
+            mole.classList.remove('up');
+            if (score < 10) peep();
+        }, time);
+    }
+
+    moles.forEach(mole => mole.ondblclick = function() {
+        if(!this.classList.contains('up')) return;
+        score++;
+        this.classList.remove('up');
+        this.innerHTML = '✨';
+        scoreBoard.classList.add('score-pop');
+        scoreBoard.innerText = score;
+
+        setTimeout(() => {
+            this.innerHTML = '🐹';
+            scoreBoard.classList.remove('score-pop');
+            if(score >= 10) {
+                document.getElementById('success-modal').classList.remove('hidden');
+            }
+        }, 300);
+    });
+
+    // Penalize for single clicks to force the lesson!
+    moles.forEach(mole => mole.onclick = function() {
+        if(this.classList.contains('up')) {
+            console.log("Too slow! Remember: DOUBLE click!");
+        }
+    });
   </script>
 </body>
 </html>
