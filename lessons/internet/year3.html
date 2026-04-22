@@ -112,6 +112,27 @@
     }
 
     function sortMail(choice) {
+    const display = document.getElementById('mail-display');
+    
+    if (choice === emails[current].type) {
+        // SUCCESS: Flash Green
+        display.style.border = "8px solid #10b981"; 
+        score++;
+        document.getElementById('score').innerText = `${score}/10`;
+    } else {
+        // ERROR: Flash Red and Shake
+        display.style.border = "8px solid #f43f5e";
+        display.classList.add('animate-shake'); 
+    }
+
+    setTimeout(() => {
+        display.style.border = "none";
+        display.classList.remove('animate-shake');
+        current++;
+        // ... rest of your logic
+    }, 500);
+}
+    /*function sortMail(choice) {
         if (choice === emails[current].type) {
             score++;
             document.getElementById('score').innerText = `${score}/10`;
@@ -123,7 +144,7 @@
         } else {
             renderMail();
         }
-    }
+    }*/
 
     // Start
     renderMail();
