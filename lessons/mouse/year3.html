@@ -73,9 +73,9 @@
         <h2 class="text-3xl font-black mb-2 text-slate-800">Master of Mouse!</h2>
         <p class="text-slate-500 mb-8 leading-relaxed">You delivered all the cargo perfectly. You have officially mastered clicking, scrolling, and dragging!</p>
         <button onclick="window.location.href='../mouse-practice.html?unlocked=13'" 
-                class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-xl">
-            CLAIM DIPLOMA 🎓
-        </button>
+        class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-xl hover:scale-105 transition-all shadow-xl">
+    CLAIM DIPLOMA 🎓
+</button>
     </div>
   </div>
 
@@ -171,6 +171,34 @@
     window.onload = () => {
         updateCargo();
     };
+
+    function initHub() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let unlocked = urlParams.get('unlocked');
+
+    if (unlocked === '13') {
+        // 1. Save the final progress
+        setProgress('13');
+        
+        // 2. Visual "Loading" effect so they know something big is happening
+        document.body.innerHTML = `
+            <div class="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white font-sans">
+                <div class="text-9xl animate-bounce">🎓</div>
+                <h1 class="text-4xl font-black mt-8">GENERATING DIPLOMA...</h1>
+                <p class="text-slate-400 mt-2">Preparing your graduation ceremony!</p>
+            </div>
+        `;
+
+        // 3. Redirect to the summary after a short delay
+        setTimeout(() => {
+            window.location.href = "mouse/summary.html"; 
+        }, 1500);
+        
+        return; // Stop the rest of the script
+    }
+
+    // ... rest of your existing initHub() code for levels 1, 2, and 3 ...
+}
   </script>
 </body>
 </html>
