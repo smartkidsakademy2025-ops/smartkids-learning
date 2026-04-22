@@ -2,446 +2,179 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mouse Roadmap | SmartKids</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-    .item-open .accordion-content { max-height: 500px; padding: 20px; }
-    .item-open .chevron { transform: rotate(180deg); }
-    .locked-phase { opacity: 0.6; filter: grayscale(1); cursor: not-allowed; }
-    .phase-badge { font-size: 10px; padding: 2px 8px; border-radius: 99px; font-weight: 800; }
-  </style>
-</head>
-<body class="bg-slate-50 min-h-screen p-4 md:p-12 font-sans">
-
-  <div class="max-w-4xl mx-auto">
-    <header class="bg-white p-8 rounded-[3rem] shadow-xl border-b-8 border-amber-200 mb-10 flex justify-between items-center">
-      <div>
-        <h1 class="text-3xl font-black text-slate-800">Mouse Mastery Roadmap 🖱️</h1>
-        <p class="text-slate-500">From Clicker Rookie to Interface Architect.</p>
-      </div>
-      <div class="text-right">
-        <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Graduation Progress</div>
-        <div class="w-32 h-4 bg-slate-100 rounded-full overflow-hidden border">
-            <div id="prog-bar" class="bg-amber-400 h-full transition-all duration-1000" style="width: 8%"></div>
-        </div>
-      </div>
-    </header>
-
-    <div class="space-y-4" id="roadmap">
-      
-      <div id="phase-1" class="bg-white rounded-[2rem] shadow-sm border-2 border-amber-400 overflow-hidden">
-        <button onclick="togglePhase(1)" class="w-full p-6 text-left flex justify-between items-center group">
-          <div class="flex items-center gap-4">
-            <span class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-black text-sm">01</span>
-            <div>
-              <h3 class="font-black text-xl text-slate-800">Phase 1: Basic Coordination</h3>
-              <span class="phase-badge bg-green-100 text-green-700">UNLOCKED</span>
-            </div>
-          </div>
-          <span class="chevron transition-transform">▼</span>
-        </button>
-        <div class="accordion-content bg-amber-50/30 border-t border-amber-100">
-          <div class="grid gap-4">
-            <a href="mouse/year1.html" class="flex items-center justify-between p-4 bg-white rounded-2xl border hover:border-amber-400 transition-all">
-                <span class="font-bold">Year 1: Balloon Pop (Clicking)</span>
-                <span class="text-amber-500 font-black">PLAY →</span>
-            </a>
-            <a href="mouse/year2.html" id="link-y2" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
-                <span class="font-bold">Year 2: Scroll Racer (Control)</span>
-                <span id="lock-y2">🔒 Locked</span>
-            </a>
-            <a href="mouse/year3.html" id="link-y3" class="flex items-center justify-between p-4 bg-white rounded-2xl border opacity-50 pointer-events-none">
-                <span class="font-bold">Year 3: Menu Rescue (Right-Click)</span>
-                <span id="lock-y3">🔒 Locked</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div id="phase-2" class="locked-phase bg-white rounded-[2rem] shadow-sm border-2 border-slate-100 overflow-hidden">
-        <button class="w-full p-6 text-left flex justify-between items-center">
-          <div class="flex items-center gap-4">
-            <span class="w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-black text-sm">02</span>
-            <div>
-              <h3 class="font-black text-xl text-slate-400">Phase 2: Speed & Dragging</h3>
-              <span class="phase-badge bg-slate-100 text-slate-400">LOCKED</span>
-            </div>
-          </div>
-          <span>🔒</span>
-        </button>
-      </div>
-
-      <div id="phase-3" class="locked-phase bg-white rounded-[2rem] shadow-sm border-2 border-slate-100 overflow-hidden">
-        <button class="w-full p-6 text-left flex justify-between items-center">
-            <div class="flex items-center gap-4">
-              <span class="w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-black text-sm">03</span>
-              <h3 class="font-black text-xl text-slate-400">Phase 3: The Graduation Project</h3>
-            </div>
-            <span>🔒</span>
-        </button>
-      </div>
-
-    </div>
-
-    <div id="grad-box" class="hidden mt-10 bg-slate-900 text-white p-10 rounded-[3rem] text-center shadow-2xl">
-        <h2 class="text-3xl font-black mb-4">🎓 Ready to Graduate?</h2>
-        <p class="text-slate-400 mb-6 italic">"You have mastered the hand-eye coordination required to navigate any professional software."</p>
-        <button class="bg-amber-400 text-black px-10 py-4 rounded-full font-black hover:scale-105 transition-all">Claim Your Certificate</button>
-    </div>
-  </div>
-
-  <script>
-    function togglePhase(id) {
-        const el = document.getElementById(`phase-${id}`);
-        el.classList.toggle('item-open');
-    }
-
-    // --- 1. COOKIE HELPER FUNCTIONS ---
-function setProgress(level) {
-    const d = new Date();
-    // Set expiry to 24 hours from now
-    d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
-    document.cookie = "smartkids_mouse=" + level + ";expires=" + d.toUTCString() + ";path=/";
-}
-
-function getProgress() {
-    let name = "smartkids_mouse=";
-    let ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-        let c = ca[i].trim();
-        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
-    }
-    return null;
-}
-
-// --- 2. THE UPDATED LOCKING LOGIC ---
-const urlParams = new URLSearchParams(window.location.search);
-let unlocked = urlParams.get('unlocked');
-
-// If the URL has an unlock code, save it to the cookie!
-if (unlocked) {
-    setProgress(unlocked);
-} else {
-    // If no URL code, check if we have one saved from earlier today
-    unlocked = getProgress();
-}
-
-// Convert to number for comparison
-const currentLevel = parseInt(unlocked) || 1;
-
-// --- 3. UI UPDATES ---
-if (currentLevel >= 2) {
-    const y2 = document.getElementById('link-y2');
-    y2.classList.remove('opacity-50', 'pointer-events-none');
-    y2.classList.add('border-amber-400');
-    document.getElementById('lock-y2').innerHTML = '<span class="text-green-500">PLAY →</span>';
-    document.getElementById('prog-bar').style.width = '16%';
-}
-
-if (currentLevel >= 3) {
-    const y3 = document.getElementById('link-y3');
-    y3.classList.remove('opacity-50', 'pointer-events-none');
-    y3.classList.add('border-amber-400');
-    document.getElementById('lock-y3').innerHTML = '<span class="text-green-500">PLAY →</span>';
-    document.getElementById('prog-bar').style.width = '25%';
-}
-
-if (currentLevel >= 13) {
-    // Graduation Logic
-    document.getElementById('prog-bar').style.width = '100%';
-    document.getElementById('grad-box').classList.remove('hidden');
-}
-    
-    /*
-    // LOCKING LOGIC BASED ON URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const unlocked = urlParams.get('unlocked');
-
-    if (unlocked >= 2) {
-        const y2 = document.getElementById('link-y2');
-        y2.classList.remove('opacity-50', 'pointer-events-none');
-        y2.classList.add('border-amber-400');
-        document.getElementById('lock-y2').innerHTML = '<span class="text-green-500">PLAY →</span>';
-        document.getElementById('prog-bar').style.width = '16%';
-    }
-    
-    if (unlocked >= 3) {
-        const y3 = document.getElementById('link-y3');
-        y3.classList.remove('opacity-50', 'pointer-events-none');
-        y3.classList.add('border-amber-400');
-        document.getElementById('lock-y3').innerHTML = '<span class="text-green-500">PLAY →</span>';
-        document.getElementById('prog-bar').style.width = '25%';
-    }
-
-    // Logic for Graduation would trigger when unlocked === '13'*/
-  </script>
-</body>
-</html>
-
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Practice Zone: Mouse | SmartKids</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .locked { opacity: 0.5; pointer-events: none; filter: grayscale(1); }
-    .unlocked-pulse { border-color: #fbbf24 !important; animation: pulse-border 2s infinite; }
-    @keyframes pulse-border {
-      0% { border-color: #fbbf24; }
-      50% { border-color: #fef3c7; }
-      100% { border-color: #fbbf24; }
-    }
-  </style>
-</head>
-<body class="bg-amber-50 min-h-screen p-6 md:p-12 font-sans">
-
-  <div class="max-w-5xl mx-auto">
-    <div class="flex justify-between items-center mb-8">
-        <a href="mouse-theory.html" class="inline-flex items-center gap-2 text-amber-600 font-bold hover:underline">
-          <span>📖</span> Back to Theory
-        </a>
-        <div id="rank-badge" class="bg-white px-6 py-2 rounded-full shadow-sm border-2 border-amber-200 font-black text-amber-600 uppercase tracking-widest text-sm">
-            Rank: Beginner
-        </div>
-    </div>
-
-    <header class="mb-12">
-        <h1 class="text-4xl font-black text-slate-800">Mouse Training Missions 🖱️</h1>
-        <p class="text-slate-500 mt-2">Complete each mission to unlock advanced mouse powers.</p>
-    </header>
-
-    <div class="grid md:grid-cols-3 gap-8">
-      
-      <div id="card-1" class="bg-white p-8 rounded-[3rem] shadow-xl border-4 border-amber-400 flex flex-col transition-all hover:scale-105">
-        <div class="w-16 h-16 bg-amber-100 rounded-2xl flex items-center justify-center text-4xl mb-6">🎯</div>
-        <h3 class="text-2xl font-black text-slate-800 mb-2">Year 1: Accuracy</h3>
-        <p class="text-slate-500 text-sm mb-8 flex-grow">Pop the bubbles as fast as you can! Tests your index finger speed.</p>
-        <a href="year1.html" class="block text-center bg-amber-500 text-white py-4 rounded-2xl font-bold shadow-lg shadow-amber-200">Start Mission</a>
-      </div>
-
-      <div id="card-2" class="locked bg-white p-8 rounded-[3rem] shadow-xl border-4 border-transparent flex flex-col transition-all">
-        <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center text-4xl mb-6" id="icon-2">🔒</div>
-        <h3 class="text-2xl font-black text-slate-800 mb-2">Year 2: Control</h3>
-        <p class="text-slate-500 text-sm mb-8 flex-grow">Navigate the deep sea using only your scroll wheel. No clicking allowed!</p>
-        <a href="year2.html" class="block text-center bg-amber-600 text-white py-4 rounded-2xl font-bold">Locked</a>
-      </div>
-
-      <div id="card-3" class="locked bg-white p-8 rounded-[3rem] shadow-xl border-4 border-transparent flex flex-col transition-all">
-        <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center text-4xl mb-6" id="icon-3">🔒</div>
-        <h3 class="text-2xl font-black text-slate-800 mb-2">Year 3: Mastery</h3>
-        <p class="text-slate-500 text-sm mb-8 flex-grow">Master Right-Click menus and Drag-and-Drop to move files.</p>
-        <a href="year3.html" class="block text-center bg-amber-700 text-white py-4 rounded-2xl font-bold">Locked</a>
-      </div>
-
-    </div>
-
-    <div class="mt-16 bg-white p-8 rounded-[2.5rem] border-2 border-slate-100 flex items-center gap-6">
-        <div class="text-5xl">⚡</div>
-        <div>
-            <h4 class="font-black text-slate-800">Pro Tip:</h4>
-            <p class="text-slate-500">Hold your mouse gently like a small bird. If you squeeze too hard, your hand will get tired!</p>
-        </div>
-    </div>
-  </div>
-
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const unlockLevel = urlParams.get('unlocked');
-    const badge = document.getElementById('rank-badge');
-
-    if (unlockLevel === '2') {
-        unlock(2, '🌊', 'Start Mission');
-        badge.innerText = "Rank: Intermediate";
-        badge.classList.replace('text-amber-600', 'text-blue-600');
-    } else if (unlockLevel === '3') {
-        unlock(2, '🌊', 'Mission Done');
-        unlock(3, '🏆', 'Start Mission');
-        badge.innerText = "Rank: Mouse Master";
-        badge.classList.replace('text-amber-600', 'text-indigo-600');
-    }
-
-    function unlock(level, icon, btnText) {
-        const card = document.getElementById(`card-${level}`);
-        const btn = card.querySelector('a');
-        const iconEl = document.getElementById(`icon-${level}`);
-
-        card.classList.remove('locked');
-        card.classList.add('unlocked-pulse');
-        iconEl.innerText = icon;
-        btn.innerText = btnText;
-    }
-  </script>
-</body>
-</html>
-
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mouse Practice Hub | SmartKids Learning</title>
+  <title>Keyboarding Hub | SmartKids</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1364156929469545" crossorigin="anonymous"></script>
   <style>
-    .accordion-body { max-height: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0, 1, 0, 1); }
-    .accordion-body.open { max-height: 1000px; transition: all 0.5s cubic-bezier(1, 0, 1, 0); }
-    .rotate-icon { transition: transform 0.3s ease; }
-    .lesson-btn:hover { transform: translateX(8px); }
+    /* Content Shadow & Separation */
+    .master-container {
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.05), 0 0 100px rgba(0, 0, 0, 0.02);
+    }
+    .year-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .locked { filter: grayscale(1); opacity: 0.6; cursor: not-allowed; }
+    .unlocked:hover { transform: translateY(-10px); }
+    
+    /* Custom Scrollbar for a premium feel */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans">
+<body class="bg-slate-200 text-slate-900 font-sans min-h-screen py-0 md:py-12 px-0 md:px-6">
 
-  <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50 shadow-sm">
-    <div class="max-w-5xl mx-auto flex justify-between items-center">
-      <a href="../index.html" class="flex items-center gap-2">
-        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">SK</div>
-        <span class="font-bold text-xl tracking-tight text-slate-800">SmartKids</span>
-      </a>
-      <div class="flex items-center gap-4">
-        <a href="../lessons.html" class="text-sm font-semibold text-blue-600">← All Lessons</a>
-      </div>
-    </div>
-  </nav>
-
-  <header class="bg-gradient-to-b from-blue-600 to-indigo-700 text-white py-16 px-6 text-center">
-    <div class="max-w-3xl mx-auto">
-      <div class="inline-block bg-blue-400/30 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4">Practical Skills</div>
-      <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Master Your Mouse</h1>
-      <p class="text-blue-100 text-lg">Choose your level below and start practicing your precision, speed, and control.</p>
-    </div>
-  </header>
-
-  <main class="max-w-4xl mx-auto py-12 px-6 min-h-screen">
+  <div class="max-w-6xl mx-auto bg-white min-h-screen md:rounded-[4rem] overflow-hidden master-container border border-white">
     
-    <div class="grid gap-6 mb-12">
-        <div class="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-2xl">
-            <h3 class="font-bold text-blue-800 mb-1">Why Practice?</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">Using a mouse is like using a pencil. At first, it feels strange, but with practice, it becomes natural. High-level tech jobs like Graphic Design and Engineering require expert mouse control!</p>
-        </div>
-    </div>
+    <header class="py-16 px-6 text-center bg-slate-50/50 border-b-2 border-dashed border-slate-200">
+        <div class="inline-block bg-blue-600 text-white px-4 py-1 rounded-full text-xs font-black uppercase tracking-[0.2em] mb-4">Level Up Your Skills</div>
+        <h1 class="text-5xl font-black text-slate-800 mb-3 tracking-tighter">Keyboarding Academy</h1>
+        <p class="text-slate-400 font-medium text-lg">Master the keys, unlock your future.</p>
+    </header>
 
-    <div id="accordion" class="space-y-4">
+    <main class="py-12 px-8 md:px-16">
+        
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-xl font-black text-slate-400 uppercase tracking-widest">Foundations</h2>
+            <div class="h-[2px] flex-grow bg-slate-100"></div>
         </div>
-  </main>
+        <div id="tier-foundations" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-16"></div>
 
-  <footer class="bg-slate-900 text-slate-400 py-12 px-4 mt-20">
-    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-b border-slate-800 pb-8">
-      <div class="text-center md:text-left">
-        <div class="flex items-center justify-center md:justify-start gap-2 text-white mb-2">
-          <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold text-xs">SK</div>
-          <span class="font-bold tracking-tight text-lg text-white">SmartKids Learning</span>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-xl font-black text-slate-400 uppercase tracking-widest">Professional</h2>
+            <div class="h-[2px] flex-grow bg-slate-100"></div>
         </div>
-        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold mb-3 italic">Empowering Nigeria's Future Tech Giants</p>
-        <div class="h-5">
-          <p id="footer-typing" class="text-sm font-mono text-blue-400"></p>
+        <div id="tier-professional" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-16"></div>
+
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-xl font-black text-slate-400 uppercase tracking-widest">Expert & Graduation</h2>
+            <div class="h-[2px] flex-grow bg-slate-100"></div>
         </div>
-      </div>
-      <nav class="flex gap-8 text-sm font-medium">
-        <a href="../about.html" class="hover:text-white transition-colors">About</a>
-        <a href="../privacy.html" class="hover:text-white transition-colors">Privacy</a>
-      </nav>
+        <div id="tier-expert" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-16"></div>
+
+        <div id="grad-container" class="mt-12 text-center hidden">
+            <button onclick="document.getElementById('grad-box').style.display='flex'" class="bg-amber-400 text-black px-12 py-6 rounded-[2.5rem] font-black text-2xl shadow-2xl hover:scale-105 transition-all border-b-8 border-amber-600 active:border-b-0 active:translate-y-2">
+                🎓 CLAIM YOUR DIPLOMA
+            </button>
+        </div>
+
+    </main>
+
+    <footer class="py-8 text-center text-slate-400 text-xs font-medium border-t border-slate-50">
+        &copy; 2026 SmartKids Academy • Secure Student Portal
+    </footer>
+  </div>
+
+  <div id="grad-box" class="hidden fixed inset-0 bg-slate-900/95 backdrop-blur-xl z-[200] flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-4xl rounded-[4rem] p-8 md:p-16 border-[16px] border-double border-amber-400 shadow-[0_0_100px_rgba(251,191,36,0.4)] text-center relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-amber-400 rounded-full flex items-center justify-center text-white font-black text-6xl rotate-12 shadow-xl border-8 border-white">100%</div>
+
+        <div class="mb-6">
+            <span class="text-xs font-black uppercase tracking-[0.5em] text-slate-400">Official Certification</span>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-800 mt-2 tracking-tighter">DIPLOMA OF MASTERY</h1>
+            <p class="text-slate-500 font-medium italic mt-2">Class of 2026</p>
+        </div>
+
+        <div class="my-12 py-8 border-y-2 border-slate-100">
+            <p class="text-2xl text-slate-700 font-medium">This certifies that</p>
+            <div class="text-5xl md:text-7xl font-serif font-black text-blue-600 my-4 tracking-tight">The Digital Native</div>
+            <p class="text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
+                Has successfully completed all <b>12 Levels</b> of the Keyboarding Academy, demonstrating elite speed, accuracy, and professional navigation.
+            </p>
+        </div>
+
+        <div class="flex justify-around items-end mb-12">
+            <div class="text-center">
+                <div class="w-32 h-[2px] bg-slate-300 mb-2"></div>
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Academy Director</p>
+            </div>
+            <div class="text-6xl hidden md:block">🎓</div>
+            <div class="text-center">
+                <div class="w-32 h-[2px] bg-slate-300 mb-2"></div>
+                <p class="text-[10px] font-bold text-slate-400 uppercase">Verification ID: SK-2026</p>
+            </div>
+        </div>
+
+        <button onclick="document.getElementById('grad-box').style.display='none'" class="bg-slate-800 text-white px-10 py-4 rounded-2xl font-black hover:scale-105 transition-all">CLOSE DIPLOMA</button>
     </div>
-    <p class="text-center mt-8 text-[10px] uppercase tracking-widest text-slate-600">© 2026 SmartKids Tech Skills • Nigeria</p>
-  </footer>
+  </div>
 
   <script>
-    // Logic for Accordion and Footer
-    document.addEventListener("DOMContentLoaded", () => {
-      const container = document.getElementById("accordion");
-      const years = [
-        {id:"year1", name:"Year 1", topics:["Clicking Basics","Double-Clicking","Mouse Movement"]},
-        {id:"year2", name:"Year 2", topics:["Drag and Drop","Right-Click Basics","Click and Hold"]},
-        {id:"year3", name:"Year 3", topics:["Text Selection","Scrolling","Simple Shapes Drawing"]},
-        {id:"year4", name:"Year 4", topics:["File Selection","Resizing Windows","Gaming Controls"]},
-        {id:"year5", name:"Year 5", topics:["Using Toolbars","Right-Click Advanced","Shape Manipulation"]},
-        {id:"year6", name:"Year 6", topics:["Copy, Cut, Paste","Advanced Drag-and-Drop","Multi-Window Nav"]},
-        {id:"year7", name:"Year 7", topics:["Drawing Tools","Precision Clicking","Scroll and Zoom"]},
-        {id:"year8", name:"Year 8", topics:["Spreadsheet Nav","Advanced Gaming","Image Editing"]},
-        {id:"year9", name:"Year 9", topics:["Graphic Design Tools","Multi-Select","Timeline Nav"]},
-        {id:"year10", name:"Year 10", topics:["3D Object Control","Layer Controls","Precision Selection"]},
-        {id:"year11", name:"Year 11", topics:["Professional Design","Complex Spreadsheets","CAD Skills"]},
-        {id:"year12", name:"Year 12", topics:["Multimedia Editing","UI/UX Prototyping","High-Speed Tasks"]},
-        {
-  id: "graduation", 
-  name: "🎓 GRADUATION", 
-  topics: ["Final Assessment", "Certificate Generation", "Course Summary"],
-  link: "graduation.html",
-  isSpecial: true // We can use this to give it a unique gold color
-}
-      ];
+    const years = [
+        { id: 1, name: "Geography", icon: "🗺️" },
+        { id: 2, name: "Home Row", icon: "🏠" },
+        { id: 3, name: "Top Reach", icon: "🚀" },
+        { id: 4, name: "Bottom Curl", icon: "⚓" },
+        { id: 5, name: "Power Keys", icon: "⚡" },
+        { id: 6, name: "Shift Rule", icon: "⬆️" },
+        { id: 7, name: "Symbols", icon: "⌨️" },
+        { id: 8, name: "Common Words", icon: "📝" },
+        { id: 9, name: "Shortcuts", icon: "✂️" },
+        { id: 10, name: "The Flow", icon: "🌊" },
+        { id: 11, name: "Navigation", icon: "🧭" },
+        { id: 12, name: "Dev Mode", icon: "💻" }
+    ];
 
-      years.forEach(year => {
-        const card = document.createElement("div");
-        card.className = "bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden";
+    function setCookie(name, value) {
+        const d = new Date();
+        d.setTime(d.getTime() + (24*60*60*1000));
+        document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/;SameSite=Lax";
+    }
 
-        const header = document.createElement("button");
-        header.className = "w-full flex justify-between items-center px-6 py-5 text-lg font-bold text-slate-700 hover:bg-slate-50 transition-colors";
-        header.innerHTML = `
-          <span class="flex items-center gap-3">
-            <span class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full text-xs flex items-center justify-center">${year.id.replace('year','')}</span>
-            ${year.name}
-          </span>
-          <span class="rotate-icon text-slate-400 font-light text-2xl">+</span>
-        `;
+    function getCookie(name) {
+        let nameEQ = name + "=";
+        let ca = document.cookie.split(';');
+        for(let i=0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
 
-        const body = document.createElement("div");
-        body.className = "accordion-body bg-slate-50 px-6";
+    function loadHub() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let unlockedParam = urlParams.get('unlocked');
+        
+        if (unlockedParam) {
+            setCookie('typing_progress', unlockedParam);
+        }
 
-        body.innerHTML = `
-          <div class="py-4 grid gap-3">
-            ${year.topics.map(topic => `
-              <a href="mouse/${year.id}.html" class="lesson-btn flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:border-blue-300 transition-all group">
-                <span class="text-xl">🖱️</span>
-                <span class="text-sm font-semibold text-slate-700 group-hover:text-blue-600">${topic}</span>
-              </a>
-            `).join("")}
-          </div>
-        `;
+        const progress = parseInt(unlockedParam || getCookie('typing_progress')) || 1;
 
-        header.addEventListener("click", () => {
-          const isOpen = body.classList.contains('open');
-          // Close others
-          document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
-          document.querySelectorAll('.rotate-icon').forEach(i => i.style.transform = 'rotate(0deg)');
-          
-          if (!isOpen) {
-            body.classList.add('open');
-            header.querySelector('.rotate-icon').style.transform = 'rotate(45deg)';
-          }
+        document.getElementById('tier-foundations').innerHTML = '';
+        document.getElementById('tier-professional').innerHTML = '';
+        document.getElementById('tier-expert').innerHTML = '';
+
+        years.forEach(year => {
+            const isLocked = year.id > progress;
+            const card = document.createElement('div');
+            
+            let tierId = "tier-foundations";
+            if (year.id > 4) tierId = "tier-professional";
+            if (year.id > 8) tierId = "tier-expert";
+
+            card.className = `p-8 rounded-[2.5rem] text-center border-b-[8px] transition-all relative ${isLocked ? 'bg-slate-100 border-slate-200 grayscale opacity-50 cursor-not-allowed' : 'bg-white border-blue-500 shadow-xl cursor-pointer hover:-translate-y-2'}`;
+            
+            card.innerHTML = `
+                <div class="text-5xl mb-4">${year.icon}</div>
+                <h3 class="text-xl font-black text-slate-800">Year ${year.id}</h3>
+                <p class="text-xs uppercase font-bold text-slate-400 mt-1">${year.name}</p>
+                ${isLocked ? '<div class="mt-4 text-[10px] font-black text-slate-400 bg-slate-200/50 py-1 px-3 rounded-full inline-block">🔒 LOCKED</div>' : '<div class="mt-4 text-[10px] font-black text-blue-600 bg-blue-50 py-1 px-3 rounded-full inline-block">⭐ START</div>'}
+            `;
+
+            if (!isLocked) {
+                card.onclick = () => window.location.href = `keyboard/year${year.id}.html`;
+            }
+
+            document.getElementById(tierId).appendChild(card);
         });
 
-        card.appendChild(header);
-        card.appendChild(body);
-        container.appendChild(card);
-      });
-
-      // Footer Typing Script
-      const footerMsg = "Empowering the next generation of African tech leaders.";
-      let charIdx = 0;
-      const type = () => {
-        const el = document.getElementById("footer-typing");
-        if (charIdx < footerMsg.length) {
-          el.innerHTML += footerMsg.charAt(charIdx);
-          charIdx++;
-          setTimeout(type, 70);
-        } else {
-          setTimeout(() => { el.innerHTML = ""; charIdx = 0; type(); }, 5000);
+        // If they finish Year 12 (setting progress to 13), show diploma
+        if (progress >= 13) {
+            document.getElementById('grad-container').classList.remove('hidden');
         }
-      };
-      type();
-    });
+    }
+
+    window.onload = loadHub;
   </script>
 </body>
 </html>
