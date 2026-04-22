@@ -6,6 +6,187 @@
   <title>Curriculum | Kidventor Academy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    .lesson-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 2.5rem; }
+    .lesson-card:hover { transform: translateY(-8px); box-shadow: 0 25px 30px -10px rgb(79 70 229 / 0.15); }
+    .nav-link { position: relative; transition: color 0.3s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #4f46e5; transition: width 0.3s; }
+    .nav-link:hover::after { width: 100%; }
+    .glass-pill { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(4px); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+
+  <nav class="bg-white/90 backdrop-blur-md border-b py-5 px-6 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-2 group">
+        <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black group-hover:rotate-12 transition-transform">K</div>
+        <span class="font-black text-xl tracking-tighter uppercase text-slate-800">Kidventor</span>
+      </a>
+      <div class="flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+        <a href="index.html" class="nav-link hover:text-indigo-600 transition">Home</a>
+        <a href="about.html" class="nav-link hover:text-indigo-600 transition">Mission</a>
+        <a href="about.html" class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 uppercase tracking-widest text-center">
+            Explore Website
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-indigo-600 py-32 px-6 text-center text-white relative overflow-hidden">
+    <div class="relative z-10 max-w-4xl mx-auto">
+        <span class="glass-pill px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 inline-block border border-white/20">Structured 12-Year Roadmap</span>
+        <h1 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter leading-[1.1]">The Innovation Lab</h1>
+        <p class="text-indigo-100 text-xl font-medium leading-relaxed opacity-90">
+          From mastering the precision of a mouse to architecting the future with Artificial Intelligence. Your journey starts here.
+        </p>
+    </div>
+    <div class="absolute -top-10 -right-10 text-[25rem] opacity-5 select-none rotate-12">🚀</div>
+    <div class="absolute -bottom-20 -left-20 text-[20rem] opacity-5 select-none -rotate-12">⚙️</div>
+  </header>
+
+  <main class="max-w-7xl mx-auto py-24 px-6">
+    
+    <div class="mb-24">
+      <div class="flex items-center gap-6 mb-12">
+        <h2 class="text-4xl font-black text-slate-800 tracking-tighter">Stage 1: Foundation</h2>
+        <div class="h-[1px] bg-slate-200 flex-grow"></div>
+        <span class="text-slate-400 font-black text-[10px] uppercase tracking-[0.2em]">Years 1-3 • Mastery</span>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <a href="lessons/intro-to-computers.html" class="lesson-card bg-white p-10 border border-slate-100 shadow-sm block hover:border-indigo-400">
+          <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center text-3xl mb-8">🖥️</div>
+          <h3 class="font-black text-2xl mb-4 tracking-tight">Machine Logic</h3>
+          <p class="text-slate-500 text-sm mb-8 leading-relaxed">Understanding the soul of technology. Learn how hardware and software collaborate to solve problems.</p>
+          <span class="text-indigo-600 font-black text-[10px] uppercase tracking-widest flex items-center gap-2">Initiate Module <span>→</span></span>
+        </a>
+
+        <a href="mouse-theory.html" class="lesson-card bg-white p-10 border border-slate-100 shadow-sm block hover:border-sky-400">
+          <div class="w-16 h-16 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center text-3xl mb-8">🖱️</div>
+          <h3 class="font-black text-2xl mb-4 tracking-tight">Precision Hub</h3>
+          <p class="text-slate-500 text-sm mb-8 leading-relaxed">Coordination is the root of skill. Professional-grade mouse training for perfect digital dexterity.</p>
+          <span class="text-sky-600 font-black text-[10px] uppercase tracking-widest flex items-center gap-2">Enter Lab <span>→</span></span>
+        </a>
+
+        <a href="keyboard-theory.html" class="lesson-card bg-white p-10 border border-slate-100 shadow-sm block hover:border-amber-400">
+          <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-3xl mb-8">⌨️</div>
+          <h3 class="font-black text-2xl mb-4 tracking-tight">Input Mastery</h3>
+          <p class="text-slate-500 text-sm mb-8 leading-relaxed">From home-row basics to high-speed communication. Unlock the superpower of text literacy.</p>
+          <span class="text-amber-600 font-black text-[10px] uppercase tracking-widest flex items-center gap-2">Start Training <span>→</span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="mb-24">
+      <div class="flex items-center gap-6 mb-12">
+        <h2 class="text-4xl font-black text-slate-800 tracking-tighter">Stage 2: Navigator</h2>
+        <div class="h-[1px] bg-slate-200 flex-grow"></div>
+        <span class="text-slate-400 font-black text-[10px] uppercase tracking-[0.2em]">Years 4-6 • Proficiency</span>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <a href="lessons/files/year1.html" class="lesson-card bg-white p-10 border border-slate-100 shadow-sm block hover:border-emerald-400">
+          <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-8">📂</div>
+          <h3 class="font-black text-2xl mb-4 tracking-tight">Data Architect</h3>
+          <p class="text-slate-500 text-sm mb-8 leading-relaxed">Efficiency through organization. Mastering file structures, cloud storage, and digital hygiene.</p>
+          <span class="text-emerald-600 font-black text-[10px] uppercase tracking-widest">Explore System →</span>
+        </a>
+
+        <a href="lessons/internet/email-basics.html" class="lesson-card bg-white p-10 border border-slate-100 shadow-sm block hover:border-blue-400">
+          <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-8">🌐</div>
+          <h3 class="font-black text-2xl mb-4 tracking-tight">Global Pilot</h3>
+          <p class="text-slate-500 text-sm mb-8 leading-relaxed">Navigate the global web. Mastering advanced research, communication, and safe browsing.</p>
+          <span class="text-blue-600 font-black text-[10px] uppercase tracking-widest">Open Web →</span>
+        </a>
+
+        <a href="lessons/netiquette.html" class="lesson-card bg-white p-10 border border-slate-100 shadow-sm block hover:border-rose-400">
+          <div class="w-16 h-16 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center text-3xl mb-8">🛡️</div>
+          <h3 class="font-black text-2xl mb-4 tracking-tight">Cyber Security</h3>
+          <p class="text-slate-500 text-sm mb-8 leading-relaxed">Safety, Ethics, and Global Netiquette. Protect your identity in the digital ecosystem.</p>
+          <span class="text-rose-600 font-black text-[10px] uppercase tracking-widest">Stay Secure →</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="mb-16">
+      <div class="flex items-center gap-6 mb-12">
+        <h2 class="text-4xl font-black text-slate-800 tracking-tighter">Stage 3: Invention</h2>
+        <div class="h-[1px] bg-slate-200 flex-grow"></div>
+        <span class="text-slate-400 font-black text-[10px] uppercase tracking-[0.2em]">Years 7+ • Expertise</span>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="bg-white p-12 rounded-[3.5rem] border-2 border-dashed border-slate-200 flex flex-col justify-between items-start opacity-70">
+          <span class="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-6 inline-block bg-indigo-50 px-3 py-1 rounded-full">Future Track</span>
+          <div>
+            <h3 class="font-black text-3xl mb-4 text-slate-400 italic tracking-tighter">Coding & Algorithms</h3>
+            <p class="text-slate-400 text-sm leading-relaxed max-w-md">The builder's level. Transition from user to creator with Python, logic flows, and app development.</p>
+          </div>
+          <div class="mt-10 px-5 py-2 bg-slate-100 rounded-full text-[10px] font-black text-slate-400 uppercase tracking-widest">🔒 Module Locked</div>
+        </div>
+
+        <div class="bg-white p-12 rounded-[3.5rem] border-2 border-dashed border-slate-200 flex flex-col justify-between items-start opacity-70">
+          <span class="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-400 mb-6 inline-block bg-indigo-50 px-3 py-1 rounded-full">Future Track</span>
+          <div>
+            <h3 class="font-black text-3xl mb-4 text-slate-400 italic tracking-tighter">AI Engineering</h3>
+            <p class="text-slate-400 text-sm leading-relaxed max-w-md">The final frontier. Mastering prompt engineering, AI ethics, and creating with intelligent agents.</p>
+          </div>
+          <div class="mt-10 px-5 py-2 bg-slate-100 rounded-full text-[10px] font-black text-slate-400 uppercase tracking-widest">🔒 Module Locked</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-slate-950 text-slate-500 py-24 px-6">
+    <div class="max-w-7xl mx-auto border-b border-slate-900 pb-16 flex flex-col md:flex-row justify-between items-start gap-12">
+      <div>
+        <div class="flex items-center gap-2 text-white mb-6">
+          <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-black text-sm">K</div>
+          <span class="font-black tracking-tighter text-2xl uppercase">Kidventor Academy</span>
+        </div>
+        <p id="footer-typing" class="text-sm font-mono text-indigo-400 h-6"></p>
+      </div>
+      <nav class="flex flex-wrap gap-12 text-[10px] font-black uppercase tracking-[0.2em]">
+        <a href="about.html" class="hover:text-white transition">Mission</a>
+        <a href="privacy.html" class="hover:text-white transition">Privacy</a>
+        <a href="morals.html" class="hover:text-white transition text-indigo-400">Ethics & Values</a>
+      </nav>
+    </div>
+    <div class="max-w-7xl mx-auto pt-12 flex flex-col md:flex-row justify-between gap-6 text-[10px] font-bold uppercase tracking-[0.3em]">
+        <p>© 2026 Kidventor Academy • Global Initiatives</p>
+        <p>Architecting the Next Generation of Tech Leaders</p>
+    </div>
+  </footer>
+
+  <script>
+    const footerMsg = "Empowering the next generation of global innovators.";
+    let charIdx = 0;
+    function type() {
+      const el = document.getElementById("footer-typing");
+      if (el && charIdx < footerMsg.length) {
+        el.innerHTML += footerMsg.charAt(charIdx);
+        charIdx++;
+        setTimeout(type, 50);
+      }
+    }
+    document.addEventListener("DOMContentLoaded", type);
+  </script>
+</body>
+</html>
+
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curriculum | Kidventor Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
     .lesson-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 2rem; }
     .lesson-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(79 70 229 / 0.1); }
     .nav-link { position: relative; }
@@ -179,212 +360,7 @@
 
 
 
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Computer Lessons | SmartKids Learning</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .lesson-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .lesson-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
-  </style>
-</head>
-<body class="bg-slate-50 text-slate-900 font-sans">
 
-  <nav class="bg-white border-b py-4 px-6 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <a href="index.html" class="flex items-center gap-2">
-        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">SK</div>
-        <span class="font-bold text-xl tracking-tight">SmartKids</span>
-      </a>
-      <div class="flex gap-4 text-sm font-semibold">
-        <a href="index.html" class="text-slate-600 hover:text-blue-600">Home</a>
-        <a href="morals.html" class="text-slate-600 hover:text-orange-600">Morals</a>
-      </div>
-    </div>
-  </nav>
-
-  <header class="bg-blue-600 py-16 px-6 text-center text-white">
-    <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Computer Studies & Tech</h1>
-    <p class="text-blue-100 max-w-2xl mx-auto text-lg">
-      From basic mouse skills to advanced coding logic. Explore the world of technology step-by-step.
-    </p>
-  </header>
-
-  <main class="max-w-6xl mx-auto py-16 px-6">
-    
-    <div class="mb-20">
-      <div class="flex items-center gap-4 mb-8">
-        <h2 class="text-2xl font-bold text-slate-800">Level 1: Foundation</h2>
-        <div class="h-[2px] bg-slate-200 flex-grow"></div>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <a href="lessons/intro-to-computers.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-blue-400">
-          <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-4">🖥️</div>
-          <h3 class="font-bold text-xl mb-2">What is a Computer?</h3>
-          <p class="text-slate-600 text-sm mb-4">Learn about the machines that power our world. Input, Output, and Processing.</p>
-          <span class="text-blue-600 font-bold text-xs uppercase tracking-widest">Start Lesson →</span>
-        </a>
-
-        <a href="lessons/hardware-basics.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-green-400">
-          <div class="w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-4">🛠️</div>
-          <h3 class="font-bold text-xl mb-2">Computer Hardware</h3>
-          <p class="text-slate-600 text-sm mb-4">Explore the parts you can touch: Monitor, CPU, Keyboard, and Mouse.</p>
-          <span class="text-green-600 font-bold text-xs uppercase tracking-widest">Start Lesson →</span>
-        </a>
-
-        <a href="lessons/software-basics.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-purple-400">
-          <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-4">🎮</div>
-          <h3 class="font-bold text-xl mb-2">Software Basics</h3>
-          <p class="text-slate-600 text-sm mb-4">Understanding Operating Systems and the Apps we use every day.</p>
-          <span class="text-purple-600 font-bold text-xs uppercase tracking-widest">Start Lesson →</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="mb-20">
-      <div class="flex items-center gap-4 mb-8">
-        <h2 class="text-2xl font-bold text-slate-800">Level 2: The Digital World</h2>
-        <div class="h-[2px] bg-slate-200 flex-grow"></div>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <a href="mouse-theory.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-blue-400">
-          <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-4">🖱️</div>
-          <h3 class="font-bold text-xl mb-2">Mouse Practice</h3>
-          <p class="text-slate-600 text-sm mb-4">Master your clicking, dragging, and precision with year-by-year tasks.</p>
-          <span class="text-blue-600 font-bold text-xs uppercase tracking-widest">Practice →</span>
-        </a>
-
-        <a href="keyboard-theory.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-orange-400">
-          <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-4">⌨️</div>
-          <h3 class="font-bold text-xl mb-2">Keyboarding</h3>
-          <p class="text-slate-600 text-sm mb-4">Improve speed and accuracy with the full 12-year typing journey.</p>
-          <span class="text-orange-600 font-bold text-xs uppercase tracking-widest">Type →</span>
-        </a>
-
-        <a href="lessons/files/year1.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-green-400">
-          <div class="w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl mb-4">📂</div>
-          <h3 class="font-bold text-xl mb-2">File Management</h3>
-          <p class="text-slate-600 text-sm mb-4">Sharpen your blade by learning to organize files and folders efficiently.</p>
-          <span class="text-green-600 font-bold text-xs uppercase tracking-widest">Organize →</span>
-        </a>
-
-        <a href="lessons/netiquette.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-indigo-400">
-          <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-2xl mb-4">🤝</div>
-          <h3 class="font-bold text-xl mb-2">Netiquette</h3>
-          <p class="text-slate-600 text-sm mb-4">How to be a kind and safe citizen in the digital village.</p>
-          <span class="text-indigo-600 font-bold text-xs uppercase tracking-widest">Start →</span>
-        </a>
-
-        <a href="lessons/internet/email-basics.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-sky-400">
-  <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-2xl mb-4">🌐</div>
-  <h3 class="font-bold text-xl mb-2">Internet & Email</h3>
-  <p class="text-slate-600 text-sm mb-4">Become a Digital Pilot! Learn how to navigate URLs and send letters across the world.</p>
-  <span class="text-sky-600 font-bold text-xs uppercase tracking-widest">Take Off →</span>
-</a>
-
-        <a href="lessons/browsers-and-search.html" class="lesson-card bg-white p-6 rounded-3xl border border-slate-100 shadow-sm block hover:border-rose-400">
-          <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl mb-4">🔍</div>
-          <h3 class="font-bold text-xl mb-2">Search Skills</h3>
-          <p class="text-slate-600 text-sm mb-4">Understand your vehicle (Browser) and your map (Search Engine).</p>
-          <span class="text-rose-600 font-bold text-xs uppercase tracking-widest">Search →</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="mb-16">
-      <div class="flex items-center gap-4 mb-8">
-        <h2 class="text-2xl font-bold text-slate-800">Level 3: Skills of the Future</h2>
-        <div class="h-[2px] bg-slate-200 flex-grow"></div>
-      </div>
-      
-      <div class="grid md:grid-cols-2 gap-8 opacity-60">
-        <div class="bg-white p-8 rounded-3xl border border-dashed border-slate-300 flex items-center justify-between">
-          <div>
-            <h3 class="font-bold text-lg">Coding for Beginners</h3>
-            <p class="text-sm text-slate-500">Locked: Master File Management to unlock Logic & Algorithms.</p>
-          </div>
-          <span class="text-xs bg-slate-100 px-3 py-1 rounded-full italic text-slate-400">🔒 Locked</span>
-        </div>
-        <div class="bg-white p-8 rounded-3xl border border-dashed border-slate-300 flex items-center justify-between">
-          <div>
-            <h3 class="font-bold text-lg">AI & The Future</h3>
-            <p class="text-sm text-slate-500">Locked: Advanced Digital Literacy required.</p>
-          </div>
-          <span class="text-xs bg-slate-100 px-3 py-1 rounded-full italic text-slate-400">🔒 Locked</span>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <footer class="bg-slate-900 text-slate-400 py-12 px-4 mt-20">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-b border-slate-800 pb-8">
-      <div class="text-center md:text-left">
-        <div class="flex items-center justify-center md:justify-start gap-2 text-white mb-2">
-          <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold text-xs">SK</div>
-          <span class="font-bold tracking-tight text-lg">SmartKids Learning</span>
-        </div>
-        <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold mb-3">
-          Part of the SmartKids Digital Literacy Program
-        </p>
-        <div class="h-5">
-          <p id="footer-typing" class="text-sm font-mono text-blue-400"></p>
-        </div>
-      </div>
-      <nav class="flex gap-8 text-sm font-medium">
-        <a href="about.html" class="hover:text-white transition-colors">About</a>
-        <a href="privacy.html" class="hover:text-white transition-colors">Privacy</a>
-      </nav>
-    </div>
-    <p class="text-center mt-8 text-[10px] uppercase tracking-widest text-slate-600">
-      © 2026 SmartKids Tech Skills • Nigeria
-    </p>
-  </footer>
-
-  <script>
-    const footerMsg = "Empowering the next generation of African tech leaders.";
-    let charIdx = 0;
-    function type() {
-      const el = document.getElementById("footer-typing");
-      if (el && charIdx < footerMsg.length) {
-        el.innerHTML += footerMsg.charAt(charIdx);
-        charIdx++;
-        setTimeout(type, 70);
-      } else if (el) {
-        setTimeout(() => { el.innerHTML = ""; charIdx = 0; type(); }, 5000);
-      }
-    }
-    document.addEventListener("DOMContentLoaded", type);
-  </script>
-<script>
-  // 1. Update the Browser Tab Title
-  document.title = "Kidventor Academy | Coding & Digital Literacy for Future Leaders";
-
-  // 2. Safely update text without breaking images
-  function renameBrandSafely(node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      // Only replace text inside the actual words, not HTML attributes
-      node.textContent = node.textContent.replace(/SmartKids/g, 'Kidventor');
-    } else {
-      for (let child of node.childNodes) {
-        // Skip script and style tags so we don't break logic/CSS
-        if (child.tagName !== 'SCRIPT' && child.tagName !== 'STYLE') {
-          renameBrandSafely(child);
-        }
-      }
-    }
-  }
-
-  // Run the safety rename on the whole body
-  renameBrandSafely(document.body);
-</script>
-</body>
-</html>
 
 
 
