@@ -3,99 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Compatibility Script | KidVentor Terminal</title>
+  <title>The Compatibility Script | KidVentor Academy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+    
+    /* Clean, Book-Like Typography */
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .script-font { font-family: 'Space Mono', monospace; }
+    .story-text { font-family: 'Merriweather', serif; }
     
-    .character-name { @apply text-indigo-600 font-black uppercase tracking-tighter text-sm mb-1 block; }
-    .dialogue-box { @apply pl-6 border-l-2 border-slate-200 mb-6 py-1; }
-    .scene-direction { @apply text-slate-500 italic text-sm my-4 block bg-slate-100 p-4 rounded-xl border-l-4 border-slate-300; }
-    
-    /* Act Toggler Styles */
-    .act-content { display: none; }
-    .act-content.active { display: block; animation: fadeIn 0.5s ease; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .character-tag {
+      @apply text-indigo-600 font-extrabold uppercase tracking-widest text-[10px] mb-1 block;
+    }
+    .dialogue {
+      @apply text-lg text-slate-800 leading-relaxed mb-8 pl-4 border-l-2 border-indigo-100;
+    }
+    .direction {
+      @apply text-slate-500 italic text-sm my-6 block bg-slate-50 p-4 rounded-2xl border border-slate-100;
+    }
+    .dropcap::first-letter {
+      @apply text-5xl font-black text-indigo-600 mr-3 float-left leading-none;
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased">
+<body class="bg-[#fdfdfd] text-slate-900">
 
-  <nav class="bg-white/80 backdrop-blur-md border-b py-4 px-6 sticky top-0 z-50">
-    <div class="max-w-5xl mx-auto flex justify-between items-center">
+  <nav class="bg-white/90 backdrop-blur-md border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
       <div class="flex items-center gap-2">
-        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black shadow-lg">K</div>
-        <span class="font-extrabold text-xl tracking-tighter uppercase">Kid<span class="text-indigo-600 text-opacity-80">Ventor</span></span>
+        <div class="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg">K</div>
+        <span class="font-extrabold text-xl tracking-tighter uppercase">Kid<span class="text-indigo-600">Ventor</span></span>
       </div>
-      <div class="flex gap-2">
-        <button onclick="switchAct(1)" id="tab-1" class="act-tab px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-600 text-white shadow-md transition">Act 01</button>
-        <button onclick="switchAct(2)" id="tab-2" class="act-tab px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-slate-200 text-slate-500 hover:bg-slate-300 transition">Act 02</button>
-      </div>
+      <a href="../index.html" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-indigo-600 transition">Return to Library</a>
     </div>
   </nav>
 
-  <main class="max-w-4xl mx-auto px-6 py-12">
+  <header class="max-w-3xl mx-auto pt-16 px-6 text-center">
+    <span class="bg-indigo-50 text-indigo-700 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border border-indigo-100">Social Architecture Module</span>
+    <h1 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter mt-6 mb-4">The Compatibility <span class="text-indigo-600">Script</span></h1>
+    <p class="text-slate-500 font-medium">A Drama of Tribes, Jobs, and the Power of Partnership</p>
+    <div class="flex justify-center gap-2 mt-8">
+        <div class="w-2 h-2 rounded-full bg-indigo-600"></div>
+        <div class="w-12 h-2 rounded-full bg-indigo-100"></div>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-16 story-text">
     
-    <section class="grid md:grid-cols-2 gap-4 mb-12">
-        <div class="bg-indigo-900 text-indigo-100 p-6 rounded-3xl shadow-xl">
-            <h3 class="text-[10px] font-black uppercase tracking-widest text-amber-400 mb-3">Node 01: The Bride</h3>
-            <p class="text-xl font-extrabold mb-1">Adiza</p>
-            <p class="text-xs opacity-70 mb-4">Tribe: Northern (Hausa-Fulani) | Class: Business Admin (UI)</p>
-            <p class="text-xs leading-relaxed italic">"The Lead Controller. Manages the supply chain and personal ego with high efficiency."</p>
-        </div>
-        <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
-            <h3 class="text-[10px] font-black uppercase tracking-widest text-indigo-600 mb-3">Node 02: The Groom</h3>
-            <p class="text-xl font-extrabold text-slate-900 mb-1">Obalade</p>
-            <p class="text-xs text-slate-500 mb-4">Tribe: Southwest (Yoruba) | Class: Agric Science & Comp. Engineering</p>
-            <p class="text-xs leading-relaxed italic text-slate-600">"The System Support. Skilled in practical hardware and emotional intelligence."</p>
-        </div>
-    </section>
-
-    <div id="act-1" class="act-content active script-font bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-slate-100">
-        <h2 class="text-slate-300 font-bold mb-8 uppercase tracking-widest text-xs">// ACT 01: THE SYSTEM OVERLOAD</h2>
+    <div class="mb-20">
+        <h2 class="font-black text-xs uppercase tracking-[0.3em] text-slate-300 mb-10 text-center">— ACT 01: THE FOUNDATION —</h2>
         
-        <div class="scene-direction">EXTERIOR: THE ROAD SIDE. Adiza has just pulled over the company mini-bus to pick up Obalade.</div>
+        <div class="direction">
+            The story begins with two young couples. Religion and tribe were the first barriers, but they were settled by fathers who were not biased. Even the groom’s mother supported the marriage, though the bride’s mother remained skeptical.
+        </div>
 
-        <span class="character-name">ADIZA</span>
-        <div class="dialogue-box">Na so e be oo, Obalade! Kazim resigned just this morning to get a bank job. We have heavy supplies and no driver. Enter inside!</div>
+        <p class="dialogue dropcap">
+            The siblings often made matters worse due to separate experiences in their universities. But Obalade and Adiza didn't look at the family ends of the issues. Each time they were together, they laughed the matters away.
+        </p>
 
-        <span class="character-name">OBALADE</span>
-        <div class="dialogue-box">(Surprised) My love, why? You look stunning in that uniform, but this bus is too big for you to handle alone.</div>
+        <div class="direction">
+            One year into the marriage. No "good jobs" yet, and no rush for babies. They understood that life is gradual. Then, Adiza secures a job as a Store Manager.
+        </div>
 
-        <span class="character-name">ADIZA</span>
-        <div class="dialogue-box">What should I do? Sit and watch my business go down? Or let the customers loss faith in us? Load the bus, let's move!</div>
+        <span class="character-tag">ADIZA</span>
+        <p class="dialogue">
+            (To herself) I cannot inform my mother that I have a job before my husband. It will cause a "system error" in her head. For now, I will just support my mother-in-law at the market.
+        </p>
 
-        <span class="character-name">OBALADE</span>
-        <div class="dialogue-box">(Laughing) Okay, let me drive you. I can help with this today. Where is our first stop?</div>
+        <div class="direction">
+            3 months later. The company driver, Kazim, resigns suddenly for a bank job.
+        </div>
+
+        <span class="character-tag">ADIZA</span>
+        <p class="dialogue">
+            But Kazim, this is too close! You are leaving now? I am left with six female staff with no driving experience. We have supplies to make!
+        </p>
+
+        <span class="character-tag">TINUKE (Staff)</span>
+        <p class="dialogue">
+            Madam, you want to supply yourself? You look stunning in that driver uniform o! Sexy!
+        </p>
+
+        <span class="character-tag">ADIZA</span>
+        <p class="dialogue">
+            What will I do? If this were my personal business, I wouldn't sit watching it go down. Please load the mini-bus. I am moving!
+        </p>
+
+        <div class="direction">
+            Adiza is driving the truck when she sees Obalade by the road.
+        </div>
+
+        <span class="character-tag">OBALADE</span>
+        <p class="dialogue">
+            (Surprised) Adi?! My love, why? (He bursts into laughter seeing the company cap) Wao! You look stunning!
+        </p>
+
+        <span class="character-tag">ADIZA</span>
+        <p class="dialogue">
+            (In Pidgin) Na so e be oo! Kazim resigned this morning. Please enter inside. Where are you going?
+        </p>
+
+        <span class="character-tag">OBALADE</span>
+        <p class="dialogue">
+            To the market for accessories. But move over—let me drive you. I can help with this today. My repairs can wait until the weekend. Today, the Manager needs a Driver.
+        </p>
     </div>
 
-    <div id="act-2" class="act-content script-font bg-white p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-slate-100">
-        <h2 class="text-slate-300 font-bold mb-8 uppercase tracking-widest text-xs">// ACT 02: [TITLE PENDING]</h2>
-        
-        <p class="text-slate-400 italic">Receiving transmission... Please paste the next part of the story.</p>
+    <div class="mb-20">
+        <h2 class="font-black text-xs uppercase tracking-[0.3em] text-slate-300 mb-10 text-center">— ACT 02: THE MOTHER'S VISIT —</h2>
+
+        <span class="character-tag">ADIZA</span>
+        <p class="dialogue">
+            (Watching Obalade) You look just like my grandpa did for my grandma. He was such an amazing man. My dad supported my mum always, and that support earned me my certificates.
+        </p>
+
+        <span class="character-tag">OBALADE</span>
+        <p class="dialogue">
+            My love, I can do this work. The owners are abroad; you have the right to employ who you like. I can earn more, and we can save for our own store. I’ll be your boss at home, but you are my boss at work. 
+        </p>
+
+        <div class="direction">
+            The staff learns from their cooperation. But then... Adiza’s mother visits suddenly.
+        </div>
+
+        <span class="character-tag">MUM ADIZA</span>
+        <p class="dialogue">
+            Don't tell me you work in the same place! Adiza, why didn't you inform me you were coming? Obalade, why are you prostrating in a driver uniform?
+        </p>
+
+        <div class="direction">
+            Later that night at dinner...
+        </div>
+
+        <span class="character-tag">MUM ADIZA</span>
+        <p class="dialogue">
+            Where are my grandchildren? (To Obalade) Sir! Sit there! So you cannot get a woman pregnant? (She begins rebuking them in Hausa).
+        </p>
+
+        <div class="direction">
+            The next morning. A phone call from Adiza's Father reveals the truth.
+        </div>
+
+        <span class="character-tag">ADIZA</span>
+        <p class="dialogue">
+            (To her Mother) Dad says you have been in Lagos for four days? But you just came to my house yesterday! You told him I was pregnant just so you could go to parties with your friends?
+        </p>
+
+        <span class="character-tag">MUM ADIZA</span>
+        <p class="dialogue">
+            I had to see how you were doing! And I still want to visit your workplace.
+        </p>
+
+        <span class="character-tag">ADIZA</span>
+        <p class="dialogue">
+            Mum, Dad misses you in Abuja. He missing his wife. Please, go back to him. My mother-in-law is caring, and we are fine. Your "grandchild" story will have to wait for the right time!
+        </p>
+
+        <div class="direction">
+            Adiza gestures for Obalade to head to the truck. The "Mother Error" is resolved—for now.
+        </div>
     </div>
 
   </main>
 
-  <script>
-    function switchAct(actNumber) {
-      // Hide all acts
-      document.querySelectorAll('.act-content').forEach(act => act.classList.remove('active'));
-      // Show selected act
-      document.getElementById('act-' + actNumber).classList.add('active');
-      
-      // Update Tab Styles
-      document.querySelectorAll('.act-tab').forEach(tab => {
-        tab.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
-        tab.classList.add('bg-slate-200', 'text-slate-500');
-      });
-      document.getElementById('tab-' + actNumber).classList.add('bg-indigo-600', 'text-white', 'shadow-md');
-      document.getElementById('tab-' + actNumber).classList.remove('bg-slate-200', 'text-slate-500');
-      
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  </script>
+  <section class="max-w-3xl mx-auto px-6 pb-24">
+    <div class="bg-slate-900 rounded-[3rem] p-10 md:p-16 text-white shadow-2xl relative overflow-hidden">
+        <h3 class="text-indigo-400 font-black text-[10px] uppercase tracking-[0.4em] mb-6">KidVentor Logic Board</h3>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div>
+                <p class="text-xl font-black mb-2">Zero-Bias Partnership</p>
+                <p class="text-slate-400 text-sm leading-relaxed">Obalade and Adiza show that a "Team" doesn't care about tribes or who is the "boss." They care about the <strong>Success of the System</strong>.</p>
+            </div>
+            <div>
+                <p class="text-xl font-black mb-2">Handling Noise</p>
+                <p class="text-slate-400 text-sm leading-relaxed">Family pressure is often like "background noise" in a signal. You must filter it out to keep the connection strong.</p>
+            </div>
+        </div>
+        <div class="absolute -right-10 -bottom-10 text-9xl opacity-5">🎭</div>
+    </div>
+  </section>
 
 </body>
 </html>
