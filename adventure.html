@@ -171,11 +171,25 @@
         const modal = document.getElementById('gameModal');
         const frame = document.getElementById('gameFrame');
         const titleEl = document.getElementById('modalTitle');
+        const loadingEl = document.getElementById('gameLoading');
         
+        // 1. Set the Title
         titleEl.innerText = title;
-        // Logic: You would point to your game URL here
-        // frame.src = "games/" + title.replace(/\s/g, '').toLowerCase() + ".html";
         
+        // 2. Show the loading spinner
+        loadingEl.classList.remove('hidden');
+
+        // 3. Define the path to your game file
+        // This converts "Keyboard Ninja" to "keyboard-ninja.html"
+        const fileName = title.toLowerCase().replace(/\s+/g, '-') + ".html";
+        frame.src = "games/" + fileName;
+
+        // 4. Hide the loading spinner ONLY when the game has actually loaded
+        frame.onload = function() {
+            loadingEl.classList.add('hidden');
+        };
+        
+        // 5. Open the modal
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden'; 
     }
@@ -183,8 +197,9 @@
     function closeGame() {
         const modal = document.getElementById('gameModal');
         const frame = document.getElementById('gameFrame');
+        
         modal.classList.add('hidden');
-        frame.src = ""; 
+        frame.src = ""; // This stops the game music/sound immediately
         document.body.style.overflow = 'auto';
     }
 </script>
