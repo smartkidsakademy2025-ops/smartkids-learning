@@ -1,158 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Compatibility Script | KidVentor Terminal</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
-    
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fdfdfd; }
-    .story-font { font-family: 'Merriweather', serif; }
-    
-    .act-container { display: none; }
-    .act-container.active { display: block; animation: slideUp 0.6s ease-out; }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .character-tag { @apply text-indigo-600 font-black uppercase tracking-widest text-[10px] mb-2 block; }
-    .dialogue { @apply text-lg text-slate-800 leading-relaxed mb-8 pl-5 border-l-2 border-indigo-100; }
-    .direction { @apply text-slate-500 italic text-sm my-6 block bg-slate-50 p-5 rounded-2xl border border-slate-100; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Love Beyond Borders | Drama Script</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;700;900&family=Merriweather:ital,wght@0,400;1,400&display=swap');
+body{font-family:Inter,sans-serif;background:#0f172a;color:#e2e8f0}
+.story{font-family:Merriweather,serif}
+.title{font-family:Cinzel,serif}
+.scene{display:none}.scene.active{display:block;animation:fade .6s ease}
+@keyframes fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.tag{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;font-weight:900;color:#f59e0b}
+.dialogue{border-left:3px solid #334155;padding-left:1rem;margin:.8rem 0 1.4rem;font-size:1.08rem;line-height:1.9}
+.dir{font-style:italic;color:#94a3b8;background:#111827;border:1px solid #1f2937;padding:1rem;border-radius:1rem;margin:1rem 0}
+</style>
 </head>
-<body class="text-slate-900">
-
-  <nav class="bg-white/90 backdrop-blur-md border-b border-slate-100 py-4 px-6 sticky top-0 z-50">
-    <div class="max-w-4xl mx-auto flex justify-between items-center">
-      <div class="flex items-center gap-2">
-        <div class="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg">K</div>
-        <span class="font-extrabold text-xl tracking-tighter uppercase">Kid<span class="text-indigo-600">Ventor</span></span>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="h-1 w-20 bg-slate-100 rounded-full overflow-hidden">
-          <div id="progress-bar" class="h-full bg-indigo-600 transition-all duration-500"></div>
-        </div>
-        <span id="log-indicator" class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Log 01/06</span>
-      </div>
-    </div>
-  </nav>
-
-  <main class="max-w-3xl mx-auto px-6 py-12 md:py-20">
-    
-    <div id="act-1" class="act-container active">
-        <div class="mb-12 bg-indigo-50 p-8 rounded-[2rem] border border-indigo-100">
-            <h4 class="text-indigo-600 font-black text-[10px] uppercase tracking-[0.3em] mb-2">Log Summary // Act 01</h4>
-            <p class="text-indigo-900 font-bold leading-relaxed">Two young couples overcome tribal barriers through the support of their fathers. While Adiza secures a job, Obalade supports the family business, proving that partnership matters more than ego.</p>
-        </div>
-
-        <div class="story-font">
-            <h1 class="text-4xl font-black tracking-tighter mb-8 text-slate-900">The Foundation</h1>
-            
-            <div class="direction">Adiza and Obalade were a match the world said wouldn't work. She from the North, he from the Southwest. While their siblings worried about old tribal stories, the couple simply laughed the matters away.</div>
-
-            <p class="dialogue">After one year of marriage, they had no big house or luxury, but they had understanding. Adiza, a Business Admin graduate, got a job as a Store Manager. Obalade, an Agric Scientist and Computer Engineer, supported his mother at her vegetable stand.</p>
-
-            <div class="direction">At the store, the driver Kazim resigns suddenly for a bank job, leaving Adiza with heavy supplies and no driver. She takes the keys herself.</div>
-
-            <span class="character-tag">TINUKE (Staff)</span>
-            <p class="dialogue">Madam, you want to supply yourself? Ah! You even look more prettier, sexy in that uniform!</p>
-
-            <span class="character-tag">ADIZA</span>
-            <p class="dialogue">What will I do? Customers won't listen to excuses. Load the bigger bus, let me move. I won't sit watching my business go down.</p>
-
-            <div class="direction">On the road, she pulls over to pick up Obalade, who is looking for a bike to go buy computer parts.</div>
-
-            <span class="character-tag">ADIZA</span>
-            <p class="dialogue">(In Pidgin) Na so e be oo, Kazim resigned just this morning. Please come inside, where are you going?</p>
-
-            <span class="character-tag">OBALADE</span>
-            <p class="dialogue">(Laughing) Wao! You look stunning. Let me drive you instead. I can help you with this today; my repairs can wait until the weekend.</p>
-        </div>
-    </div>
-
-    <div id="act-2" class="act-container">
-        <div class="mb-12 bg-amber-50 p-8 rounded-[2rem] border border-amber-100">
-            <h4 class="text-amber-600 font-black text-[10px] uppercase tracking-[0.3em] mb-2">Log Summary // Act 02</h4>
-            <p class="text-amber-900 font-bold leading-relaxed">Obalade joins the company as a driver to support Adiza's leadership. However, Adiza’s mother visits with traditional expectations, causing a clash between their modern logic and her old-school demands.</p>
-        </div>
-
-        <div class="story-font">
-            <h1 class="text-4xl font-black tracking-tighter mb-8 text-slate-900">The Mother Error</h1>
-
-            <span class="character-tag">ADIZA</span>
-            <p class="dialogue">You look just like my husband, Mr... Ah! You do exactly like my grandpa did for Grandma. He was such an amazing man. My dad supported my mum too, and I guess that support earned me my certificates.</p>
-
-            <span class="character-tag">OBALADE</span>
-            <p class="dialogue">My love, I can do this work. The owners are abroad; you have the right to employ who you like. I’ll be your boss at home, but you are my boss at work. I answer "Yes Ma'am" and deliver timely.</p>
-
-            <div class="direction">The staff begins to learn from their cooperation. But soon, Adiza’s mother visits. She is shocked to see Obalade in a driver's uniform and begins a rebuke in Hausa.</div>
-
-            <span class="character-tag">MUM ADIZA</span>
-            <p class="dialogue">Where are my grandchildren? Sir! Sit there! So you cannot get a woman pregnant? You tell your father she is pregnant just so I can come and see her!</p>
-
-            <div class="direction">A phone call from Adiza's Father reveals that the Mother lied about the pregnancy just to visit Lagos for four days without being questioned.</div>
-
-            <span class="character-tag">ADIZA</span>
-            <p class="dialogue">Mum, Dad thinks I am pregnant because of you! You lied just to visit your friends for four days? Dad misses you in Abuja. Please, go back to him. We are happy and my mother-in-law is caring.</p>
-        </div>
-    </div>
-
-    <div id="act-3" class="act-container">
-        <div class="mb-12 bg-slate-100 p-8 rounded-[2rem]">
-            <h4 class="text-slate-500 font-black text-[10px] uppercase tracking-[0.3em] mb-2">Log Summary // Act 03</h4>
-            <p class="text-slate-600 font-bold">Awaiting Part 3 content... The saga of Adiza and Obalade continues.</p>
-        </div>
-        <div class="story-font">
-            <h1 class="text-4xl font-black tracking-tighter mb-8">System Update Required</h1>
-            <p class="text-slate-400 italic text-center py-20">Transmission paused. Please upload the next part of the story.</p>
-        </div>
-    </div>
-
-    <div id="act-4" class="act-container"><p class="p-20 text-center text-slate-200">Log 04 Protected</p></div>
-    <div id="act-5" class="act-container"><p class="p-20 text-center text-slate-200">Log 05 Protected</p></div>
-    <div id="act-6" class="act-container"><p class="p-20 text-center text-slate-200">Log 06 Protected</p></div>
-
-    <div class="mt-16 flex items-center justify-between border-t border-slate-100 pt-10">
-      <button onclick="changeAct(-1)" id="prev-btn" class="flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-indigo-600 transition disabled:opacity-0">
-        ← PREVIOUS LOG
-      </button>
-      
-      <button onclick="changeAct(1)" id="next-btn" class="flex items-center gap-2 text-sm font-bold text-indigo-600 hover:text-indigo-800 transition">
-        NEXT LOG →
-      </button>
-    </div>
-  </main>
-
-  <script>
-    let currentAct = 1;
-    const totalActs = 6;
-
-    function updateUI() {
-      document.querySelectorAll('.act-container').forEach(act => act.classList.remove('active'));
-      document.getElementById('act-' + currentAct).classList.add('active');
-
-      document.getElementById('log-indicator').innerText = `Log 0${currentAct}/0${totalActs}`;
-      document.getElementById('progress-bar').style.width = (currentAct / totalActs) * 100 + "%";
-      
-      document.getElementById('prev-btn').disabled = (currentAct === 1);
-      document.getElementById('next-btn').style.visibility = (currentAct === totalActs) ? "hidden" : "visible";
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function changeAct(step) {
-      const newAct = currentAct + step;
-      if (newAct >= 1 && newAct <= totalActs) {
-        currentAct = newAct;
-        updateUI();
-      }
-    }
-
-    window.onload = updateUI;
-  </script>
+<body>
+<header class="sticky top-0 z-50 backdrop-blur bg-slate-950/80 border-b border-slate-800">
+<div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+<div>
+<h1 class="title text-2xl md:text-3xl font-bold text-amber-400">Love Beyond Borders</h1>
+<p class="text-xs tracking-[0.3em] uppercase text-slate-400">A Modern African Family Drama</p>
+</div>
+<div class="w-40 bg-slate-800 h-2 rounded-full overflow-hidden"><div id="bar" class="h-full bg-amber-400"></div></div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 py-10">
+<section id="scene-1" class="scene active">
+<h2 class="title text-4xl mb-6">Act I — The Foundation</h2>
+<div class="dir">Two lovers marry despite tribal tension. Adiza is from the North. Obalade is Yoruba from the Southwest. Their fathers support the union. Their mothers worry in different ways.</div>
+<div class="story">
+<p class="dialogue">They had no mansion, no luxury car, no riches. But they had understanding. They chose patience over pressure.</p>
+<p class="tag">ADIZA</p><p class="dialogue">We will build gradually. No rushing. Life is not a race.</p>
+<p class="tag">OBALADE</p><p class="dialogue">As long as we have peace, we are already rich.</p>
+</div>
+</section>
+<section id="scene-2" class="scene">
+<h2 class="title text-4xl mb-6">Act II — The Steering Wheel</h2>
+<div class="dir">Adiza becomes Store Manager. The company driver resigns suddenly. Deliveries must continue.</div>
+<p class="tag">TINUKE</p><p class="dialogue">Madam, you want to drive by yourself?</p>
+<p class="tag">ADIZA</p><p class="dialogue">Customers will not listen to excuses. Load the bus.</p>
+<div class="dir">On the road, she finds Obalade waiting for transport.</div>
+<p class="tag">OBALADE</p><p class="dialogue">You look stunning in that cap. Let me drive. Today, I am your staff.</p>
+<p class="tag">ADIZA</p><p class="dialogue">At work, I am your boss. At home, we settle later.</p>
+</section>
+<section id="scene-3" class="scene">
+<h2 class="title text-4xl mb-6">Act III — The Mothers</h2>
+<div class="dir">Adiza's mother arrives unexpectedly and questions everything: jobs, grandchildren, timing, tradition.</div>
+<p class="tag">MUM ADIZA</p><p class="dialogue">Where are my grandchildren? Why are you delaying life?</p>
+<p class="tag">ADIZA</p><p class="dialogue">Mum, we are planning wisely, not delaying life.</p>
+<p class="tag">MAAMI</p><p class="dialogue">Marriage is not competition. But do not let small issues become big ones.</p>
+</section>
+<section id="scene-4" class="scene">
+<h2 class="title text-4xl mb-6">Act IV — Office Fire</h2>
+<div class="dir">At the monthly review, HR publicly queries Obalade for late delivery.</div>
+<p class="tag">HR (ABIGAIL)</p><p class="dialogue">Why was Wednesday delivery delayed? Why should your salary not be cut?</p>
+<p class="tag">OBALADE</p><p class="dialogue">The tyre deflated after loading. I off-loaded, repaired it, then loaded again.</p>
+<p class="tag">HR</p><p class="dialogue">Take this query letter.</p>
+<div class="dir">He suspects she wants to expose that he and Adiza are husband and wife.</div>
+</section>
+<section id="scene-5" class="scene">
+<h2 class="title text-4xl mb-6">Act V — The Taxi</h2>
+<div class="dir">After work, both return home silently in a taxi.</div>
+<p class="dialogue">Without speaking, Obalade reaches for Adiza's hand. She pulls him close and rests on his shoulder.</p>
+<p class="tag">TAXI DRIVER</p><p class="dialogue">Oga, wait till you reach house now!</p>
+<div class="dir">They laugh—then Adiza suddenly holds her stomach in pain.</div>
+</section>
+<section id="scene-6" class="scene">
+<h2 class="title text-4xl mb-6">Act VI — New Life</h2>
+<div class="dir">At the clinic, the doctor calls Obalade inside.</div>
+<p class="tag">DOCTOR</p><p class="dialogue">Congratulations. She is six weeks pregnant. She needs rest.</p>
+<p class="tag">OBALADE</p><p class="dialogue">Pregnant?</p>
+<p class="tag">ADIZA</p><p class="dialogue">Looks like our mothers will win this round.</p>
+<div class="dir">Outside, the taxi driver is still waiting.</div>
+<p class="tag">TAXI DRIVER</p><p class="dialogue">We must look after each other. In this country, people must be cameras for one another.</p>
+<p class="dialogue">They drive home smiling into a new chapter of life.</p>
+</section>
+<div class="mt-12 flex justify-between border-t border-slate-800 pt-6">
+<button onclick="move(-1)" id="prev" class="px-4 py-2 rounded-xl bg-slate-800">← Previous</button>
+<button onclick="move(1)" id="next" class="px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-bold">Next →</button>
+</div>
+</main>
+<script>
+let current=1,total=6;
+function render(){document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById('scene-'+current).classList.add('active');document.getElementById('bar').style.width=(current/total*100)+'%';prev.disabled=current===1;next.style.visibility=current===total?'hidden':'visible';window.scrollTo({top:0,behavior:'smooth'});} 
+function move(n){let x=current+n;if(x>=1&&x<=total){current=x;render();}}
+render();
+</script>
 </body>
 </html>
