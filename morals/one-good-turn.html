@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Good Turn | KidVentor Academy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,900;1,400&family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+    
+    body { font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.5s ease; }
+    .story-font { font-family: 'Merriweather', serif; }
+    
+    .chapter-card { display: none; }
+    .chapter-card.active { display: block; animation: slideIn 0.6s ease-out; }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .drop-cap::first-letter {
+      @apply text-6xl font-black mr-3 float-left leading-none text-indigo-600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+  <nav class="bg-white/80 backdrop-blur-md border-b py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-emerald-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg">K</div>
+        <span class="font-extrabold text-xl tracking-tighter uppercase italic">Kid<span class="text-emerald-600">Ventor</span></span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="h-1.5 w-24 bg-slate-100 rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-emerald-500 transition-all duration-500"></div>
+        </div>
+        <span id="log-indicator" class="text-[10px] font-black text-slate-400 uppercase tracking-widest">LOG 01/09</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-6 py-12 md:py-20">
+    
+    <div id="story-container">
+        </div>
+
+    <div class="mt-16 flex items-center justify-between border-t border-slate-200 pt-10">
+      <button onclick="changeChapter(-1)" id="prev-btn" class="flex items-center gap-2 text-sm font-bold text-slate-300 hover:text-emerald-600 transition disabled:opacity-0">
+        ← PREVIOUS LOG
+      </button>
+      
+      <button onclick="changeChapter(1)" id="next-btn" class="flex items-center gap-2 text-sm font-bold text-emerald-600 hover:text-emerald-800 transition">
+        NEXT LOG →
+      </button>
+    </div>
+  </main>
+
+  <script>
+    const chapters = [
+      {
+        title: "The Act of Kindness",
+        summary: "A simple rainy afternoon changes everything when Tunde stops to help an old woman with her firewood.",
+        content: "In the peaceful village of Itura, lived a boy named Tunde. One rainy afternoon, he noticed an old woman struggling with her basket of firewood. Many passed by, but Tunde, despite his own errands, stopped to help her. She smiled warmly, her eyes glistening with gratitude. Together they reached her hut, and she offered him warm groundnuts. Tunde didn’t know that this small act would change his life forever.",
+        color: "#f0fdf4", // Emerald tint
+        accent: "#059669"
+      },
+      {
+        title: "Mysterious Dreams",
+        summary: "Musa experiences a vision of a village brought back to life through a single bowl of water.",
+        content: "That night, Musa lay in bed feeling a strange sense of peace. But as he drifted off to sleep, an unusual dream unfolded. He saw himself walking through a dense forest, guided by a faint light. A voice echoed through the trees, whispering, 'One good turn deserves another.' In the dream, Musa stumbled upon a village in need—children thirsty, crops failing, and the air heavy with sadness.",
+        color: "#fdf4ff", // Purple tint
+        accent: "#a21caf"
+      },
+      {
+        title: "The Pendant",
+        summary: "The old woman gives Musa a gift—a wooden pendant that acts as a compass for his soul.",
+        content: "On his way home from school, Musa passed the same old woman’s house. She waved him in with a kind smile. Inside, her small home smelled of herbs and warmth. After sharing a cup of tea, she reached into an old basket and handed Musa a wooden pendant carved with ancient symbols. 'Keep this close,' she said, 'You have started a journey you may not understand yet.'",
+        color: "#fffbeb", // Amber tint
+        accent: "#d97706"
+      }
+      // Add chapters 4-9 here following the same structure
+      {
+        title: "The Water Crisis",
+        summary: "When the village water tank fails, Musa's previous dream becomes a blueprint for a real-world miracle.",
+        content: "A week later, the village faced an unexpected problem. The main water tank broke down, and children had to fetch water from a faraway stream. Musa sat by the broken tank, holding his pendant. That night, he dreamed of glowing pipes and flowing water. The next day, a team of volunteers arrived unexpectedly to fix the tank. Musa watched in awe, wondering if kindness truly had the power to bring help from the unseen.",
+        color: "#f0f9ff", // Blue tint for water
+        accent: "#0284c7"
+      },
+      {
+        title: "Unseen Hands",
+        summary: "Kindness becomes a 'contagious signal' in the village, proving that one good deed can ripple through an entire community.",
+        content: "Musa’s kindness began to ripple. A bully started sharing lunch; the school cleaner received unexpected gifts. It was as if a quiet wind of goodness swept through the village. His grandmother reminded him that good deeds don't always come with applause. Musa began writing in a notebook: 'The world watches in silence but responds loudly.' He no longer feared his dreams; he understood they were a guide.",
+        color: "#fafaf9", // Soft stone tint
+        accent: "#44403c"
+      },
+      {
+        title: "A Test of Heart",
+        summary: "Musa faces a difficult choice between personal gain and integrity, leading to a life-changing reward.",
+        content: "One morning, Musa found a wallet full of money. He thought of new shoes and a phone, but the weight of the pendant reminded him of his true self. He returned the wallet to the village chief. The owner, a merchant, was so grateful he offered Musa a full scholarship to a city school. Musa realized that honesty isn't about being watched—it's about doing right when you are all alone.",
+        color: "#fff7ed", // Orange tint
+        accent: "#ea580c"
+      },
+      {
+        title: "Journey to the City",
+        summary: "Moving from the quiet village to the loud city, Musa discovers that kindness is a universal language.",
+        content: "With his grandmother’s blessing, Musa left for the city. It was loud and fast, filled with zooming cars and bright lights. At first, he felt lost, but his pendant gave him courage. He became the quiet boy who listened. Soon, everyone noticed his wisdom. He wrote in his notebook: 'The world is wide, but kindness fits everywhere.' He was no longer just a village boy; he was a boy with a purpose.",
+        color: "#f8fafc", // Slate/City tint
+        accent: "#475569"
+      },
+      {
+        title: "The Reward",
+        summary: "Musa's voice reaches the airwaves, inspiring a new generation to believe in the power of the 'Good Turn.'",
+        content: "Months passed, and Musa won a citywide essay competition. He spoke on the radio about the old woman and the pendant. Back in the village, the old woman heard his voice and smiled. His words lit a fire. The merchant expanded the scholarship program, and more children began to follow Musa’s path. The dream was no longer just a vision in his sleep—it was now his life’s mission.",
+        color: "#eef2ff", // Indigo tint
+        accent: "#4f46e5"
+      },
+      {
+        title: "Full Circle",
+        summary: "Musa returns home to build a legacy, completing the cycle of kindness that started with a simple basket of firewood.",
+        content: "Years later, Musa returned to Itura as a man. He built 'The Good Turn Centre' for the village children. At the opening, he tried to return the pendant to the frail old woman, but she placed it back around his neck. 'It was always yours,' she whispered. Musa told the crowd: 'I was once just a boy who helped someone carry groceries. Look where it brought me.' The circle was complete, but the story of kindness was only just beginning.",
+        color: "#ecfdf5", // Final Emerald tint
+        accent: "#059669"
+      }
+    ];
+
+    let currentChapter = 0;
+
+    function render() {
+      const container = document.getElementById("story-container");
+      const ch = chapters[currentChapter];
+      
+      // Update Background
+      document.body.style.backgroundColor = ch.color;
+
+      container.innerHTML = `
+        <div class="chapter-card active">
+            <div class="mb-12 bg-white/60 backdrop-blur-sm p-8 rounded-[2.5rem] border border-white shadow-sm">
+                <h4 style="color: ${ch.accent}" class="font-black text-[10px] uppercase tracking-[0.3em] mb-2">Log Summary // Act 0${currentChapter + 1}</h4>
+                <p class="text-slate-700 font-bold leading-relaxed">${ch.summary}</p>
+            </div>
+
+            <div class="story-font">
+                <h1 class="text-4xl md:text-5xl font-black tracking-tighter mb-8 text-slate-900">${ch.title}</h1>
+                <p class="text-xl text-slate-800 leading-[1.9] drop-cap">${ch.content}</p>
+            </div>
+        </div>
+      `;
+
+      // Update Navigation
+      document.getElementById('log-indicator').innerText = `LOG 0${currentChapter + 1}/0${chapters.length}`;
+      document.getElementById('progress-bar').style.width = ((currentChapter + 1) / chapters.length) * 100 + "%";
+      document.getElementById('progress-bar').style.backgroundColor = ch.accent;
+      
+      document.getElementById('prev-btn').disabled = (currentChapter === 0);
+      
+      const nextBtn = document.getElementById('next-btn');
+      if (currentChapter === chapters.length - 1) {
+        nextBtn.innerHTML = "Back To Morals ↺";
+        nextBtn.onclick = () => window.location.href = "morals.html";
+      } else {
+        nextBtn.innerHTML = "NEXT LOG →";
+        nextBtn.onclick = () => changeChapter(1);
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function changeChapter(dir) {
+      currentChapter += dir;
+      render();
+    }
+
+    window.onload = render;
+  </script>
+</body>
+</html>
