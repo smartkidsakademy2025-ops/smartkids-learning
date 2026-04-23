@@ -166,7 +166,171 @@
     </div>
 </footer>
 
+<!-- REPLACE ONLY YOUR <script> ... </script> WITH THIS IMPROVED VERSION -->
 <script>
+/* ===============================
+   KIDVENTOR QUEST ENGINE
+   Cleaner / Faster / More Playable
+================================= */
+
+const GAME_PATH = "games/";
+
+/* Game database */
+const games = {
+  "Keyboard Ninja": {
+    file: "keyboard-ninja.html",
+    color: "indigo"
+  },
+  "Mouse Maze": {
+    file: "mouse-maze.html",
+    color: "emerald"
+  },
+  "Puzzle Hero": {
+    file: "puzzle-hero.html",
+    color: "amber"
+  },
+  "Space Cadet": {
+    file: "space-cadet.html",
+    color: "purple"
+  }
+};
+
+/* Elements */
+const modal = document.getElementById("gameModal");
+const frame = document.getElementById("gameFrame");
+const titleEl = document.getElementById("modalTitle");
+const loadingEl = document.getElementById("gameLoading");
+
+/* ===============================
+   OPEN GAME
+================================= */
+function openGame(gameTitle) {
+  const game = games[gameTitle];
+
+  if (!game) {
+    alert("Game not found.");
+    return;
+  }
+
+  titleEl.textContent = gameTitle;
+  loadingEl.classList.remove("hidden");
+  frame.classList.add("opacity-0");
+
+  modal.classList.remove("hidden");
+  document.body.style.overflow = "hidden";
+
+  frame.src = GAME_PATH + game.file;
+
+  frame.onload = () => {
+    loadingEl.classList.add("hidden");
+    frame.classList.remove("opacity-0");
+  };
+}
+
+/* ===============================
+   CLOSE GAME
+================================= */
+function closeGame() {
+  modal.classList.add("hidden");
+  frame.src = "";
+  document.body.style.overflow = "auto";
+}
+
+/* ===============================
+   ESC KEY CLOSE
+================================= */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeGame();
+});
+
+/* ===============================
+   CLICK OUTSIDE CLOSE
+================================= */
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeGame();
+});
+
+/* ===============================
+   STAR BALANCE SYSTEM
+================================= */
+let stars = Number(localStorage.getItem("kidventorStars")) || 140;
+
+function updateStars() {
+  const starText = document.querySelector("#missions .text-xl");
+  if (starText) {
+    starText.textContent = "⭐ " + stars;
+  }
+}
+
+function rewardStars(amount = 10) {
+  stars += amount;
+  localStorage.setItem("kidventorStars", stars);
+  updateStars();
+}
+
+/* ===============================
+   DAILY BONUS
+================================= */
+function dailyBonus() {
+  const today = new Date().toDateString();
+  const claimed = localStorage.getItem("dailyBonus");
+
+  if (claimed !== today) {
+    stars += 20;
+    localStorage.setItem("kidventorStars", stars);
+    localStorage.setItem("dailyBonus", today);
+
+    setTimeout(() => {
+      alert("🎉 Daily Bonus! +20 Stars");
+      updateStars();
+    }, 1200);
+  }
+}
+
+/* ===============================
+   BUTTON EFFECTS
+================================= */
+document.querySelectorAll("button").forEach(btn => {
+  btn.addEventListener("mouseenter", () => {
+    btn.classList.add("scale-105");
+  });
+
+  btn.addEventListener("mouseleave", () => {
+    btn.classList.remove("scale-105");
+  });
+});
+
+/* ===============================
+   REWARD WHEN GAME OPENS
+================================= */
+const oldOpen = openGame;
+
+window.openGame = function(title){
+  rewardStars(5);   // reward just for playing
+  oldOpen(title);
+};
+
+window.closeGame = closeGame;
+
+/* ===============================
+   PAGE LOAD
+================================= */
+window.addEventListener("load", () => {
+  updateStars();
+  dailyBonus();
+});
+
+/* ===============================
+   FUTURE FEATURE READY
+   Save badges later
+================================= */
+function unlockBadge(name){
+  console.log("Badge unlocked:", name);
+}
+</script>
+    
+    
+    <!--<script>
     function openGame(title) {
         const modal = document.getElementById('gameModal');
         const frame = document.getElementById('gameFrame');
