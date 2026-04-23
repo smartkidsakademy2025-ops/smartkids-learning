@@ -3,274 +3,255 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Keyboard Ninja | Kidventor</title>
+<title>Keyboard Ninja Pro | Kidventor</title>
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-body{
-margin:0;
-overflow:hidden;
-font-family:Inter,system-ui,sans-serif;
-background:linear-gradient(135deg,#0f172a,#1e293b,#312e81);
-}
-.letter{
-position:absolute;
-width:64px;
-height:64px;
-border-radius:18px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-font-weight:900;
-color:#fff;
-background:linear-gradient(135deg,#6366f1,#8b5cf6);
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-user-select:none;
-transition:transform .1s;
-}
-.hit{
-transform:scale(1.25);
-background:linear-gradient(135deg,#10b981,#22c55e);
-}
-.miss{
-background:linear-gradient(135deg,#ef4444,#f97316);
-}
-.panel{
-backdrop-filter:blur(10px);
-background:rgba(255,255,255,.08);
-}
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Inter', system-ui, sans-serif;
+        background: radial-gradient(circle at center, #1e1b4b, #0f172a);
+    }
+
+    /* Upgraded Letter Style */
+    .letter {
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        font-weight: 900;
+        color: #fff;
+        background: linear-gradient(135deg, #6366f1, #4338ca);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 -4px 0 rgba(0,0,0,0.2);
+        user-select: none;
+        border: 2px solid rgba(255,255,255,0.1);
+    }
+
+    /* Slash Effect */
+    .slash {
+        position: absolute;
+        height: 4px;
+        background: white;
+        border-radius: 2px;
+        transform: rotate(-45deg);
+        pointer-events: none;
+        animation: slashAnim 0.3s ease-out forwards;
+    }
+
+    @keyframes slashAnim {
+        0% { width: 0; opacity: 1; }
+        100% { width: 150px; opacity: 0; }
+    }
+
+    .hit {
+        transform: scale(0);
+        opacity: 0;
+        transition: all 0.2s ease-out;
+    }
+
+    .panel {
+        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Floating Animation for Start Text */
+    .floating { animation: float 3s ease-in-out infinite; }
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div class="fixed top-0 inset-x-0 z-50 px-4 py-4">
-<div class="max-w-6xl mx-auto panel rounded-2xl px-5 py-4 flex flex-wrap gap-4 justify-between text-white">
+<div class="fixed top-0 inset-x-0 z-50 px-6 py-6">
+    <div class="content-container max-w-5xl mx-auto flex justify-between items-center">
+        <div class="flex gap-4">
+            <div class="panel px-6 py-3 rounded-2xl text-white">
+                <p class="text-[10px] uppercase font-black tracking-widest text-indigo-300">Score</p>
+                <p id="score" class="text-3xl font-black">0</p>
+            </div>
+            <div class="panel px-6 py-3 rounded-2xl text-white">
+                <p class="text-[10px] uppercase font-black tracking-widest text-emerald-300">Stars</p>
+                <p id="currentStars" class="text-3xl font-black text-amber-400">0</p>
+            </div>
+        </div>
 
-<div>
-<p class="text-xs uppercase tracking-widest text-indigo-200 font-black">Score</p>
-<p id="score" class="text-2xl font-black">0</p>
+        <div id="comboContainer" class="hidden text-center">
+            <p id="comboText" class="text-4xl font-black text-white italic italic">X2</p>
+            <p class="text-[10px] font-black text-indigo-400 uppercase">Combo</p>
+        </div>
+
+        <div class="flex gap-4">
+            <div class="panel px-6 py-3 rounded-2xl text-white text-right">
+                <p class="text-[10px] uppercase font-black tracking-widest text-rose-300">Lives</p>
+                <p id="lives" class="text-2xl font-black">❤️❤️❤️</p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div>
-<p class="text-xs uppercase tracking-widest text-indigo-200 font-black">Lives</p>
-<p id="lives" class="text-2xl font-black">❤️❤️❤️</p>
+<div id="startScreen" class="absolute inset-0 flex flex-col items-center justify-center z-40 bg-slate-950/40">
+    <div class="floating text-center">
+        <h1 class="text-white text-7xl font-black tracking-tighter mb-4">KEYBOARD <span class="text-indigo-500">NINJA</span></h1>
+        <p class="text-indigo-200 font-bold tracking-[0.3em] animate-pulse uppercase">Press any key to begin mission</p>
+    </div>
 </div>
 
-<div>
-<p class="text-xs uppercase tracking-widest text-indigo-200 font-black">Level</p>
-<p id="level" class="text-2xl font-black">1</p>
-</div>
+<div id="gameArea" class="absolute inset-0"></div>
 
-<div>
-<p class="text-xs uppercase tracking-widest text-indigo-200 font-black">Time</p>
-<p id="timer" class="text-2xl font-black">60</p>
-</div>
+<div id="gameOver" class="hidden fixed inset-0 z-[100] bg-slate-950/95 flex items-center justify-center p-6">
+    <div class="bg-white rounded-[3rem] p-12 max-w-md w-full text-center shadow-2xl">
+        <div class="text-6xl mb-6">🏆</div>
+        <h2 class="text-4xl font-black text-slate-900 leading-none">Mission Complete</h2>
+        <p class="mt-2 text-slate-400 font-medium">You protected the digital scroll!</p>
 
-</div>
-</div>
+        <div class="mt-8 space-y-3">
+            <div class="bg-slate-50 flex justify-between items-center p-5 rounded-2xl">
+                <span class="font-black text-slate-400 uppercase text-xs">Total Score</span>
+                <span id="finalScore" class="text-2xl font-black">0</span>
+            </div>
+            <div class="bg-indigo-600 flex justify-between items-center p-5 rounded-2xl text-white">
+                <span class="font-black opacity-80 uppercase text-xs">Stars Earned</span>
+                <span id="starsWon" class="text-2xl font-black">0</span>
+            </div>
+        </div>
 
-<!-- CENTER -->
-<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-<h1 id="startText" class="text-white text-4xl md:text-6xl font-black opacity-20 text-center px-4">
-PRESS ANY KEY TO START
-</h1>
-</div>
-
-<!-- GAME AREA -->
-<div id="gameArea" class="absolute inset-0 overflow-hidden"></div>
-
-<!-- GAME OVER -->
-<div id="gameOver" class="hidden fixed inset-0 z-50 bg-slate-950/90 flex items-center justify-center p-6">
-<div class="bg-white rounded-[2rem] p-10 max-w-md w-full text-center">
-<h2 class="text-4xl font-black text-slate-900">Game Over</h2>
-<p class="mt-4 text-slate-500">You played like a true ninja.</p>
-
-<div class="mt-8 grid grid-cols-2 gap-4 text-left">
-<div class="bg-slate-50 rounded-2xl p-4">
-<p class="text-xs font-black text-slate-400 uppercase">Final Score</p>
-<p id="finalScore" class="text-3xl font-black">0</p>
-</div>
-
-<div class="bg-slate-50 rounded-2xl p-4">
-<p class="text-xs font-black text-slate-400 uppercase">Stars Won</p>
-<p id="starsWon" class="text-3xl font-black text-amber-500">0</p>
-</div>
-</div>
-
-<button onclick="restartGame()" class="mt-8 w-full py-4 rounded-2xl bg-indigo-600 text-white font-black hover:bg-indigo-700">
-Play Again
-</button>
-</div>
+        <button onclick="location.reload()" class="mt-8 w-full py-5 rounded-[1.5rem] bg-slate-900 text-white font-black hover:bg-indigo-600 transition-all transform hover:scale-105">
+            RETRY MISSION
+        </button>
+    </div>
 </div>
 
 <script>
-const gameArea = document.getElementById("gameArea");
+    const gameArea = document.getElementById("gameArea");
+    let score = 0;
+    let lives = 3;
+    let combo = 0;
+    let speed = 2.0;
+    let started = false;
+    let ended = false;
+    let activeLetters = [];
 
-let score = 0;
-let lives = 3;
-let level = 1;
-let timeLeft = 60;
-let speed = 1.6;
-let started = false;
-let ended = false;
+    // Sound FX Simulation (Visual)
+    function triggerSlash(x, y) {
+        const slash = document.createElement("div");
+        slash.className = "slash";
+        slash.style.left = x + "px";
+        slash.style.top = y + "px";
+        document.body.appendChild(slash);
+        setTimeout(() => slash.remove(), 300);
+    }
 
-let activeLetters = [];
-let spawnLoop;
-let timerLoop;
-let animLoop;
+    function updateUI() {
+        document.getElementById("score").textContent = score;
+        document.getElementById("currentStars").textContent = Math.floor(score / 5);
+        
+        let hearts = "";
+        for(let i=0; i<3; i++) hearts += (i < lives) ? "❤️" : "🖤";
+        document.getElementById("lives").textContent = hearts;
 
-/* UI */
-function updateUI(){
-document.getElementById("score").textContent = score;
-document.getElementById("level").textContent = level;
-document.getElementById("timer").textContent = timeLeft;
+        if (combo > 2) {
+            document.getElementById("comboContainer").classList.remove("hidden");
+            document.getElementById("comboText").textContent = `X${Math.floor(combo/2)}`;
+        } else {
+            document.getElementById("comboContainer").classList.add("hidden");
+        }
+    }
 
-let hearts = "";
-for(let i=0;i<lives;i++) hearts += "❤️";
-document.getElementById("lives").textContent = hearts || "💀";
-}
+    function spawnLetter() {
+        if (ended) return;
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        const el = document.createElement("div");
+        el.className = "letter";
+        el.textContent = char;
+        
+        const x = Math.random() * (window.innerWidth - 100) + 20;
+        el.style.left = x + "px";
+        el.style.top = "-100px";
+        
+        // Randomize color slightly for variety
+        const colors = ['#6366f1', '#8b5cf6', '#4f46e5', '#3730a3'];
+        el.style.background = `linear-gradient(135deg, ${colors[Math.floor(Math.random()*colors.length)]}, #1e1b4b)`;
 
-/* Start Game */
-function startGame(){
-if(started) return;
-started = true;
-document.getElementById("startText").style.display = "none";
+        gameArea.appendChild(el);
+        activeLetters.push({ char, el, x, y: -100 });
+        
+        // Increase speed slowly
+        speed += 0.01;
+    }
 
-spawnLoop = setInterval(spawnLetter, 900);
-timerLoop = setInterval(() => {
-timeLeft--;
-updateUI();
+    function gameLoop() {
+        if (ended) return;
+        for (let i = activeLetters.length - 1; i >= 0; i--) {
+            const item = activeLetters[i];
+            item.y += speed;
+            item.el.style.top = item.y + "px";
 
-if(timeLeft <= 0) endGame();
+            if (item.y > window.innerHeight) {
+                item.el.remove();
+                activeLetters.splice(i, 1);
+                lives--;
+                combo = 0;
+                updateUI();
+                if (lives <= 0) endGame();
+            }
+        }
+        requestAnimationFrame(gameLoop);
+    }
 
-if(score >= level * 100){
-level++;
-speed += 0.25;
-updateUI();
-}
-},1000);
+    document.addEventListener("keydown", (e) => {
+        if (!started) {
+            started = true;
+            document.getElementById("startScreen").classList.add("hidden");
+            setInterval(spawnLetter, 800);
+            gameLoop();
+            return;
+        }
+        if (ended) return;
 
-requestAnimationFrame(gameLoop);
-}
+        const key = e.key.toUpperCase();
+        let hitFound = false;
 
-/* Spawn Letter */
-function spawnLetter(){
-if(ended) return;
+        for (let i = 0; i < activeLetters.length; i++) {
+            if (activeLetters[i].char === key) {
+                const hit = activeLetters[i];
+                triggerSlash(hit.x, hit.y + 35);
+                hit.el.classList.add("hit");
+                
+                setTimeout(() => hit.el.remove(), 200);
+                activeLetters.splice(i, 1);
+                
+                combo++;
+                score += (10 * Math.floor(combo/2 || 1));
+                updateUI();
+                hitFound = true;
+                break;
+            }
+        }
+        
+        if (!hitFound && started) combo = 0; // Break combo on wrong key
+    });
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const char = chars[Math.floor(Math.random()*chars.length)];
-
-const el = document.createElement("div");
-el.className = "letter";
-el.textContent = char;
-
-const x = Math.random() * (window.innerWidth - 70);
-el.style.left = x + "px";
-el.style.top = "-80px";
-
-gameArea.appendChild(el);
-
-activeLetters.push({
-char,
-el,
-x,
-y:-80
-});
-}
-
-/* Main Loop */
-function gameLoop(){
-if(ended) return;
-
-for(let i=activeLetters.length-1;i>=0;i--){
-const item = activeLetters[i];
-item.y += speed;
-item.el.style.top = item.y + "px";
-
-if(item.y > window.innerHeight){
-item.el.remove();
-activeLetters.splice(i,1);
-loseLife();
-}
-}
-
-animLoop = requestAnimationFrame(gameLoop);
-}
-
-/* Keyboard Hit */
-document.addEventListener("keydown",(e)=>{
-if(!started){
-startGame();
-return;
-}
-
-if(ended) return;
-
-const key = e.key.toUpperCase();
-
-for(let i=0;i<activeLetters.length;i++){
-if(activeLetters[i].char === key){
-
-const hit = activeLetters[i];
-hit.el.classList.add("hit");
-
-setTimeout(()=>hit.el.remove(),80);
-
-activeLetters.splice(i,1);
-
-score += 10;
-updateUI();
-saveStars(2);
-
-return;
-}
-}
-});
-
-/* Lose life */
-function loseLife(){
-lives--;
-updateUI();
-
-if(lives <= 0){
-endGame();
-}
-}
-
-/* Save stars */
-function saveStars(n){
-let stars = Number(localStorage.getItem("kidventorStars")) || 0;
-stars += n;
-localStorage.setItem("kidventorStars", stars);
-}
-
-/* End */
-function endGame(){
-ended = true;
-
-clearInterval(spawnLoop);
-clearInterval(timerLoop);
-cancelAnimationFrame(animLoop);
-
-document.getElementById("finalScore").textContent = score;
-
-const reward = Math.floor(score / 10);
-document.getElementById("starsWon").textContent = reward;
-
-saveStars(reward);
-
-document.getElementById("gameOver").classList.remove("hidden");
-}
-
-/* Restart */
-function restartGame(){
-location.reload();
-}
-
-updateUI();
+    function endGame() {
+        ended = true;
+        document.getElementById("gameOver").classList.remove("hidden");
+        document.getElementById("finalScore").textContent = score;
+        const totalStars = Math.floor(score / 5);
+        document.getElementById("starsWon").textContent = totalStars;
+        
+        // Save to local storage for the Adventure page
+        let savedStars = Number(localStorage.getItem("kidventorStars")) || 0;
+        localStorage.setItem("kidventorStars", savedStars + totalStars);
+    }
 </script>
 
 </body>
