@@ -66,6 +66,56 @@ animation:shine 3s linear infinite;
 
 @keyframes shine{ to{background-position:200% center;} }
 .card:hover{ transform:translateY(-8px); }
+
+    /* Container to hold the scroller and provide side spacing */
+    .testimonial-wrapper {
+        overflow: hidden;
+        width: 100%;
+        padding: 40px 0;
+        position: relative;
+    }
+
+    /* The actual moving track */
+    .testimonial-track {
+        display: flex;
+        width: calc(350px * 12); /* Adjust based on card width * number of cards */
+        animation: scroll 40s linear infinite;
+    }
+
+    /* Pause animation on hover so people can read */
+    .testimonial-track:hover {
+        animation-play-state: paused;
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-350px * 6)); } /* Move by half the track length */
+    }
+
+    .testimonial-card {
+        width: 320px;
+        flex-shrink: 0;
+        margin: 0 15px;
+    }
+
+    /* Gradient Fades for the edges to make it look smooth */
+    .testimonial-wrapper::before,
+    .testimonial-wrapper::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100px;
+        height: 100%;
+        z-index: 2;
+    }
+    .testimonial-wrapper::before {
+        left: 0;
+        background: linear-gradient(to right, #f8fafc, transparent);
+    }
+    .testimonial-wrapper::after {
+        right: 0;
+        background: linear-gradient(to left, #f8fafc, transparent);
+    }
 </style>
 </head>
 
@@ -149,83 +199,87 @@ animation:shine 3s linear infinite;
 </div>
 </section>
 
-<section id="testimonials" class="py-24 px-6 bg-slate-50">
-<div class="content-container">
-    <div class="text-center mb-16">
-        <h2 class="text-4xl font-black italic text-indigo-600">"A Platform for Every Stage of Growth."</h2>
-        <p class="mt-4 text-slate-500 font-bold uppercase tracking-widest text-xs">Hear from our Global Community</p>
+
+
+<section id="testimonials" class="py-24 bg-slate-50 overflow-hidden">
+    <div class="content-container px-6 mb-12">
+        <div class="text-center">
+            <h2 class="text-4xl font-black italic text-indigo-600">Trust by Schools & Parents</h2>
+            <p class="mt-4 text-slate-500 font-bold uppercase tracking-widest text-xs">A Platform for Every Stage of Growth</p>
+        </div>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-t-4 border-indigo-600 flex flex-col justify-between">
-            <p class="text-slate-600 italic text-sm leading-relaxed">"We integrated Kidventor into our ICT curriculum for both our primary and junior secondary wings. The transition in complexity—from basic mouse skills to advanced logic puzzles—makes it a perfect all-in-one solution for a growing school."</p>
-            <div class="mt-8 flex items-center gap-4">
-                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-600 text-xs">Prop.</div>
-                <div>
-                    <h4 class="font-black text-slate-800 leading-none text-sm">Dr. Samuel O.</h4>
-                    <p class="text-[10px] text-slate-400 mt-1 uppercase font-black">School Proprietor</p>
+    <div class="testimonial-wrapper">
+        <div class="testimonial-track">
+            
+            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-indigo-600 flex flex-col justify-between h-[300px]">
+                <p class="text-slate-600 italic text-sm leading-relaxed">"We integrated Kidventor into our ICT curriculum. The transition from basic skills to logic puzzles is perfect."</p>
+                <div class="mt-6 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-600 text-xs text-center">SO</div>
+                    <div>
+                        <h4 class="font-black text-slate-800 text-xs">Dr. Samuel O.</h4>
+                        <p class="text-[9px] text-slate-400 uppercase font-black">School Proprietor</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-t-4 border-slate-800 flex flex-col justify-between">
-            <p class="text-slate-600 italic text-sm leading-relaxed">"People think Kidventor is just for kids, but as a Senior Student, the UI design and mission logic are actually challenging. It’s a great playground for practicing my front-end dev skills in a fun environment."</p>
-            <div class="mt-8 flex items-center gap-4">
-                <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-800 text-xs">J.D</div>
-                <div>
-                    <h4 class="font-black text-slate-800 leading-none text-sm">Janet D.</h4>
-                    <p class="text-[10px] text-slate-400 mt-1 uppercase font-black">Grade 11 Student</p>
+            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-slate-800 flex flex-col justify-between h-[300px]">
+                <p class="text-slate-600 italic text-sm leading-relaxed">"As a Senior Student, the UI design is actually challenging. Great for practicing my front-end dev skills."</p>
+                <div class="mt-6 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-800 text-xs text-center">JD</div>
+                    <div>
+                        <h4 class="font-black text-slate-800 text-xs">Janet D.</h4>
+                        <p class="text-[9px] text-slate-400 uppercase font-black">Grade 11 Student</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-t-4 border-emerald-500 flex flex-col justify-between">
-            <p class="text-slate-600 italic text-sm leading-relaxed">"What I love is that my 8-year-old and my 14-year-old both use Kidventor daily. The platform scales. My older daughter spends time on the advanced missions, while my son enjoys the moral stories."</p>
-            <div class="mt-8 flex items-center gap-4">
-                <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center font-bold text-emerald-600 text-xs">Mrs. F</div>
-                <div>
-                    <h4 class="font-black text-slate-800 leading-none text-sm">Mrs. Farrah B.</h4>
-                    <p class="text-[10px] text-slate-400 mt-1 uppercase font-black">Parent of 2 Explorers</p>
+            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-emerald-500 flex flex-col justify-between h-[300px]">
+                <p class="text-slate-600 italic text-sm leading-relaxed">"My 8-year-old and my 14-year-old both use Kidventor daily. The platform scales beautifully for both."</p>
+                <div class="mt-6 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center font-bold text-emerald-600 text-xs text-center">MF</div>
+                    <div>
+                        <h4 class="font-black text-slate-800 text-xs">Mrs. Farrah B.</h4>
+                        <p class="text-[9px] text-slate-400 uppercase font-black">Parent of 2</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-t-4 border-amber-500 flex flex-col justify-between">
-            <p class="text-slate-600 italic text-sm leading-relaxed">"The moral integration is universal. We use the stories as conversation starters in our secondary assembly. It's rare to find a tech platform that values character as much as code."</p>
-            <div class="mt-8 flex items-center gap-4">
-                <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center font-bold text-amber-600 text-xs">Dir.</div>
-                <div>
-                    <h4 class="font-black text-slate-800 leading-none text-sm">Director Hassan</h4>
-                    <p class="text-[10px] text-slate-400 mt-1 uppercase font-black">Principal, Bright-Way College</p>
+            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-amber-500 flex flex-col justify-between h-[300px]">
+                <p class="text-slate-600 italic text-sm leading-relaxed">"We use the moral stories as conversation starters in our secondary assembly. It values character as much as code."</p>
+                <div class="mt-6 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center font-bold text-amber-600 text-xs text-center">DH</div>
+                    <div>
+                        <h4 class="font-black text-slate-800 text-xs">Director Hassan</h4>
+                        <p class="text-[9px] text-slate-400 uppercase font-black">Principal</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-t-4 border-blue-500 flex flex-col justify-between">
-            <p class="text-slate-600 italic text-sm leading-relaxed">"The Keyboard Ninja missions helped me increase my WPM to 65. It's perfect for anyone—regardless of age—who wants to master the digital basics while having a blast."</p>
-            <div class="mt-8 flex items-center gap-4">
-                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 text-xs">K.A</div>
-                <div>
-                    <h4 class="font-black text-slate-800 leading-none text-sm">Kevin A.</h4>
-                    <p class="text-[10px] text-slate-400 mt-1 uppercase font-black">Junior Secondary 3</p>
+            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-blue-500 flex flex-col justify-between h-[300px]">
+                <p class="text-slate-600 italic text-sm leading-relaxed">"Keyboard Ninja helped me increase my WPM to 65. It's perfect for anyone wanting to master digital basics."</p>
+                <div class="mt-6 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 text-xs text-center">KA</div>
+                    <div>
+                        <h4 class="font-black text-slate-800 text-xs">Kevin A.</h4>
+                        <p class="text-[9px] text-slate-400 uppercase font-black">JS 3 Student</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border-t-4 border-rose-500 flex flex-col justify-between">
-            <p class="text-slate-600 italic text-sm leading-relaxed">"My teenager was skeptical at first, but once he saw the Adventure Zone and the reward system, he was hooked. It bridges the gap between 'childish' and 'corporate' perfectly."</p>
-            <div class="mt-8 flex items-center gap-4">
-                <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center font-bold text-rose-600 text-xs">Mr. C</div>
-                <div>
-                    <h4 class="font-black text-slate-800 leading-none text-sm">Mr. Chinedu</h4>
-                    <p class="text-[10px] text-slate-400 mt-1 uppercase font-black">Parent of 15-year-old</p>
+            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-rose-500 flex flex-col justify-between h-[300px]">
+                <p class="text-slate-600 italic text-sm leading-relaxed">"It bridges the gap between 'childish' and 'corporate' perfectly for my teenager."</p>
+                <div class="mt-6 flex items-center gap-3">
+                    <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center font-bold text-rose-600 text-xs text-center">MC</div>
+                    <div>
+                        <h4 class="font-black text-slate-800 text-xs">Mr. Chinedu</h4>
+                        <p class="text-[9px] text-slate-400 uppercase font-black">Parent of Teen</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
+            </div>
     </div>
-</div>
 </section>
 <!--<section id="adventure" class="pt-32 pb-24 px-6 bg-slate-50">
 <div class="content-container">
