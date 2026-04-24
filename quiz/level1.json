@@ -1,0 +1,13 @@
+[
+  {
+    "question": "What is an algorithm?",
+    "options": ["A type of computer", "A step-by-step instruction", "A programming language", "A social media app"],
+    "answer": 1
+  },
+  {
+    "question": "Which of these is decomposition?",
+    "options": ["Deleting code", "Breaking big tasks into small ones", "Adding numbers", "Naming a robot"],
+    "answer": 1
+  },
+  ... add more questions ...
+]
