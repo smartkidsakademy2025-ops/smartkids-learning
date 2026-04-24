@@ -1,125 +1,154 @@
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Help Center | Kidventor Academy</title>
+<title>FAQ | Kidventor Academy</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
     body { font-family: 'Inter', system-ui, sans-serif; }
     .content-container { max-width: 1000px; margin: 0 auto; }
     
-    .faq-hero {
+    .faq-gradient {
         background: radial-gradient(circle at top right, #e0e7ff 0%, transparent 40%),
-                    radial-gradient(circle at bottom left, #fef3c7 0%, transparent 30%),
-                    #ffffff;
+                    linear-gradient(to bottom, #ffffff, #f8fafc);
     }
 
-    /* Modern Glass Search Bar */
-    .search-glass {
-        backdrop-filter: blur(10px);
-        background: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(99, 102, 241, 0.2);
-        box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+    /* Modern Search Input Styling */
+    .search-wrapper {
+        position: relative;
+        max-width: 600px;
+        margin: -40px auto 0; /* Pulls search bar up into the hero area */
+        z-index: 10;
     }
 
-    .faq-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .faq-card.hidden { display: none; }
+    .search-input {
+        width: 100%;
+        padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+        border-radius: 1.5rem;
+        border: 1px solid #e2e8f0;
+        background: white;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        outline: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        border-color: #6366f1;
+        box-shadow: 0 15px 30px -10px rgba(99, 102, 241, 0.2);
+    }
+
+    .faq-item { transition: transform 0.2s ease, opacity 0.2s ease; }
 </style>
 </head>
 <body class="bg-slate-50 text-slate-900">
 
 <header class="py-6 px-6 bg-white/80 backdrop-blur sticky top-0 z-50 border-b border-slate-100">
     <div class="content-container flex justify-between items-center">
-        <a href="index.html" class="flex items-center gap-2 group">
-            <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black group-hover:rotate-12 transition-transform">K</div>
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-black">K</div>
             <span class="font-black text-xl">Kidventor</span>
         </a>
-        <a href="index.html" class="text-sm font-bold text-slate-400 hover:text-indigo-600 transition-colors">Back to Academy</a>
+        <a href="index.html" class="text-sm font-bold text-indigo-600">← Back to Home</a>
     </div>
 </header>
 
-<section class="faq-hero pt-24 pb-16 px-6">
-    <div class="content-container text-center">
-        <span class="px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-black uppercase tracking-[0.2em]">Knowledge Base</span>
-        <h1 class="text-5xl font-black mt-6 tracking-tight text-slate-900">How can we <span class="text-indigo-600">help you?</span></h1>
-        
-        <div class="mt-12 max-w-2xl mx-auto relative group">
-            <div class="absolute inset-y-0 left-6 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-600 transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+<section class="faq-gradient pt-20 pb-20 px-6 text-center">
+    <div class="content-container">
+        <span class="px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black uppercase tracking-widest">Help Center</span>
+        <h1 class="text-5xl font-black mt-6 tracking-tight">Got Questions? <br><span class="text-indigo-600">We've Got Answers.</span></h1>
+        <p class="mt-6 text-slate-500 text-lg max-w-2xl mx-auto">Find everything you need to know about our learning paths and safety.</p>
+    </div>
+</section>
+
+<div class="px-6">
+    <div class="content-container">
+        <div class="search-wrapper">
+            <div class="absolute inset-y-0 left-5 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
             </div>
-            <input type="text" id="faqSearch" placeholder="Search for 'stars', 'safety', 'coding'..." 
-                class="w-full pl-16 pr-8 py-6 rounded-[2rem] search-glass outline-none focus:ring-4 focus:ring-indigo-100 text-lg font-medium transition-all"
-                onkeyup="filterFAQ()">
+            <input type="text" id="faqSearch" onkeyup="searchFAQ()" placeholder="Search help topics..." class="search-input">
+        </div>
+    </div>
+</div>
+
+<section class="py-20 px-6">
+    <div class="content-container">
+        <div id="faqList" class="grid gap-4">
+
+            <div class="faq-item bg-white border border-slate-100 rounded-3xl p-8 shadow-sm">
+                <h3 class="text-xl font-black text-slate-800">What is Kidventor Academy?</h3>
+                <p class="mt-4 text-slate-600 leading-relaxed">Kidventor Academy is a digital learning platform designed specifically for children. We combine technical skills like <strong>coding and web design</strong> with essential life lessons through our <strong>Moral Stories</strong>.</p>
+            </div>
+
+            <div class="faq-item bg-white border border-slate-100 rounded-3xl p-8 shadow-sm">
+                <h3 class="text-xl font-black text-slate-800">Is the content safe for my child?</h3>
+                <p class="mt-4 text-slate-600 leading-relaxed">Safety is our top priority. Our platform is a "walled garden," meaning all content is pre-vetted. We don't have open chat rooms, and our AI lessons focus on safe, responsible use of technology.</p>
+            </div>
+
+            <div class="faq-item bg-white border border-slate-100 rounded-3xl p-8 shadow-sm">
+                <h3 class="text-xl font-black text-slate-800">How do "Stars" and "XP" work?</h3>
+                <p class="mt-4 text-slate-600 leading-relaxed">We use gamification to keep kids engaged. When a student completes a mission or reads a moral story, they earn Stars. These Stars reflect their progress and can be used to unlock new "Quest" ranks on their Adventure page.</p>
+            </div>
+
+            <div class="faq-item bg-white border border-slate-100 rounded-3xl p-8 shadow-sm">
+                <h3 class="text-xl font-black text-slate-800">Do I need to pay for any courses?</h3>
+                <p class="mt-4 text-slate-600 leading-relaxed">Currently, Kidventor Academy is free to use. We support our mission through curated advertisements. This allows us to provide high-quality tech education to future leaders regardless of their background.</p>
+            </div>
+
+            <div id="noResults" class="hidden py-10 text-center">
+                <p class="text-slate-400 font-bold uppercase tracking-widest italic">No matching answers found...</p>
+            </div>
+
         </div>
     </div>
 </section>
 
-<section class="py-12 pb-32 px-6">
-    <div class="content-container">
-        <div id="faqGrid" class="grid gap-6">
-
-            <div class="faq-card bg-white border border-slate-100 rounded-[2.5rem] p-10 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-50/50">
-                <h3 class="text-2xl font-black text-slate-800 tracking-tight">What is Kidventor Academy?</h3>
-                <p class="mt-4 text-slate-500 leading-relaxed text-lg">Kidventor Academy is a digital learning platform designed specifically for children. We combine technical skills like <strong>coding and web design</strong> with essential life lessons through our <strong>Moral Stories</strong>.</p>
-            </div>
-
-            <div class="faq-card bg-white border border-slate-100 rounded-[2.5rem] p-10 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-50/50">
-                <h3 class="text-2xl font-black text-slate-800 tracking-tight">Is the content safe for my child?</h3>
-                <p class="mt-4 text-slate-500 leading-relaxed text-lg">Safety is our priority. We follow a strict "walled garden" approach—no open chats, no external links, and all content is vetted for safe, responsible use of technology.</p>
-            </div>
-
-            <div class="faq-card bg-white border border-slate-100 rounded-[2.5rem] p-10 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-50/50">
-                <h3 class="text-2xl font-black text-slate-800 tracking-tight">How do Stars and XP work?</h3>
-                <p class="mt-4 text-slate-500 leading-relaxed text-lg">When students complete missions or read stories, they earn <strong>Stars</strong>. These stars represent their growth and can be used on the <strong>Adventure</strong> page to track their rank from Beginner to Tech Legend.</p>
-            </div>
-
-            <div class="faq-card bg-white border border-slate-100 rounded-[2.5rem] p-10 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-50/50">
-                <h3 class="text-2xl font-black text-slate-800 tracking-tight">Are the games educational?</h3>
-                <p class="mt-4 text-slate-500 leading-relaxed text-lg">Yes! Every mission in the Adventure Zone, like <strong>Keyboard Ninja</strong>, is built to improve real skills such as typing speed, mouse accuracy, and logic thinking.</p>
-            </div>
-
-            <div id="noResults" class="hidden py-20 text-center">
-                <div class="text-6xl mb-4">🔍</div>
-                <h3 class="text-xl font-black text-slate-400">Oops! We couldn't find that mission.</h3>
-                <p class="text-slate-400 mt-2">Try searching for "coding" or "stars".</p>
-            </div>
-
+<section class="pb-24 px-6">
+    <div class="content-container bg-indigo-600 rounded-[3rem] p-12 text-center text-white relative overflow-hidden">
+        <div class="relative z-10">
+            <h2 class="text-3xl font-black">Still have a question?</h2>
+            <p class="mt-4 text-indigo-100">Our team of educators is here to help you and your child.</p>
+            <a href="mailto:hello@kidventoracademy.com" class="inline-block mt-8 px-10 py-4 bg-white text-indigo-600 font-black rounded-2xl hover:bg-indigo-50 transition-colors">Contact Support</a>
         </div>
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500 rounded-full opacity-50"></div>
     </div>
 </section>
 
 <script>
-    function filterFAQ() {
+    function searchFAQ() {
         const input = document.getElementById('faqSearch');
         const filter = input.value.toLowerCase();
-        const grid = document.getElementById('faqGrid');
-        const cards = grid.getElementsByClassName('faq-card');
+        const faqList = document.getElementById('faqList');
+        const items = faqList.getElementsByClassName('faq-item');
         const noResults = document.getElementById('noResults');
-        let found = false;
+        let hasResults = false;
 
-        for (let i = 0; i < cards.length; i++) {
-            const text = cards[i].innerText.toLowerCase();
+        for (let i = 0; i < items.length; i++) {
+            const text = items[i].innerText.toLowerCase();
             if (text.includes(filter)) {
-                cards[i].style.display = "";
-                found = true;
+                items[i].style.display = "";
+                hasResults = true;
             } else {
-                cards[i].style.display = "none";
+                items[i].style.display = "none";
             }
         }
 
-        noResults.style.display = found ? "none" : "block";
+        noResults.classList.toggle('hidden', hasResults);
     }
 </script>
 
 <footer class="bg-slate-950 text-slate-500 py-16 px-6 text-center">
-    <p class="text-xs font-black uppercase tracking-widest">© 2026 Kidventor Academy • Global Tech Education</p>
+    <div class="content-container">
+        <p class="text-xs font-bold uppercase tracking-[0.3em]">© 2026 Kidventor Academy • Empowering Future Leaders</p>
+    </div>
 </footer>
 
 </body>
-</html>-->
+</html>
 
 
 
@@ -127,7 +156,7 @@
 
 
 
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
