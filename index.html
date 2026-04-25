@@ -1,1126 +1,321 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Kidventor Academy | Future Builders</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Kidventor Academy | Future Builders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="description" content="Kidventor Academy teaches coding, digital literacy and character education for children.">
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* SMOOTH SCROLLING */
+        html { scroll-behavior: smooth; }
 
-<meta name="description" content="Kidventor Academy teaches coding, digital literacy and character education for children.">
+        /* LOGO SPIN ANIMATION */
+        @keyframes logo-turn {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+        .logo-container:hover .logo-icon {
+            animation: logo-turn 0.8s ease-in-out;
+        }
 
- <style>
-/* ... existing styles ... */
+        /* SHINING EDGE MENU BUTTONS */
+        .nav-link {
+            position: relative;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        .nav-link:hover {
+            color: #4f46e5;
+            background: white;
+            border: 1px solid #818cf8;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+        }
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: 0.75rem;
+            padding: 1px;
+            background: linear-gradient(90deg, transparent, #ffffff, #6366f1, transparent);
+            background-size: 200% auto;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .nav-link:hover::after {
+            opacity: 1;
+            animation: shine 1.5s linear infinite;
+        }
 
-/* LOGO SPIN ANIMATION */
-@keyframes logo-turn {
-    from { transform: rotateY(0deg); }
-    to { transform: rotateY(360deg); }
-}
-.logo-container:hover .logo-icon {
-    animation: logo-turn 0.8s ease-in-out;
-}
+        .shine {
+            background: linear-gradient(90deg, #4f46e5, #818cf8, #4f46e5);
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine { to { background-position: 200% center; } }
+        
+        .card:hover { transform: translateY(-8px); }
 
-/* SHINING EDGE MENU BUTTONS */
-.nav-link {
-    position: relative;
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.75rem;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-}
-
-.nav-link:hover {
-    color: #4f46e5;
-    background: white;
-    border: 1px solid #818cf8;
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
-}
-
-/* The Shining Light Edge Effect */
-.nav-link::after {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: 0.75rem;
-    padding: 1px; /* The border width */
-    background: linear-gradient(90deg, transparent, #ffffff, #6366f1, transparent);
-    background-size: 200% auto;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.nav-link:hover::after {
-    opacity: 1;
-    animation: shine 1.5s linear infinite;
-}
-        .shine{
-background:linear-gradient(90deg,#4f46e5,#818cf8,#4f46e5);
-background-size:200% auto;
-animation:shine 3s linear infinite;
-}
-
-@keyframes shine{ to{background-position:200% center;} }
-.card:hover{ transform:translateY(-8px); }
-
-    /* Container to hold the scroller and provide side spacing */
-    .testimonial-wrapper {
-        overflow: hidden;
-        width: 100%;
-        padding: 40px 0;
-        position: relative;
-    }
-
-    /* The actual moving track */
-    .testimonial-track {
-        display: flex;
-        width: calc(350px * 12); /* Adjust based on card width * number of cards */
-        animation: scroll 40s linear infinite;
-    }
-
-    /* Pause animation on hover so people can read */
-    .testimonial-track:hover {
-        animation-play-state: paused;
-    }
-
-    @keyframes scroll {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-350px * 6)); } /* Move by half the track length */
-    }
-
-    .testimonial-card {
-        width: 320px;
-        flex-shrink: 0;
-        margin: 0 15px;
-    }
-
-    /* Gradient Fades for the edges to make it look smooth */
-    .testimonial-wrapper::before,
-    .testimonial-wrapper::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        width: 100px;
-        height: 100%;
-        z-index: 2;
-    }
-    .testimonial-wrapper::before {
-        left: 0;
-        background: linear-gradient(to right, #f8fafc, transparent);
-    }
-    .testimonial-wrapper::after {
-        right: 0;
-        background: linear-gradient(to left, #f8fafc, transparent);
-    }
-</style>
+        /* TESTIMONIAL SCROLLER */
+        .testimonial-wrapper {
+            overflow: hidden;
+            width: 100%;
+            padding: 40px 0;
+            position: relative;
+        }
+        .testimonial-track {
+            display: flex;
+            width: calc(350px * 12);
+            animation: scroll 40s linear infinite;
+        }
+        .testimonial-track:hover { animation-play-state: paused; }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-350px * 6)); }
+        }
+        .testimonial-card {
+            width: 320px;
+            flex-shrink: 0;
+            margin: 0 15px;
+        }
+        .testimonial-wrapper::before,
+        .testimonial-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+        }
+        .testimonial-wrapper::before { left: 0; background: linear-gradient(to right, #f8fafc, transparent); }
+        .testimonial-wrapper::after { right: 0; background: linear-gradient(to left, #f8fafc, transparent); }
+    </style>
 </head>
 
 <body class="bg-slate-50 text-slate-900">
-<header class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur border-b border-slate-100 px-6">
-    <div class="content-container h-20 flex items-center justify-between">
-        
-        <a href="index.html" class="logo-container flex items-center gap-3 group">
-            <div class="logo-icon w-10 h-10 rounded-xl bg-indigo-600 text-white font-black flex items-center justify-center shadow-lg transition-transform">K</div>
-            <span class="font-black text-xl tracking-tight group-hover:text-indigo-600 transition-colors">Kidventor</span>
-        </a>
 
-        <nav class="hidden md:flex items-center gap-4 text-sm font-bold">
-            <a href="#testimonials" class="nav-link">Testimonials</a>
-            <a href="#courses" class="nav-link">Courses</a>
-            <a href="#why">Why</a>
-            <a href="adventure.html" class="nav-link text-indigo-600">Adventure</a>
-            <a href="#worksheets">Worksheets</a>
-            
-            <a href="morals.html" class="ml-4 px-6 py-3 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition transform hover:-translate-y-0.5 active:scale-95">
-                Morals
+    <header class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur border-b border-slate-100 px-6">
+        <div class="max-w-7xl mx-auto h-20 flex items-center justify-between">
+            <a href="index.html" class="logo-container flex items-center gap-3 group">
+                <div class="logo-icon w-10 h-10 rounded-xl bg-indigo-600 text-white font-black flex items-center justify-center shadow-lg transition-transform">K</div>
+                <span class="font-black text-xl tracking-tight group-hover:text-indigo-600 transition-colors">Kidventor</span>
             </a>
-        </nav>
-
-        <button id="menuBtn" class="md:hidden text-3xl font-bold p-2 hover:bg-slate-50 rounded-lg">☰</button>
-    </div>
-</header>
-<div id="mobileMenu" class="hidden fixed inset-0 bg-slate-950 text-white z-50">
-<div class="h-full flex flex-col items-center justify-center gap-8 text-3xl font-black">
-<a href="#testimonials">Testimonials</a>
-<a href="#courses">Courses</a>
-<a href="#worksheets">Worksheets</a>
-<a href="adventure.html">Adventure</a>
-<a href="#why">Why</a>
-<a href="morals.html">Morals</a>
-<button id="closeBtn" class="text-sm text-slate-400 mt-8">Close ✕</button>
-</div>
-</div>
-
-<section class="hero-bg pt-36 pb-24 px-6">
-<div class="content-container grid lg:grid-cols-2 gap-16 items-center">
-    <div class="fade-up">
-        <p class="inline-block px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black uppercase tracking-widest">Launch Bright Futures</p>
-        <h1 class="mt-8 text-5xl md:text-6xl font-black leading-tight tracking-tight">
-            Kids should not only use tech... <span class="text-indigo-600">they should create it.</span>
-        </h1>
-        <p class="mt-8 text-lg text-slate-600 max-w-xl leading-relaxed">Kidventor Academy teaches coding, digital literacy, creativity and morals for tomorrow’s leaders.</p>
-        <div class="mt-10 flex flex-wrap gap-4">
-            <a href="#courses" class="shine text-white px-8 py-4 rounded-2xl font-black shadow-xl">Start Learning</a>
-            <a href="about.html" class="px-8 py-4 rounded-2xl bg-white border font-black hover:bg-slate-100">Our Mission</a>
+            <nav class="hidden md:flex items-center gap-4 text-sm font-bold">
+                <a href="#testimonials" class="nav-link">Testimonials</a>
+                <a href="#courses" class="nav-link">Courses</a>
+                <a href="#why" class="nav-link">Why</a>
+                <a href="adventure.html" class="nav-link text-indigo-600">Adventure</a>
+                <a href="#worksheets" class="nav-link">Worksheets</a>
+                <a href="morals.html" class="ml-4 px-6 py-3 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition transform hover:-translate-y-0.5 active:scale-95">Morals</a>
+            </nav>
+            <button id="menuBtn" class="md:hidden text-3xl font-bold p-2 hover:bg-slate-50 rounded-lg">☰</button>
         </div>
-    </div>
-    <div class="fade-up hidden lg:block">
-        <img src="https://raw.githubusercontent.com/SmartKids-app/smartkids-learning/main/image/side-view-two-siblings-home-together-playing-laptop.jpg" alt="Students learning coding" class="rounded-[2rem] shadow-2xl border-8 border-white">
-    </div>
-</div>
-</section>
+    </header>
 
-<section id="why" class="py-24 px-6 bg-white">
-<div class="content-container">
-    <div class="max-w-2xl mb-16">
-        <h2 class="text-4xl font-black">Why Kidventor?</h2>
-        <p class="mt-4 text-slate-500 text-lg">We combine computer skills with confidence and character.</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8">
-        <div class="card transition duration-500 bg-slate-50 p-8 rounded-3xl border text-center md:text-left">
-            <div class="text-4xl mb-6">💻</div>
-            <h3 class="text-2xl font-black mb-3">Coding Basics</h3>
-            <p class="text-slate-500">Kids learn websites, apps and creative problem solving.</p>
-        </div>
-        <div class="card transition duration-500 bg-slate-50 p-8 rounded-3xl border text-center md:text-left">
-            <div class="text-4xl mb-6">🧠</div>
-            <h3 class="text-2xl font-black mb-3">Digital Literacy</h3>
-            <p class="text-slate-500">Typing, CBT exams, and smart internet use.</p>
-        </div>
-        <div class="card transition duration-500 bg-slate-50 p-8 rounded-3xl border text-center md:text-left">
-            <div class="text-4xl mb-6">⚖️</div>
-            <h3 class="text-2xl font-black mb-3">Morals & Values</h3>
-            <p class="text-slate-500">Because good character matters as much as skills.</p>
-        </div>
-    </div>
-</div>
-</section>
-
-<section id="testimonials" class="py-24 bg-slate-50 overflow-hidden">
-    <div class="content-container px-6 mb-12">
-        <div class="text-center">
-            <h2 class="text-4xl font-black italic text-indigo-600">Trust by Schools & Parents</h2>
-            <p class="mt-4 text-slate-500 font-bold uppercase tracking-widest text-xs">A Platform for Every Stage of Growth</p>
+    <div id="mobileMenu" class="hidden fixed inset-0 bg-slate-950 text-white z-50">
+        <div class="h-full flex flex-col items-center justify-center gap-8 text-3xl font-black">
+            <a href="#testimonials">Testimonials</a>
+            <a href="#courses">Courses</a>
+            <a href="#worksheets">Worksheets</a>
+            <a href="adventure.html">Adventure</a>
+            <a href="morals.html">Morals</a>
+            <button id="closeBtn" class="text-sm text-slate-400 mt-8">Close ✕</button>
         </div>
     </div>
 
-    <div class="testimonial-wrapper">
-        <div class="testimonial-track">
-            
-            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-indigo-600 flex flex-col justify-between h-[300px]">
-                <p class="text-slate-600 italic text-sm leading-relaxed">"We integrated Kidventor into our ICT curriculum. The transition from basic skills to logic puzzles is perfect."</p>
-                <div class="mt-6 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-600 text-xs text-center">SO</div>
-                    <div>
-                        <h4 class="font-black text-slate-800 text-xs">Dr. Samuel O.</h4>
-                        <p class="text-[9px] text-slate-400 uppercase font-black">School Proprietor</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-slate-800 flex flex-col justify-between h-[300px]">
-                <p class="text-slate-600 italic text-sm leading-relaxed">"As a Senior Student, the UI design is actually challenging. Great for practicing my front-end dev skills."</p>
-                <div class="mt-6 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-800 text-xs text-center">JD</div>
-                    <div>
-                        <h4 class="font-black text-slate-800 text-xs">Janet D.</h4>
-                        <p class="text-[9px] text-slate-400 uppercase font-black">Grade 11 Student</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-emerald-500 flex flex-col justify-between h-[300px]">
-                <p class="text-slate-600 italic text-sm leading-relaxed">"My 8-year-old and my 14-year-old both use Kidventor daily. The platform scales beautifully for both."</p>
-                <div class="mt-6 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center font-bold text-emerald-600 text-xs text-center">MF</div>
-                    <div>
-                        <h4 class="font-black text-slate-800 text-xs">Mrs. Farrah B.</h4>
-                        <p class="text-[9px] text-slate-400 uppercase font-black">Parent of 2</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-amber-500 flex flex-col justify-between h-[300px]">
-                <p class="text-slate-600 italic text-sm leading-relaxed">"We use the moral stories as conversation starters in our secondary assembly. It values character as much as code."</p>
-                <div class="mt-6 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center font-bold text-amber-600 text-xs text-center">DH</div>
-                    <div>
-                        <h4 class="font-black text-slate-800 text-xs">Director Hassan</h4>
-                        <p class="text-[9px] text-slate-400 uppercase font-black">Principal</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-blue-500 flex flex-col justify-between h-[300px]">
-                <p class="text-slate-600 italic text-sm leading-relaxed">"Keyboard Ninja helped me increase my WPM to 65. It's perfect for anyone wanting to master digital basics."</p>
-                <div class="mt-6 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 text-xs text-center">KA</div>
-                    <div>
-                        <h4 class="font-black text-slate-800 text-xs">Kevin A.</h4>
-                        <p class="text-[9px] text-slate-400 uppercase font-black">JS 3 Student</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-rose-500 flex flex-col justify-between h-[300px]">
-                <p class="text-slate-600 italic text-sm leading-relaxed">"It bridges the gap between 'childish' and 'corporate' perfectly for my teenager."</p>
-                <div class="mt-6 flex items-center gap-3">
-                    <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center font-bold text-rose-600 text-xs text-center">MC</div>
-                    <div>
-                        <h4 class="font-black text-slate-800 text-xs">Mr. Chinedu</h4>
-                        <p class="text-[9px] text-slate-400 uppercase font-black">Parent of Teen</p>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-    </div>
-</section>
-<section id="worksheets" class="pt-32 pb-24 px-6 bg-slate-50">
-<div class="content-container">
-    
-    <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-wrap justify-between items-center mb-12">
-        <div class="flex items-center gap-4">
-            <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg shadow-indigo-200">👨‍🎓</div>
+    <section class="pt-36 pb-24 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
             <div>
-                <h2 class="text-2xl font-black text-slate-800 tracking-tight">Student Worksheet</h2>
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Session: April 2026</p>
+                <p class="inline-block px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black uppercase tracking-widest">Launch Bright Futures</p>
+                <h1 class="mt-8 text-5xl md:text-6xl font-black leading-tight tracking-tight">
+                    Kids should not only use tech... <span class="text-indigo-600">they should create it.</span>
+                </h1>
+                <p class="mt-8 text-lg text-slate-600 max-w-xl leading-relaxed">Kidventor Academy teaches coding, digital literacy, creativity and morals for tomorrow’s leaders.</p>
+                <div class="mt-10 flex flex-wrap gap-4">
+                    <a href="#courses" class="shine text-white px-8 py-4 rounded-2xl font-black shadow-xl">Start Learning</a>
+                    <a href="about.html" class="px-8 py-4 rounded-2xl bg-white border font-black hover:bg-slate-100">Our Mission</a>
+                </div>
+            </div>
+            <div class="hidden lg:block">
+                <img src="https://raw.githubusercontent.com/SmartKids-app/smartkids-learning/main/image/side-view-two-siblings-home-together-playing-laptop.jpg" alt="Students learning coding" class="rounded-[2rem] shadow-2xl border-8 border-white">
             </div>
         </div>
-        <div class="flex gap-4">
-           <!-- <button onclick="window.print()" class="px-6 py-3 bg-slate-900 text-white text-xs font-black rounded-xl hover:bg-indigo-600 transition shadow-lg shadow-slate-200">
-                FIND WORKSHEET
-            </button>-->
-         <button href="worksheet.html" class="px-6 py-3 bg-slate-900 text-white text-xs font-black rounded-xl hover:bg-indigo-600 transition shadow-lg shadow-slate-200">
-                GO TO WORKSHEET
-            </button>
-        </div>
-    </div>
+    </section>
 
-    <div class="grid lg:grid-cols-3 gap-8">
-        
-        <div class="lg:col-span-2 space-y-6">
-            <h3 class="text-sm font-black text-slate-400 uppercase tracking-[0.4em] mb-6">Completed Topics</h3>
-            
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 flex items-center justify-between group hover:border-indigo-200 transition">
+    <section id="why" class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="max-w-2xl mb-16">
+                <h2 class="text-4xl font-black">Why Kidventor?</h2>
+                <p class="mt-4 text-slate-500 text-lg">We combine computer skills with confidence and character.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card transition duration-500 bg-slate-50 p-8 rounded-3xl border">
+                    <div class="text-4xl mb-6">💻</div>
+                    <h3 class="text-2xl font-black mb-3">Coding Basics</h3>
+                    <p class="text-slate-500">Kids learn websites, apps and creative problem solving.</p>
+                </div>
+                <div class="card transition duration-500 bg-slate-50 p-8 rounded-3xl border">
+                    <div class="text-4xl mb-6">🧠</div>
+                    <h3 class="text-2xl font-black mb-3">Digital Literacy</h3>
+                    <p class="text-slate-500">Typing, CBT exams, and smart internet use.</p>
+                </div>
+                <div class="card transition duration-500 bg-slate-50 p-8 rounded-3xl border">
+                    <div class="text-4xl mb-6">⚖️</div>
+                    <h3 class="text-2xl font-black mb-3">Morals & Values</h3>
+                    <p class="text-slate-500">Because good character matters as much as skills.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="py-24 bg-slate-50 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 mb-12 text-center">
+            <h2 class="text-4xl font-black italic text-indigo-600">Trusted by Schools & Parents</h2>
+            <p class="mt-4 text-slate-400 font-bold uppercase tracking-widest text-xs">A Platform for Every Stage of Growth</p>
+        </div>
+        <div class="testimonial-wrapper">
+            <div class="testimonial-track">
+                <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-indigo-600 flex flex-col justify-between h-[300px]">
+                    <p class="text-slate-600 italic text-sm leading-relaxed">"We integrated Kidventor into our ICT curriculum. The transition from basic skills to logic puzzles is perfect."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-600 text-xs">SO</div>
+                        <div><h4 class="font-black text-slate-800 text-xs">Dr. Samuel O.</h4><p class="text-[9px] text-slate-400 uppercase font-black">School Proprietor</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-slate-800 flex flex-col justify-between h-[300px]">
+                    <p class="text-slate-600 italic text-sm leading-relaxed">"The UI design is actually challenging. Great for practicing my front-end dev skills."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center font-bold text-slate-800 text-xs">JD</div>
+                        <div><h4 class="font-black text-slate-800 text-xs">Janet D.</h4><p class="text-[9px] text-slate-400 uppercase font-black">Grade 11 Student</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card bg-white p-8 rounded-[2rem] shadow-sm border-t-4 border-emerald-500 flex flex-col justify-between h-[300px]">
+                    <p class="text-slate-600 italic text-sm leading-relaxed">"My 8-year-old and my 14-year-old both use Kidventor daily. The platform scales beautifully."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center font-bold text-emerald-600 text-xs">MF</div>
+                        <div><h4 class="font-black text-slate-800 text-xs">Mrs. Farrah B.</h4><p class="text-[9px] text-slate-400 uppercase font-black">Parent</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="worksheets" class="py-24 px-6 bg-slate-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-wrap justify-between items-center mb-12">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold">01</div>
+                    <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg">👨‍🎓</div>
                     <div>
-                        <h4 class="font-black text-slate-800">Internet Safety Fundamentals</h4>
-                        <p class="text-xs text-slate-400">Mastered: Privacy, Passwords & Phishing</p>
+                        <h2 class="text-2xl font-black text-slate-800 tracking-tight">Student Worksheet</h2>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Active Session: April 2026</p>
                     </div>
                 </div>
-                <span class="text-emerald-500 font-black text-xs">PASSED</span>
+                <a href="worksheet.html" class="px-6 py-3 bg-slate-900 text-white text-xs font-black rounded-xl hover:bg-indigo-600 transition shadow-lg">
+                    GO TO WORKSHEET
+                </a>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl border border-slate-100 flex items-center justify-between group hover:border-indigo-200 transition">
-                <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-bold">02</div>
-                    <div>
-                        <h4 class="font-black text-slate-800">Keyboard Ninja (Speed Test)</h4>
-                        <p class="text-xs text-slate-400">Current Rank: Shogun (45 WPM)</p>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white p-6 rounded-3xl border border-slate-100 flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold">01</div>
+                            <div>
+                                <h4 class="font-black text-slate-800 user-name">Explorer</h4>
+                                <p class="text-xs text-slate-400">Mastered: Privacy & Passwords</p>
+                            </div>
+                        </div>
+                        <span class="text-emerald-500 font-black text-xs">PASSED</span>
+                    </div>
+                    <div class="bg-indigo-600 p-8 rounded-[2.5rem] text-white shadow-xl relative overflow-hidden">
+                        <div class="relative z-10">
+                            <span class="px-3 py-1 bg-white/20 text-white text-[10px] font-black rounded-full uppercase">In Progress</span>
+                            <h4 class="text-2xl font-black mt-4">Algorithm Basics</h4>
+                            <p class="text-indigo-100 text-sm mt-2 opacity-90">Break down complex tasks into small, logical steps.</p>
+                            <a href="quiz.html" class="inline-block mt-6 px-8 py-3 bg-white text-indigo-600 font-black rounded-xl text-xs hover:scale-105 transition">START QUIZ</a>
+                        </div>
                     </div>
                 </div>
-                <span class="text-indigo-600 font-black text-xs">88% SCORE</span>
-            </div>
-
-            <div class="bg-indigo-600 p-8 rounded-[2.5rem] text-white shadow-xl shadow-indigo-200 relative overflow-hidden">
-                <div class="relative z-10">
-                    <span class="px-3 py-1 bg-white/20 text-white text-[10px] font-black rounded-full uppercase">In Progress</span>
-                    <h4 class="text-2xl font-black mt-4">Algorithm Basics: The Sandwich Method</h4>
-                    <p class="text-indigo-100 text-sm mt-2 opacity-90">Learn how to break down complex tasks into small, logical steps. Complete the quiz to earn your Logic Badge.</p>
-                    <button class="mt-6 px-8 py-3 bg-white text-indigo-600 font-black rounded-xl text-xs hover:scale-105 transition">START QUIZ</button>
-                </div>
-                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-indigo-500 rounded-full blur-3xl opacity-50"></div>
-            </div>
-        </div>
-
-        <div class="space-y-8">
-            <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-6">Skill Breakdown</h3>
-                
-                <div class="mb-6">
-                    <div class="flex justify-between text-xs font-black mb-2 uppercase">
-                        <span>Coding Logic</span>
-                        <span class="text-indigo-600">75%</span>
-                    </div>
-                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-indigo-600" style="width: 75%"></div>
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <div class="flex justify-between text-xs font-black mb-2 uppercase">
-                        <span>Digital Ethics</span>
-                        <span class="text-emerald-500">90%</span>
-                    </div>
-                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-emerald-500" style="width: 90%"></div>
-                    </div>
-                </div>
-
-                <div class="mb-2">
-                    <div class="flex justify-between text-xs font-black mb-2 uppercase">
-                        <span>Creative Design</span>
-                        <span class="text-amber-500">40%</span>
-                    </div>
-                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                        <div class="h-full bg-amber-500" style="width: 40%"></div>
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-6">Skill Breakdown</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-xs font-black mb-2 uppercase"><span>Coding Logic</span> <span class="text-indigo-600">75%</span></div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-indigo-600" style="width: 75%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-black mb-2 uppercase"><span>Digital Ethics</span> <span class="text-emerald-500">90%</span></div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-full bg-emerald-500" style="width: 90%"></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="bg-indigo-50 p-8 rounded-[2.5rem] border-2 border-dashed border-indigo-200">
-                <h4 class="font-black text-indigo-900 text-sm uppercase mb-2">Teacher's Note</h4>
-                <p class="text-xs text-indigo-700 leading-relaxed italic">
-                    "Musa has shown exceptional growth in digital ethics. Next focus: Refining mouse precision in the Architect module."
-                </p>
-            </div>
         </div>
-
-    </div>
-</div>
-</section>
-<section id="courses" class="py-24 px-6 bg-white">
-<div class="content-container">
-    <h2 class="text-4xl font-black mb-14 text-center md:text-left">Popular Learning Paths</h2>
-    
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-indigo-200 transition-colors shadow-sm">
-            <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-2xl mb-6">🐱</div>
-            <h4 class="font-black text-xl">Scratch Coding</h4>
-            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Master the logic of programming through fun drag-and-drop game creation.</p>
-        </div>
-
-        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-indigo-200 transition-colors shadow-sm">
-            <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-2xl mb-6">🌐</div>
-            <h4 class="font-black text-xl">Web Design</h4>
-            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Build your own corner of the internet using HTML, CSS and modern layouts.</p>
-        </div>
-
-        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-indigo-200 transition-colors shadow-sm">
-            <div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center text-2xl mb-6">🖱️</div>
-            <h4 class="font-black text-xl">Mouse Mastery</h4>
-            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Perfecting precision, clicking techniques, and drag-and-drop accuracy for young users.</p>
-        </div>
-
-        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-indigo-200 transition-colors shadow-sm">
-            <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-2xl mb-6">⌨️</div>
-            <h4 class="font-black text-xl">Keyboard Pro</h4>
-            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Learn touch-typing, essential shortcuts, and speed to navigate like a professional.</p>
-        </div>
-
-        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-indigo-200 transition-colors shadow-sm">
-            <div class="w-12 h-12 bg-rose-100 rounded-2xl flex items-center justify-center text-2xl mb-6">📝</div>
-            <h4 class="font-black text-xl">CBT Mastery</h4>
-            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Get familiar with Computer Based Test interfaces to ace digital exams confidently.</p>
-        </div>
-
-        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-indigo-200 transition-colors shadow-sm">
-            <div class="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center text-2xl mb-6">🤖</div>
-            <h4 class="font-black text-xl">AI for Kids</h4>
-            <p class="text-sm text-slate-500 mt-2 leading-relaxed">Understand how smart tools work and how to use artificial intelligence safely.</p>
-        </div>
-
-    </div>
-</div>
-</section>
-
-<section class="py-24 px-6 bg-indigo-600 text-white text-center">
-<div class="content-container">
-    <h2 class="text-4xl font-black">Build the Future Today</h2>
-    <p class="mt-5 text-indigo-100 text-lg">Every child deserves tech confidence and creativity.</p>
-    <a href="quiz.html" class="inline-block mt-8 px-8 py-4 rounded-2xl bg-white text-indigo-700 font-black hover:bg-slate-100 transition shadow-lg">Start Our Quiz</a>
-</div>
-</section>
+    </section>
 
     <footer class="bg-slate-950 text-slate-500 py-20 px-6">
-  <div class="content-container flex flex-col md:flex-row justify-between items-start gap-12 border-b border-slate-900 pb-16">
-    <div>
-      <div class="flex items-center gap-2 text-white mb-6">
-        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-black text-sm">K</div>
-        <span class="font-black text-2xl tracking-tighter uppercase italic">Kidventor <span class="text-indigo-500">Academy</span></span>
-      </div>
-      <div class="h-6">
-        <p id="typing-text" class="text-sm font-mono text-indigo-400"></p>
-      </div>
-    </div>
-    
-    <div class="flex flex-wrap gap-12 text-xs font-black uppercase tracking-widest">
-      <a href="about.html" class="hover:text-white transition">About Mission</a>
-      <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
-      <a href="contact.html" class="hover:text-white transition">Contact</a>
-        <a href="faq.html" class="hover:text-white transition">Faq</a>
-    </div>
-  </div>
-  
-  <div class="content-container mt-12 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-[0.3em] font-bold">
-    <p>© 2026 Kidventor Academy • Global Education</p>
-    <div class="flex gap-4 mt-6 md:mt-0">
-      <span>Built for the Next Generation</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-  /** USER DATA & PERSISTENCE LOGIC **/
-  let userData = {
-    name: "Guest Explorer",
-    xp: 0,
-    level: 1,
-    completedLessons: []
-  };
-
-  // 1. Check if user already exists in browser memory
-  function checkIdentity() {
-    const savedData = localStorage.getItem('kidventor_user');
-    const modal = document.getElementById('name-modal');
-
-    if (savedData) {
-      userData = JSON.parse(savedData);
-      updateUI();
-    } else if (modal) {
-      // Show modal only if it exists on the current page
-      modal.classList.remove('hidden');
-    }
-  }
-
-  // 2. Save Name from Modal
-  function saveName() {
-    const nameInput = document.getElementById('knight-name-input');
-    const modal = document.getElementById('name-modal');
-    
-    if (nameInput && nameInput.value.trim() !== "") {
-      userData.name = nameInput.value.trim();
-      userData.xp = 0; 
-      localStorage.setItem('kidventor_user', JSON.stringify(userData));
-      
-      if(modal) modal.classList.add('hidden');
-      updateUI();
-    } else {
-      alert("Please enter a name to begin your adventure!");
-    }
-  }
-
-  // 3. Update all UI elements with User Data
-  function updateUI() {
-    const nameElements = document.querySelectorAll('.user-name');
-    const xpElements = document.querySelectorAll('.total-xp');
-    const levelElements = document.querySelectorAll('.user-level');
-
-    nameElements.forEach(el => el.innerText = userData.name);
-    xpElements.forEach(el => el.innerText = userData.xp.toLocaleString());
-    levelElements.forEach(el => {
-      const levelStr = userData.level.toString().padStart(2, '0');
-      el.innerText = `Level ${levelStr} Explorer`;
-    });
-  }
-
-  /** TYPING ANIMATION **/
-  const typeText = "Empowering the next generation of global tech leaders.";
-  let charIndex = 0;
-
-  function typeWriter() {
-    const displayElement = document.getElementById("typing-text");
-    if (displayElement && charIndex < typeText.length) {
-      displayElement.innerHTML += typeText.charAt(charIndex);
-      charIndex++;
-      setTimeout(typeWriter, 50);
-    }
-  }
-
-  /** MOBILE MENU LOGIC **/
-  function setupMobileMenu() {
-    const menuBtn = document.getElementById("menuBtn");
-    const closeBtn = document.getElementById("closeBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-
-    if (menuBtn && mobileMenu) {
-      menuBtn.onclick = () => {
-        mobileMenu.classList.remove("hidden");
-        document.body.style.overflow = 'hidden';
-      };
-      
-      if (closeBtn) {
-        closeBtn.onclick = () => {
-          mobileMenu.classList.add("hidden");
-          document.body.style.overflow = 'auto';
-        };
-      }
-
-      document.querySelectorAll("#mobileMenu a").forEach(link => {
-        link.onclick = () => {
-          mobileMenu.classList.add("hidden");
-          document.body.style.overflow = 'auto';
-        };
-      });
-    }
-  }
-
-  /** INITIALIZATION **/
-  // Using 'DOMContentLoaded' is safer for element manipulation
-  document.addEventListener('DOMContentLoaded', () => {
-    checkIdentity();
-    setupMobileMenu();
-    typeWriter();
-  });
-</script>
-</body>
-</html>
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kidventor Academy | Coding & Digital Literacy for Future Leaders</title>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1364156929469545" crossorigin="anonymous"></script>
-
-  <style>
-    @keyframes shine { 0% { background-position: -200% } 100% { background-position: 200% } }
-    .btn-shine {
-      background: linear-gradient(90deg, #4f46e5, #818cf8, #4f46e5);
-      background-size: 200% auto;
-      animation: shine 3s linear infinite;
-    }
-    .hero-gradient { background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); }
-    .nav-link { position: relative; transition: color 0.3s; }
-    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #4f46e5; transition: width 0.3s; }
-    .nav-link:hover::after { width: 100%; }
-  </style>
-</head>
-
-<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-
-<header class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b z-[60]">
-  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-2 group">
-      <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black group-hover:rotate-12 transition-transform">K</div>
-      <span class="font-black text-xl tracking-tighter uppercase text-slate-800">Kidventor</span>
-    </a>
-
-    <nav class="hidden md:flex gap-8 items-center text-xs font-black uppercase tracking-widest text-slate-500">
-      <a href="lessons.html" class="nav-link hover:text-indigo-600 transition">Lessons</a>
-      <a href="morals.html" class="nav-link hover:text-indigo-600 transition">Morals</a>
-      <a href="about.html" class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 text-center">Explore Website</a>
-    </nav>
-
-    <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-end w-8 h-8 gap-1.5 focus:outline-none group">
-      <span class="w-8 h-1 bg-slate-800 rounded-full transition-all"></span>
-      <span class="w-8 h-1 bg-slate-800 rounded-full transition-all"></span>
-      <span class="w-5 h-1 bg-slate-800 rounded-full transition-all group-hover:w-8"></span>
-    </button>
-  </div>
-</header>
-
-<div id="mobile-menu" class="hidden fixed inset-0 z-[90] bg-slate-900 flex flex-col items-center justify-center space-y-8">
-    <a href="lessons.html" class="text-white text-3xl font-black uppercase tracking-tighter hover:text-indigo-400 transition">Curriculum</a>
-    <a href="morals.html" class="text-white text-3xl font-black uppercase tracking-tighter hover:text-indigo-400 transition">Ethics</a>
-    <a href="about.html" class="text-white text-3xl font-black uppercase tracking-tighter hover:text-indigo-400 transition">About Mission</a>
-    <button id="menu-close-text" class="text-slate-500 text-xs font-bold uppercase tracking-[0.3em] mt-12">Close X</button>
-</div>
-
-<section class="pt-40 pb-24 hero-gradient px-6">
-  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-    <div>
-      <span class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">Launch Your Future</span>
-      <h1 class="text-5xl lg:text-7xl font-black text-slate-900 mt-8 leading-[1.1] tracking-tighter">
-        Stop watching the future. <span class="text-indigo-600">Start inventing it.</span>
-      </h1>
-      <p class="text-xl text-slate-500 mt-8 leading-relaxed max-w-xl">
-        Kidventor is a global-standard digital academy where children transform from passive users into creative technology masters.
-      </p>
-      <div class="flex flex-wrap gap-4 mt-12">
-        <a href="lessons.html" class="bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl shadow-indigo-200 hover:translate-y-[-3px] transition btn-shine">Explore Lessons</a>
-        <a href="our-mission.html" class="bg-white border-2 border-slate-100 text-slate-600 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition">The Mission</a>
-      </div>
-    </div>
-    <div class="relative group">
-      <div class="absolute -top-10 -left-10 w-40 h-40 bg-indigo-400/20 rounded-full blur-3xl group-hover:bg-indigo-400/40 transition duration-1000"></div>
-      <img src="https://raw.githubusercontent.com/SmartKids-app/smartkids-learning/main/image/side-view-two-siblings-home-together-playing-laptop.jpg" alt="Kidventors at work" class="rounded-[3rem] shadow-2xl relative z-10 border-8 border-white">
-    </div>
-  </div>
-</section>
-
-<section class="py-32 bg-white px-6">
-  <div class="max-w-7xl mx-auto">
-    <div class="max-w-3xl mb-20">
-      <h2 class="text-4xl font-black tracking-tight mb-6">Why become a Kidventor?</h2>
-      <p class="text-lg text-slate-500">We bridge the gap between "playing games" and "understanding tech."</p>
-    </div>
-    
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="group p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-indigo-200 hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-500">
-        <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl shadow-lg shadow-indigo-200 group-hover:scale-110 transition-transform">🖱️</div>
-        <h3 class="text-2xl font-black mb-4">Precision Hub</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Mastering the mouse and UI is the first step to computer fluency. We make it an adventure.</p>
-      </div>
-      
-      <div class="group p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-100 transition-all duration-500">
-        <div class="w-14 h-14 bg-emerald-500 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform">💻</div>
-        <h3 class="text-2xl font-black mb-4">Exam Ready</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Our CBT training prepares students for modern school and national examinations with confidence.</p>
-      </div>
-
-      <div class="group p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-amber-200 hover:shadow-2xl hover:shadow-amber-100 transition-all duration-500">
-        <div class="w-14 h-14 bg-amber-500 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl shadow-lg shadow-amber-200 group-hover:scale-110 transition-transform">⚖️</div>
-        <h3 class="text-2xl font-black mb-4">Character & Code</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Tech is nothing without morals. We teach ethics and "Netiquette" to build responsible digital citizens.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer class="bg-slate-950 text-slate-500 py-20 px-6">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 border-b border-slate-900 pb-16">
-    <div>
-      <div class="flex items-center gap-2 text-white mb-6">
-        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-black text-sm">K</div>
-        <span class="font-black text-2xl tracking-tighter uppercase">Kidventor Academy</span>
-      </div>
-      <div class="h-6">
-        <p id="typing-text" class="text-sm font-mono text-indigo-400"></p>
-      </div>
-    </div>
-    
-    <div class="flex flex-wrap gap-12 text-xs font-black uppercase tracking-widest">
-      <a href="about.html" class="hover:text-white transition">About Mission</a>
-      <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
-      <a href="contact.html" class="hover:text-white transition">Contact</a>
-    </div>
-  </div>
-  
-  <div class="max-w-7xl mx-auto mt-12 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-[0.3em] font-bold">
-    <p>© 2026 Kidventor Academy • Global Education</p>
-    <div class="flex gap-4 mt-6 md:mt-0">
-      <span>Built for the Next Generation</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-  /** TYPING ANIMATION **/
-  const typeText = "Empowering the next generation of global tech leaders.";
-  let charIndex = 0;
-
-  function typeWriter() {
-    const displayElement = document.getElementById("typing-text");
-    if (displayElement && charIndex < typeText.length) {
-      displayElement.innerHTML += typeText.charAt(charIndex);
-      charIndex++;
-      setTimeout(typeWriter, 50);
-    }
-  }
-
-  /** MOBILE MENU LOGIC **/
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuCloseBtn = document.getElementById('menu-close-text');
-
-  if (menuToggle && mobileMenu) {
-    const toggleAction = () => {
-      mobileMenu.classList.toggle('hidden');
-      document.body.style.overflow = mobileMenu.classList.contains('hidden') ? 'auto' : 'hidden';
-    };
-    menuToggle.addEventListener('click', toggleAction);
-    if (menuCloseBtn) menuCloseBtn.addEventListener('click', toggleAction);
-  }
-
-  window.addEventListener('load', typeWriter);
-</script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kidventor Academy | Coding & Digital Literacy for Future Leaders</title>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1364156929469545" crossorigin="anonymous"></script>
-
-  <style>
-    @keyframes shine { 0% { background-position: -200% } 100% { background-position: 200% } }
-    .btn-shine {
-      background: linear-gradient(90deg, #4f46e5, #818cf8, #4f46e5);
-      background-size: 200% auto;
-      animation: shine 3s linear infinite;
-    }
-    .hero-gradient { background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); }
-    .nav-link { position: relative; transition: color 0.3s; }
-    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #4f46e5; transition: width 0.3s; }
-    .nav-link:hover::after { width: 100%; }
-  </style>
-</head>
-
-<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-
-<header class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b z-[60]">
-  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-2 group">
-      <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black group-hover:rotate-12 transition-transform">K</div>
-      <span class="font-black text-xl tracking-tighter uppercase text-slate-800">Kidventor</span>
-    </a>
-
-    <nav class="hidden md:flex gap-8 items-center text-xs font-black uppercase tracking-widest text-slate-500">
-      <a href="lessons.html" class="nav-link hover:text-indigo-600 transition">Lessons</a>
-      <a href="morals.html" class="nav-link hover:text-indigo-600 transition">Morals</a>
-      <a href="about.html" class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 text-center">Explore Website</a>
-    </nav>
-
-    <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-end w-8 h-8 gap-1.5 focus:outline-none group">
-      <span class="w-8 h-1 bg-slate-800 rounded-full transition-all"></span>
-      <span class="w-8 h-1 bg-slate-800 rounded-full transition-all"></span>
-      <span class="w-5 h-1 bg-slate-800 rounded-full transition-all group-hover:w-8"></span>
-    </button>
-  </div>
-</header>
-
-<div id="mobile-menu" class="hidden fixed inset-0 z-[90] bg-slate-900 flex flex-col items-center justify-center space-y-8">
-    <a href="lessons.html" class="text-white text-3xl font-black uppercase tracking-tighter hover:text-indigo-400 transition">Curriculum</a>
-    <a href="morals.html" class="text-white text-3xl font-black uppercase tracking-tighter hover:text-indigo-400 transition">Ethics</a>
-    <a href="about.html" class="text-white text-3xl font-black uppercase tracking-tighter hover:text-indigo-400 transition">About Mission</a>
-    <button id="menu-close-text" class="text-slate-500 text-xs font-bold uppercase tracking-[0.3em] mt-12">Close X</button>
-</div>
-
-<section class="pt-40 pb-24 hero-gradient px-6">
-  <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-    <div>
-      <span class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em]">Launch Your Future</span>
-      <h1 class="text-5xl lg:text-7xl font-black text-slate-900 mt-8 leading-[1.1] tracking-tighter">
-        Stop watching the future. <span class="text-indigo-600">Start inventing it.</span>
-      </h1>
-      <p class="text-xl text-slate-500 mt-8 leading-relaxed max-w-xl">
-        Kidventor is Nigeria's premier digital academy where children transform from passive users into creative technology masters.
-      </p>
-      <div class="flex flex-wrap gap-4 mt-12">
-        <a href="lessons.html" class="bg-indigo-600 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl shadow-indigo-200 hover:translate-y-[-3px] transition btn-shine">Explore Lessons</a>
-        <a href="about.html" class="bg-white border-2 border-slate-100 text-slate-600 px-10 py-5 rounded-2xl font-black text-lg hover:bg-slate-50 transition">The Mission</a>
-      </div>
-    </div>
-    <div class="relative group">
-      <div class="absolute -top-10 -left-10 w-40 h-40 bg-indigo-400/20 rounded-full blur-3xl group-hover:bg-indigo-400/40 transition duration-1000"></div>
-      <img src="https://raw.githubusercontent.com/SmartKids-app/smartkids-learning/main/image/side-view-two-siblings-home-together-playing-laptop.jpg" alt="Kidventors at work" class="rounded-[3rem] shadow-2xl relative z-10 border-8 border-white">
-    </div>
-  </div>
-</section>
-
-<section class="py-32 bg-white px-6">
-  <div class="max-w-7xl mx-auto">
-    <div class="max-w-3xl mb-20">
-      <h2 class="text-4xl font-black tracking-tight mb-6">Why become a Kidventor?</h2>
-      <p class="text-lg text-slate-500">We bridge the gap between "playing games" and "understanding tech."</p>
-    </div>
-    
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="group p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-indigo-200 hover:shadow-2xl hover:shadow-indigo-100 transition-all duration-500">
-        <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl shadow-lg shadow-indigo-200 group-hover:scale-110 transition-transform">🖱️</div>
-        <h3 class="text-2xl font-black mb-4">Precision Hub</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Mastering the mouse and UI is the first step to computer fluency. We make it an adventure.</p>
-      </div>
-      
-      <div class="group p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-100 transition-all duration-500">
-        <div class="w-14 h-14 bg-emerald-500 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform">💻</div>
-        <h3 class="text-2xl font-black mb-4">Exam Ready</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Our CBT training prepares students for modern school and national examinations with confidence.</p>
-      </div>
-
-      <div class="group p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:border-amber-200 hover:shadow-2xl hover:shadow-amber-100 transition-all duration-500">
-        <div class="w-14 h-14 bg-amber-500 text-white rounded-2xl flex items-center justify-center mb-8 text-2xl shadow-lg shadow-amber-200 group-hover:scale-110 transition-transform">⚖️</div>
-        <h3 class="text-2xl font-black mb-4">Character & Code</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Tech is nothing without morals. We teach ethics and "Netiquette" based on African values.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer class="bg-slate-950 text-slate-500 py-20 px-6">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 border-b border-slate-900 pb-16">
-    <div>
-      <div class="flex items-center gap-2 text-white mb-6">
-        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-black text-sm">K</div>
-        <span class="font-black text-2xl tracking-tighter uppercase">Kidventor Academy</span>
-      </div>
-      <div class="h-6">
-        <p id="typing-text" class="text-sm font-mono text-indigo-400"></p>
-      </div>
-    </div>
-    
-    <div class="flex flex-wrap gap-12 text-xs font-black uppercase tracking-widest">
-      <a href="about.html" class="hover:text-white transition">About Mission</a>
-      <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
-      <a href="contact.html" class="hover:text-white transition">Contact</a>
-    </div>
-  </div>
-  
-  <div class="max-w-7xl mx-auto mt-12 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-[0.3em] font-bold">
-    <p>© 2026 Kidventor Academy • Nigeria</p>
-    <div class="flex gap-4 mt-6 md:mt-0">
-      <span>Built for the Next Generation</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-  /** TYPING ANIMATION **/
-  const typeText = "Empowering the next generation of African tech leaders.";
-  let charIndex = 0;
-
-  function typeWriter() {
-    const displayElement = document.getElementById("typing-text");
-    if (displayElement && charIndex < typeText.length) {
-      displayElement.innerHTML += typeText.charAt(charIndex);
-      charIndex++;
-      setTimeout(typeWriter, 50);
-    }
-  }
-
-  /** MOBILE MENU LOGIC **/
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuCloseBtn = document.getElementById('menu-close-text');
-
-  if (menuToggle && mobileMenu) {
-    const toggleAction = () => {
-      mobileMenu.classList.toggle('hidden');
-      document.body.style.overflow = mobileMenu.classList.contains('hidden') ? 'auto' : 'hidden';
-    };
-    menuToggle.addEventListener('click', toggleAction);
-    if (menuCloseBtn) menuCloseBtn.addEventListener('click', toggleAction);
-  }
-
-  window.addEventListener('load', typeWriter);
-</script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SmartKids Learning | Coding & Digital Literacy for Future Leaders</title>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1364156929469545" crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-1364156929469545">
-
-  <style>
-    @keyframes shine { 0% { background-position: -200% } 100% { background-position: 200% } }
-    .btn-shine {
-      background: linear-gradient(90deg, #2563eb, #60a5fa, #2563eb);
-      background-size: 200% auto;
-      animation: shine 3s linear infinite;
-    }
-    .hero-gradient { background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); }
-  </style>
-</head>
-
-<body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
-<header class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b z-[60]">
-  <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-2">
-      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">SK</div>
-      <span class="font-bold text-xl tracking-tight">SmartKids</span>
-    </a>
-
-    <nav class="hidden md:flex gap-8 items-center text-sm font-semibold text-slate-600">
-      <a href="lessons.html" class="hover:text-blue-600 transition">Lessons</a>
-      <a href="lessons/keyboard-practice.html" class="hover:text-blue-600 transition">Typing Drill</a>
-      <a href="morals.html" class="hover:text-blue-600 transition">African Morals</a>
-      <a href="quiz.html" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md">Start Quiz</a>
-      <button id="authBtn" class="border border-slate-300 px-4 py-2 rounded-full hover:bg-slate-50 transition">Student Login</button>
-    </nav>
-
-    <button id="menu-toggle" class="md:hidden flex flex-col justify-center items-end w-8 h-8 gap-1.5 z-[100] focus:outline-none group">
-      <span class="w-8 h-1 bg-slate-800 rounded-full transition-all duration-300 origin-center group-[.active]:rotate-45 group-[.active]:translate-y-[10px] group-[.active]:bg-white"></span>
-      <span class="w-8 h-1 bg-slate-800 rounded-full transition-all duration-300 group-[.active]:opacity-0"></span>
-      <span class="w-5 h-1 bg-slate-800 rounded-full transition-all duration-300 origin-center group-[.active]:w-8 group-[.active]:-rotate-45 group-[.active]:-translate-y-[10px] group-[.active]:bg-white"></span>
-    </button>
-
-    <div id="mobile-menu" class="hidden fixed inset-0 z-[90] bg-slate-900 flex flex-col items-center justify-center space-y-8">
-        <a href="index.html" class="text-white text-3xl font-bold hover:text-blue-400 transition">Home</a>
-        <a href="lessons/keyboard-practice.html" class="text-white text-3xl font-bold hover:text-blue-400 transition">Typing Drill</a>
-        <a href="lessons/mouse.html" class="text-white text-3xl font-bold hover:text-blue-400 transition">Mouse Mastery</a>
-        <a href="morals.html" class="text-white text-3xl font-bold hover:text-blue-400 transition">African Morals</a>
-        
-        <button id="menu-close-text" class="text-slate-400 text-sm uppercase tracking-widest mt-12">Close Menu</button>
-    </div>
-  </div>
-</header>
- 
-
-  <section class="pt-32 pb-20 hero-gradient px-4">
-    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <span class="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Learn. Practice. Excel.</span>
-        <h1 class="text-4xl lg:text-6xl font-extrabold text-slate-900 mt-6 leading-tight">
-          Master the Digital World <span class="text-blue-600">Step by Step.</span>
-        </h1>
-        <p class="text-lg text-slate-600 mt-6">
-          Fun, interactive computer studies and coding lessons designed specifically for primary and secondary students. 
-        </p>
-        <div class="flex flex-wrap gap-4 mt-10">
-          <a href="lessons.html" class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-xl hover:translate-y-[-2px] transition btn-shine">Explore Lessons</a>
-          <a href="our-mission.html" class="bg-white border-2 border-slate-200 text-slate-700 px-8 py-4 rounded-2xl font-bold hover:bg-slate-50 transition">About Our Mission</a>
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12 border-b border-slate-900 pb-16">
+            <div>
+                <div class="flex items-center gap-2 text-white mb-6">
+                    <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center font-black text-sm">K</div>
+                    <span class="font-black text-2xl tracking-tighter uppercase italic">Kidventor <span class="text-indigo-500">Academy</span></span>
+                </div>
+                <p id="typing-text" class="text-sm font-mono text-indigo-400 h-6"></p>
+            </div>
+            <nav class="flex flex-wrap gap-12 text-xs font-black uppercase tracking-widest">
+                <a href="about.html" class="hover:text-white transition">About Mission</a>
+                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="contact.html" class="hover:text-white transition">Contact</a>
+                <a href="faq.html" class="hover:text-white transition">Faq</a>
+            </nav>
         </div>
-      </div>
-      <div class="relative">
-        <div class="absolute -top-4 -left-4 w-24 h-24 bg-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
-        <img src="https://raw.githubusercontent.com/SmartKids-app/smartkids-learning/main/image/side-view-two-siblings-home-together-playing-laptop.jpg" alt="Children learning code" class="rounded-3xl shadow-2xl relative z-10">
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20 bg-white px-4">
-    <div class="max-w-7xl mx-auto">
-      <div class="text-center max-w-2xl mx-auto mb-16">
-        <h2 class="text-3xl font-bold">Why SmartKids Learning?</h2>
-        <p class="text-slate-500 mt-4">We combine technical skills with character building to create well-rounded digital citizens.</p>
-      </div>
-      
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
-          <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">⌨️</div>
-          <h3 class="text-xl font-bold mb-3">Typing Mastery</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">Interactive drills to help pupils move from "hunt and peck" to touch typing with speed and accuracy.</p>
+        <div class="max-w-7xl mx-auto mt-12 text-[10px] uppercase tracking-[0.3em] font-bold text-center md:text-left">
+            © 2026 Kidventor Academy • Global Education
         </div>
-        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
-          <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6">💻</div>
-          <h3 class="text-xl font-bold mb-3">CBT Quizzes</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">Prepare for modern exams with our Computer Based Testing format covering all key tech topics.</p>
-        </div>
-        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition">
-          <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6">🌍</div>
-          <h3 class="text-xl font-bold mb-3">Moral Etiquette</h3>
-          <p class="text-slate-600 text-sm leading-relaxed">Unique African moral lessons integrated into the curriculum to teach character and digital ethics.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-<footer class="bg-slate-900 text-slate-400 py-12 px-4">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-b border-slate-800 pb-8">
-    <div>
-      <div class="flex items-center gap-2 text-white mb-4">
-        <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-bold text-xs">SK</div>
-        <span class="font-bold tracking-tight">SmartKids Learning</span>
-      </div>
-      <div class="h-6"> <p id="typing-text" class="text-sm font-mono text-blue-400"></p>
-      </div>
-    </div>
-    
-    <div class="flex gap-8 text-sm font-medium">
-      <a href="about.html" class="hover:text-white transition-colors">About Us</a>
-      <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
-      <a href="contact.html" class="hover:text-white transition-colors">Contact</a>
-    </div>
-  </div>
-  
-  <div class="max-w-7xl mx-auto mt-8 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest">
-    <p>© 2026 SmartKids Tech Skills. Built for Future Innovators.</p>
-    <div class="flex gap-4 mt-4 md:mt-0">
-      <span>Nigeria</span>
-      <span class="text-slate-700">|</span>
-      <span>Education Technology</span>
-    </div>
-  </div>
-</footer>
-<script>
-  /** 1. TYPING ANIMATION **/
-  const typeText = "Empowering the next generation of African tech leaders.";
-  const typeSpeed = 70; 
-  let charIndex = 0;
+    </footer>
 
-  function typeWriter() {
-    const displayElement = document.getElementById("typing-text");
-    if (displayElement && charIndex < typeText.length) {
-      displayElement.innerHTML += typeText.charAt(charIndex);
-      charIndex++;
-      setTimeout(typeWriter, typeSpeed);
-    } else if (displayElement) {
-      setTimeout(() => {
-        displayElement.innerHTML = "";
-        charIndex = 0;
-        typeWriter();
-      }, 5000);
-    }
-  }
+    <script>
+        // PERSISTENCE LOGIC
+        let userData = { name: "Guest Explorer", xp: 0, level: 1 };
 
-  /** 2. MOBILE MENU LOGIC **/
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuCloseBtn = document.getElementById('menu-close-text');
-
-  if (menuToggle && mobileMenu) {
-    const toggleAction = () => {
-      menuToggle.classList.toggle('active');
-      mobileMenu.classList.toggle('hidden');
-      
-      // Toggle body scroll
-      const isOpen = !mobileMenu.classList.contains('hidden');
-      document.body.style.overflow = isOpen ? 'hidden' : 'auto';
-    };
-
-    menuToggle.addEventListener('click', toggleAction);
-    if (menuCloseBtn) menuCloseBtn.addEventListener('click', toggleAction);
-
-    // Auto-close on link click
-    mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', toggleAction);
-    });
-  }
-
-  window.addEventListener('load', typeWriter);
-</script>
-<script>
-  // 1. Update the Browser Tab Title
-  document.title = "Kidventor Academy | Coding & Digital Literacy for Future Leaders";
-
-  // 2. Safely update text without breaking images
-  function renameBrandSafely(node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      // Only replace text inside the actual words, not HTML attributes
-      node.textContent = node.textContent.replace(/SmartKids/g, 'Kidventor');
-    } else {
-      for (let child of node.childNodes) {
-        // Skip script and style tags so we don't break logic/CSS
-        if (child.tagName !== 'SCRIPT' && child.tagName !== 'STYLE') {
-          renameBrandSafely(child);
+        function updateUI() {
+            const saved = localStorage.getItem('kidventor_user');
+            if (saved) userData = JSON.parse(saved);
+            
+            document.querySelectorAll('.user-name').forEach(el => el.innerText = userData.name);
         }
-      }
-    }
-  }
 
-  // Run the safety rename on the whole body
-  renameBrandSafely(document.body);
-</script>
+        // TYPING EFFECT
+        const typeText = "Empowering the next generation of global tech leaders.";
+        let charIndex = 0;
+        function typeWriter() {
+            const el = document.getElementById("typing-text");
+            if (el && charIndex < typeText.length) {
+                el.innerHTML += typeText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        // MOBILE MENU
+        const menuBtn = document.getElementById("menuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const closeBtn = document.getElementById("closeBtn");
+
+        menuBtn.onclick = () => mobileMenu.classList.remove("hidden");
+        closeBtn.onclick = () => mobileMenu.classList.add("hidden");
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUI();
+            typeWriter();
+        });
+    </script>
 </body>
 </html>
