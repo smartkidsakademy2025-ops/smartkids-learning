@@ -1,1 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Row Practice | Kidventor Academy</title>
 
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .key-cap {
+        transition: all 0.12s ease;
+        transform: translateY(0);
+    }
+
+    .key-pressed {
+        transform: translateY(4px);
+        border-bottom-width: 0 !important;
+        background: #fda4af !important;
+    }
+
+    @keyframes dropLetter {
+        0% {
+            transform: translateY(-80px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .letter-drop {
+        animation: dropLetter 0.35s ease;
+    }
+
+    @keyframes slideFeedback {
+        0% {
+            transform: translateY(80px);
+            opacity: 0;
+        }
+        20% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        80% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(80px);
+            opacity: 0;
+        }
+    }
+
+    .feedback-box {
+        animation: slideFeedback 1.8s forwards;
+    }
+
+    .pulse-badge {
+        animation: pulse 1.2s infinite;
+    }
+</style>
+</head>
+
+<body class="bg-rose-900 min-h-screen flex flex-col justify-center items-center overflow-hidden px-6">
+
+<!-- INTRO MODAL -->
+
+<div id="introModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 flex items-center justify-center p-6">
+    <div class="bg-white max-w-xl w-full rounded-[3rem] p-10 shadow-2xl border-4 border-rose-500">
+
+        <div class="text-6xl mb-4">🏰</div>
+
+        <h1 class="text-4xl font-black text-slate-800 mb-4">
+            Mission: Home Row Hero
+        </h1>
+
+        <p class="text-slate-600 leading-relaxed mb-6">
+            Your fingers are now royal knights of the Keyboard Kingdom.
+            Their first mission is to protect the <strong>Home Row Keys</strong>:
+            A S D F and J K L
+        </p>
+
+        <div class="space-y-3 text-slate-700 font-medium mb-8">
+
+            <div class="flex gap-3">
+                <span>👉</span>
+                <p>Feel the bumps on the <strong>F</strong> and <strong>J</strong> keys</p>
+            </div>
+
+            <div class="flex gap-3">
+                <span>⌨️</span>
+                <p>Press the exact letter shown on screen</p>
+            </div>
+
+            <div class="flex gap-3">
+                <span>🚫</span>
+                <p>Do not look down — trust your fingers</p>
+            </div>
+
+            <div class="flex gap-3">
+                <span>🔥</span>
+                <p>Build combo streaks for bonus mastery points</p>
+            </div>
+
+        </div>
+
+        <button onclick="startPractice()"
+            class="w-full bg-rose-600 hover:bg-rose-700 text-white py-5 rounded-2xl font-black text-xl transition">
+            START TRAINING
+        </button>
+
+    </div>
+</div>
+
+<!-- TOP STATUS BAR -->
+
+<div class="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-5xl px-6">
+    <div class="bg-white/10 backdrop-blur-xl border border-white/10 rounded-3xl px-8 py-5 flex flex-wrap justify-between items-center text-white">
+
+        <div>
+            <p class="text-xs uppercase tracking-widest opacity-60 font-bold">
+                Progress
+            </p>
+            <p class="text-2xl font-black">
+                <span id="score">0</span> / 20
+            </p>
+        </div>
+
+        <div>
+            <p class="text-xs uppercase tracking-widest opacity-60 font-bold">
+                Combo
+            </p>
+            <p class="text-2xl font-black">
+                🔥 <span id="combo">0</span>
+            </p>
+        </div>
+
+        <div>
+            <p class="text-xs uppercase tracking-widest opacity-60 font-bold">
+                Accuracy
+            </p>
+            <p class="text-2xl font-black">
+                <span id="accuracy">100</span>%
+            </p>
+        </div>
+
+        <div>
+            <p class="text-xs uppercase tracking-widest opacity-60 font-bold">
+                Badge
+            </p>
+            <p id="badge" class="text-xl font-black pulse-badge">
+                🛡️ Rookie
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- MAIN GAME -->
+
+<div class="text-center">
+
+    <!-- TARGET LETTER -->
+
+    <div id="targetLetter"
+        class="text-[10rem] md:text-[13rem] font-black text-rose-300 mb-10 uppercase letter-drop">
+        F
+    </div>
+
+    <!-- VISUAL KEYBOARD -->
+
+    <div class="flex gap-3 justify-center flex-wrap">
+
+        <div id="key-A" class="key-cap w-16 h-16 bg-white rounded-xl border-b-8 border-rose-200 flex items-center justify-center text-2xl font-black">A</div>
+        <div id="key-S" class="key-cap w-16 h-16 bg-white rounded-xl border-b-8 border-rose-200 flex items-center justify-center text-2xl font-black">S</div>
+        <div id="key-D" class="key-cap w-16 h-16 bg-white rounded-xl border-b-8 border-rose-200 flex items-center justify-center text-2xl font-black">D</div>
+        <div id="key-F" class="key-cap w-16 h-16 bg-rose-100 rounded-xl border-b-8 border-rose-300 flex items-center justify-center text-2xl font-black text-rose-600">F</div>
+
+        <div class="w-8 hidden md:block"></div>
+
+        <div id="key-J" class="key-cap w-16 h-16 bg-rose-100 rounded-xl border-b-8 border-rose-300 flex items-center justify-center text-2xl font-black text-rose-600">J</div>
+        <div id="key-K" class="key-cap w-16 h-16 bg-white rounded-xl border-b-8 border-rose-200 flex items-center justify-center text-2xl font-black">K</div>
+        <div id="key-L" class="key-cap w-16 h-16 bg-white rounded-xl border-b-8 border-rose-200 flex items-center justify-center text-2xl font-black">L</div>
+
+    </div>
+
+</div>
+
+<!-- FEEDBACK -->
+
+<div id="feedbackArea"
+    class="fixed inset-x-0 bottom-10 flex justify-center pointer-events-none z-40">
+</div>
+
+<!-- SUCCESS MODAL -->
+
+<div id="successModal"
+    class="hidden fixed inset-0 bg-slate-950/95 z-50 flex items-center justify-center p-6">
+
+    <div class="bg-white max-w-md w-full rounded-[3rem] p-10 text-center border-b-8 border-rose-600">
+
+        <div class="text-7xl mb-4">🎖️</div>
+
+        <h2 class="text-4xl font-black text-slate-800 mb-3">
+            Home Row Master!
+        </h2>
+
+        <p class="text-slate-500 mb-8 leading-relaxed">
+            You completed your first keyboard mission successfully.
+            The Top Row Kingdom is now unlocked.
+        </p>
+
+        <button onclick="goNext()"
+            class="w-full bg-rose-600 hover:bg-rose-700 text-white py-4 rounded-2xl font-black text-xl transition">
+            UNLOCK TOP ROW →
+        </button>
+
+    </div>
+</div>
+
+<script>
+
+const keys = ['A','S','D','F','J','K','L'];
+
+let currentTarget = '';
+let score = 0;
+let combo = 0;
+let totalPress = 0;
+let correctPress = 0;
+
+function startPractice() {
+    document.getElementById("introModal").remove();
+    nextLetter();
+
+    window.addEventListener("keydown", handleKeyPress);
+}
+
+function handleKeyPress(e) {
+    const pressed = e.key.toUpperCase();
+
+    if (!keys.includes(pressed)) return;
+
+    totalPress++;
+
+    animateKey(pressed);
+
+    if (pressed === currentTarget) {
+        score++;
+        combo++;
+        correctPress++;
+
+        updateStats();
+        showFeedback("✨ Perfect Strike!", true);
+
+        if (score >= 20) {
+            document.getElementById("successModal").classList.remove("hidden");
+            saveProgress();
+            return;
+        }
+
+        nextLetter();
+
+    } else {
+        combo = 0;
+        updateStats();
+        showFeedback("❌ Wrong Key — Stay on Home Row!", false);
+    }
+}
+
+function nextLetter() {
+    currentTarget = keys[Math.floor(Math.random() * keys.length)];
+
+    const el = document.getElementById("targetLetter");
+
+    el.classList.remove("letter-drop");
+    void el.offsetWidth;
+    el.innerText = currentTarget;
+    el.classList.add("letter-drop");
+}
+
+function animateKey(key) {
+    const el = document.getElementById(`key-${key}`);
+    if (!el) return;
+
+    el.classList.add("key-pressed");
+
+    setTimeout(() => {
+        el.classList.remove("key-pressed");
+    }, 120);
+}
+
+function updateStats() {
+    document.getElementById("score").innerText = score;
+    document.getElementById("combo").innerText = combo;
+
+    let accuracy = Math.round((correctPress / totalPress) * 100);
+    if (!accuracy) accuracy = 0;
+
+    document.getElementById("accuracy").innerText = accuracy;
+
+    let badge = "🛡️ Rookie";
+
+    if (score >= 5) badge = "⚔️ Knight";
+    if (score >= 10) badge = "🏆 Warrior";
+    if (score >= 15) badge = "👑 Champion";
+    if (score >= 20) badge = "🔥 Master";
+
+    document.getElementById("badge").innerText = badge;
+}
+
+function showFeedback(text, success) {
+    const area = document.getElementById("feedbackArea");
+    area.innerHTML = "";
+
+    const box = document.createElement("div");
+
+    box.className = `
+        feedback-box
+        px-8 py-4
+        rounded-full
+        text-white
+        font-bold
+        shadow-xl
+        ${success ? 'bg-emerald-500' : 'bg-rose-500'}
+    `;
+
+    box.innerText = text;
+
+    area.appendChild(box);
+}
+
+function saveProgress() {
+    document.cookie = "typing_progress=2; path=/; SameSite=Lax";
+}
+
+function goNext() {
+    window.location.href = "top-row-practice.html";
+}
+
+</script>
+
+</body>
+</html>
