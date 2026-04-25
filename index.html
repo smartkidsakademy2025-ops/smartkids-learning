@@ -164,28 +164,44 @@
     </section>
 
     <footer class="bg-slate-950 text-slate-400 py-12 md:py-20 px-4 md:px-6">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 border-b border-slate-800 pb-12 text-center md:text-left">
-            <div>
-                <h3 class="text-white text-2xl font-black mb-4">Kidventor Academy</h3>
-                <p class="max-w-md mx-auto md:mx-0">
-                    Empowering children with coding, digital literacy, leadership, and strong moral values for the future.
-                </p>
-            </div>
-
-            <div class="flex flex-wrap justify-center md:justify-end gap-6 text-sm font-bold">
-                <a href="about.html" class="hover:text-indigo-400 transition">About</a>
-                <a href="contact.html" class="hover:text-indigo-400 transition">Contact</a>
-                <a href="faq.html" class="hover:text-indigo-400 transition">FAQ</a>
-                <a href="morals.html" class="hover:text-indigo-400 transition">Morals</a>
-                <a href="lessons.html" class="hover:text-indigo-400 transition">Lessons</a>
-                <a href="privacy.html" class="hover:text-indigo-400 transition">Privacy</a>
-            </div>
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-12 border-b border-slate-800 pb-12">
+        
+        <div class="text-center md:text-left">
+            <h3 class="text-white text-2xl font-black mb-4 tracking-tighter uppercase">Kidventor Academy</h3>
+            <p class="max-w-md mx-auto md:mx-0 leading-relaxed text-sm">
+                Empowering children with coding, digital literacy, leadership, and strong moral values for the future.
+            </p>
         </div>
 
-        <div class="max-w-7xl mx-auto mt-8 text-center md:text-left text-xs uppercase tracking-widest">
-            © 2026 Kidventor Academy • All Rights Reserved
+        <div class="lg:col-span-2">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-y-4 gap-x-8 text-center md:text-left">
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-2 opacity-50">Explore</h4>
+                    <a href="about.html" class="text-sm font-bold hover:text-indigo-400 transition">About Us</a>
+                    <a href="lessons.html" class="text-sm font-bold hover:text-indigo-400 transition">Lessons</a>
+                    <a href="morals.html" class="text-sm font-bold hover:text-indigo-400 transition">Morals</a>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-2 opacity-50">Support</h4>
+                    <a href="contact.html" class="text-sm font-bold hover:text-indigo-400 transition">Contact</a>
+                    <a href="faq.html" class="text-sm font-bold hover:text-indigo-400 transition">FAQ Help</a>
+                    <a href="worksheet.html" class="text-sm font-bold hover:text-indigo-400 transition">Resources</a>
+                </div>
+                <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-2 opacity-50">Legal</h4>
+                    <a href="privacy.html" class="text-sm font-bold hover:text-indigo-400 transition">Privacy Policy</a>
+                    <a href="disclaimer.html" class="text-sm font-bold hover:text-indigo-400 transition">Disclaimer</a>
+                    <a href="terms.html" class="text-sm font-bold hover:text-indigo-400 transition">Terms of Use</a>
+                </div>
+            </div>
         </div>
-    </footer>
+    </div>
+
+    <div class="max-w-7xl mx-auto mt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] font-bold">
+        <p class="text-center md:text-left">© 2026 Kidventor Academy • All Rights Reserved</p>
+        <p class="text-slate-600">Built for the next generation of creators</p>
+    </div>
+</footer>
 
     <script>
         const menuToggle = document.getElementById('menu-toggle');
