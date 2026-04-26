@@ -36,6 +36,46 @@
     .progress-bar {
         transition: width 0.4s ease;
     }
+
+    @keyframes floatPointer {
+        0% { transform: translate(-50px, 30px); }
+        50% { transform: translate(20px, -20px); }
+        100% { transform: translate(-50px, 30px); }
+    }
+
+    @keyframes clickPulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(0.92); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes scrollMove {
+        0% { transform: translateY(-10px); }
+        50% { transform: translateY(10px); }
+        100% { transform: translateY(-10px); }
+    }
+
+    @keyframes dragMove {
+        0% { transform: translateX(0); }
+        50% { transform: translateX(80px); }
+        100% { transform: translateX(0); }
+    }
+
+    .pointer-float {
+        animation: floatPointer 4s infinite ease-in-out;
+    }
+
+    .click-pulse {
+        animation: clickPulse 1.5s infinite;
+    }
+
+    .scroll-move {
+        animation: scrollMove 1.5s infinite;
+    }
+
+    .drag-move {
+        animation: dragMove 3s infinite ease-in-out;
+    }
 </style>
 </head>
 
@@ -76,8 +116,8 @@
         </h1>
 
         <p class="text-lg text-slate-500 leading-relaxed max-w-3xl mx-auto">
-            The mouse is your hand inside the computer world.
-            Learn how to click, drag, scroll, control, and master your digital environment like a professional.
+            Learn how to control the computer using the mouse —
+            clicking, selecting, dragging, scrolling, and moving like a pro.
         </p>
 
     </div>
@@ -94,147 +134,270 @@
         </div>
 
         <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
-            <div id="progressBar" class="progress-bar h-full bg-amber-500 rounded-full" style="width: 12.5%;"></div>
+            <div id="progressBar"
+                class="progress-bar h-full bg-amber-500 rounded-full"
+                style="width:12.5%;">
+            </div>
         </div>
 
     </div>
 </section>
 
-<!-- LESSON AREA -->
+<!-- LESSONS -->
 
 <section class="px-6 pb-24">
-<div class="max-w-4xl mx-auto">
+<div class="max-w-5xl mx-auto">
 
-<!-- Lesson 1 -->
-    <div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100 active" data-step="1">
-    <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div class="bg-slate-50 rounded-[2rem] p-4 border border-slate-100">
-            <div class="text-[10px] font-black uppercase tracking-widest text-indigo-600 mb-4 px-4">Action: Select</div>
-            <div class="relative rounded-xl overflow-hidden bg-white shadow-inner h-48 flex flex-col items-center justify-center border border-slate-100">
-                <div class="w-16 h-24 border-4 border-slate-200 rounded-full relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-10 bg-slate-200"></div>
-                    <div class="absolute top-0 left-0 w-1/2 h-10 bg-indigo-500 rounded-tl-full animate-pulse"></div>
-                </div>
-                <div class="absolute top-10 left-10 w-12 h-12 border-2 border-indigo-400 bg-indigo-50/50 rounded animate-bounce"></div>
-            </div>
-            <p class="text-[10px] text-slate-400 text-center mt-4 uppercase font-bold tracking-tighter">Index finger clicks here</p>
-        </div>
-        <div>
-            <div class="text-5xl mb-6">🖱️</div>
-            <h2 class="text-3xl font-black mb-4">Lesson 1 — Left Button</h2>
-            <p class="text-slate-600 leading-relaxed mb-4">Use your <strong>Index Finger</strong> to click once. This is how you tell the computer "I want this one!"</p>
-        </div>
+<!-- LESSON 1 -->
+<div class="lesson-card active bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="1">
+<div class="grid md:grid-cols-2 gap-10 items-center">
+
+<div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
+<div class="text-sm font-black uppercase tracking-widest text-amber-600 mb-6">
+Live Demo
+</div>
+
+<div class="relative h-64 flex items-center justify-center">
+    <div class="w-40 h-20 rounded-2xl bg-white border-2 border-slate-200 flex items-center justify-center font-bold">
+        Click Me
+    </div>
+
+    <div class="absolute bottom-8 right-16 text-5xl click-pulse">
+        👆
     </div>
 </div>
-    <!-- Lesson 2 -->
-    <div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100 active" data-step="2">
-    <div class="grid md:grid-cols-2 gap-10 items-center">
-        
-        <div class="bg-slate-50 rounded-[2rem] p-4 border border-slate-100">
-            <div class="text-[10px] font-black uppercase tracking-widest text-amber-600 mb-4 px-4">Live Animation</div>
-            
-            <div class="relative rounded-xl overflow-hidden bg-white shadow-inner h-48 flex flex-col items-center justify-center border border-slate-100">
-                
-                <div class="w-16 h-24 border-4 border-slate-200 rounded-full relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-10 bg-slate-200"></div>
-                    <div class="absolute top-0 right-0 w-1/2 h-10 bg-amber-400 rounded-tr-full opacity-0 animate-ping" style="animation-duration: 2s;"></div>
-                    <div class="absolute top-0 right-0 w-1/2 h-10 bg-amber-500 rounded-tr-full opacity-0 animate-pulse" style="animation-delay: 1s;"></div>
-                </div>
 
-                <div class="absolute top-10 right-10 w-24 bg-white shadow-lg border border-slate-100 rounded-lg p-2 flex flex-col gap-1 scale-0 animate-[bounce_2s_infinite_1s]">
-                    <div class="h-2 w-full bg-slate-100 rounded"></div>
-                    <div class="h-2 w-2/3 bg-slate-100 rounded"></div>
-                    <div class="h-2 w-full bg-indigo-100 rounded"></div>
-                </div>
+<p class="text-sm text-slate-500 text-center mt-4">
+Move pointer → Click once
+</p>
+</div>
 
-            </div>
+<div>
+    <div class="text-5xl mb-6">👆</div>
+    <h2 class="text-3xl font-black mb-4">Lesson 1 — Single Click</h2>
 
-            <p class="text-[10px] text-slate-400 text-center mt-4 uppercase font-bold tracking-tighter">Middle finger clicks here</p>
-        </div>
+    <p class="text-slate-600 leading-relaxed mb-4">
+        A <strong>single click</strong> means pressing the left mouse button once.
+    </p>
 
-        <div>
-            <div class="text-5xl mb-6">📋</div>
-            <h2 class="text-3xl font-black mb-4 text-slate-900">Lesson 2 — Right Button</h2>
-            <p class="text-slate-600 leading-relaxed mb-4">The <strong>Right Button</strong> is like a secret key. Use your <strong>middle finger</strong> to click it.</p>
-            
-            <div class="flex flex-wrap gap-2">
-                <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg text-xs font-bold border border-indigo-100">Copy</span>
-                <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg text-xs font-bold border border-indigo-100">Paste</span>
-                <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg text-xs font-bold border border-indigo-100">Rename</span>
-            </div>
-        </div>
+    <p class="text-slate-600 leading-relaxed">
+        It helps you select icons, buttons, menus, and links.
+    </p>
+</div>
+
+</div>
+</div>
+
+<!-- LESSON 2 -->
+<div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="2">
+<div class="grid md:grid-cols-2 gap-10 items-center">
+
+<div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
+<div class="text-sm font-black uppercase tracking-widest text-amber-600 mb-6">
+Live Demo
+</div>
+
+<div class="relative h-64 flex items-center justify-center">
+    <div class="w-40 h-20 rounded-2xl bg-white border-2 border-slate-200 flex items-center justify-center font-bold">
+        Folder
+    </div>
+
+    <div class="absolute bottom-8 right-16 text-5xl animate-pulse">
+        👆👆
     </div>
 </div>
-    <! Lesson 3 -->
-    <div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="3">
-    <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div class="bg-slate-50 rounded-[2rem] p-4 border border-slate-100">
-            <div class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-4 px-4">Action: Scroll</div>
-            <div class="relative rounded-xl overflow-hidden bg-white shadow-inner h-48 flex flex-col items-center justify-center border border-slate-100">
-                <div class="w-16 h-24 border-4 border-slate-200 rounded-full relative">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-24 bg-slate-100"></div>
-                    <div class="absolute top-4 left-1/2 -translate-x-1/2 w-3 h-8 bg-slate-800 rounded-full animate-bounce"></div>
-                </div>
-                <div class="absolute right-10 flex flex-col gap-2 animate-[translateY_2s_infinite]">
-                    <div class="w-12 h-1 bg-slate-200 rounded"></div>
-                    <div class="w-12 h-1 bg-slate-400 rounded"></div>
-                    <div class="w-12 h-1 bg-slate-200 rounded"></div>
-                </div>
-            </div>
-            <p class="text-[10px] text-slate-400 text-center mt-4 uppercase font-bold tracking-tighter">Roll with your index finger</p>
-        </div>
-        <div>
-            <div class="text-5xl mb-6">🔄</div>
-            <h2 class="text-3xl font-black mb-4">Lesson 3 — Scroll Wheel</h2>
-            <p class="text-slate-600 leading-relaxed">Roll the wheel toward you to go <strong>Down</strong>. Roll it away from you to go <strong>Up</strong>.</p>
-        </div>
+
+<p class="text-sm text-slate-500 text-center mt-4">
+Click quickly two times
+</p>
+</div>
+
+<div>
+    <div class="text-5xl mb-6">⚡</div>
+    <h2 class="text-3xl font-black mb-4">Lesson 2 — Double Click</h2>
+
+    <p class="text-slate-600 leading-relaxed mb-4">
+        A <strong>double click</strong> means pressing the left button two times quickly.
+    </p>
+
+    <p class="text-slate-600 leading-relaxed">
+        It is used to open folders, files, and applications.
+    </p>
+</div>
+
+</div>
+</div>
+
+<!-- LESSON 3 -->
+<div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="3">
+<div class="grid md:grid-cols-2 gap-10 items-center">
+
+<div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
+<div class="text-sm font-black uppercase tracking-widest text-amber-600 mb-6">
+Live Demo
+</div>
+
+<div class="relative h-64 flex items-center justify-center">
+    <div class="w-16 h-24 border-4 border-slate-200 rounded-full relative">
+        <div class="absolute top-4 left-1/2 -translate-x-1/2 w-3 h-8 bg-slate-700 rounded-full scroll-move"></div>
     </div>
 </div>
-    <!-- Lesson 4 -->
-    <div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="4">
-    <div class="grid md:grid-cols-2 gap-10 items-center">
-        <div class="bg-slate-50 rounded-[2rem] p-4 border border-slate-100">
-            <div class="text-[10px] font-black uppercase tracking-widest text-rose-600 mb-4 px-4">Action: Aim</div>
-            <div class="relative rounded-xl overflow-hidden bg-white shadow-inner h-48 flex items-center justify-center border border-slate-100">
-                <div class="w-12 h-12 border-4 border-rose-200 rounded-full flex items-center justify-center">
-                    <div class="w-4 h-4 bg-rose-500 rounded-full"></div>
-                </div>
-                <div class="absolute text-3xl animate-[ping_3s_infinite] transition-all" style="animation: moveAround 4s infinite">↖️</div>
-            </div>
-            <style>
-                @keyframes moveAround {
-                    0% { transform: translate(-40px, -40px); }
-                    50% { transform: translate(0px, 0px); }
-                    100% { transform: translate(-40px, -40px); }
-                }
-            </style>
-            <p class="text-[10px] text-slate-400 text-center mt-4 uppercase font-bold tracking-tighter">Your hand moves the arrow</p>
-        </div>
-        <div>
-            <div class="text-5xl mb-6">🎯</div>
-            <h2 class="text-3xl font-black mb-4">Lesson 4 — Pointer</h2>
-            <p class="text-slate-600 leading-relaxed">The <strong>Pointer</strong> is your "digital finger." It goes exactly where you move the mouse!</p>
-        </div>
-    </div>
+
+<p class="text-sm text-slate-500 text-center mt-4">
+Roll wheel up and down
+</p>
 </div>
-    <! Lesson 5 -->
-    
+
+<div>
+    <div class="text-5xl mb-6">🔄</div>
+    <h2 class="text-3xl font-black mb-4">Lesson 3 — Scroll Wheel</h2>
+
+    <p class="text-slate-600 leading-relaxed">
+        The <strong>scroll wheel</strong> helps you move up and down long pages and documents.
+    </p>
+</div>
+
+</div>
+</div>
+
+<!-- LESSON 4 -->
+<div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="4">
+<div class="grid md:grid-cols-2 gap-10 items-center">
+
+<div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
+<div class="relative h-64 flex items-center justify-center">
+    <div class="w-16 h-16 rounded-full border-4 border-rose-200"></div>
+    <div class="absolute text-4xl pointer-float">↖️</div>
+</div>
+
+<p class="text-sm text-slate-500 text-center mt-4">
+Move the arrow to the target
+</p>
+</div>
+
+<div>
+    <div class="text-5xl mb-6">🎯</div>
+    <h2 class="text-3xl font-black mb-4">Lesson 4 — Pointer</h2>
+
+    <p class="text-slate-600 leading-relaxed">
+        The <strong>pointer</strong> is the arrow on your screen.
+        It follows where your mouse moves.
+    </p>
+</div>
+
+</div>
+</div>
+
+<!-- LESSON 5 -->
+<div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="5">
+<div class="grid md:grid-cols-2 gap-10 items-center">
+
+<div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100">
+<div class="relative h-64 flex items-center justify-center gap-10">
+    <div class="text-4xl drag-move">📄</div>
+    <div class="text-3xl">➡️</div>
+    <div class="text-4xl">📁</div>
+</div>
+
+<p class="text-sm text-slate-500 text-center mt-4">
+Hold → Move → Release
+</p>
+</div>
+
+<div>
+    <div class="text-5xl mb-6">📦</div>
+    <h2 class="text-3xl font-black mb-4">Lesson 5 — Drag and Drop</h2>
+
+    <p class="text-slate-600 leading-relaxed">
+        Click and hold an item, move it, then release it somewhere else.
+    </p>
+</div>
+
+</div>
+</div>
+
+<!-- LESSON 6 -->
+<div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="6">
+<div class="grid md:grid-cols-2 gap-10 items-center">
+
+<div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 text-center text-7xl">
+🧠
+</div>
+
+<div>
+    <div class="text-5xl mb-6">📡</div>
+    <h2 class="text-3xl font-black mb-4">Lesson 6 — Sensor</h2>
+
+    <p class="text-slate-600 leading-relaxed">
+        The sensor under the mouse helps it detect movement on the table.
+    </p>
+</div>
+
+</div>
+</div>
+
+<!-- LESSON 7 -->
+<div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="7">
+<div class="grid md:grid-cols-2 gap-10 items-center">
+
+<div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 text-center text-7xl">
+🔌
+</div>
+
+<div>
+    <div class="text-5xl mb-6">🔗</div>
+    <h2 class="text-3xl font-black mb-4">Lesson 7 — Cable / Receiver</h2>
+
+    <p class="text-slate-600 leading-relaxed">
+        A mouse connects using a cable or a wireless USB receiver.
+    </p>
+</div>
+
+</div>
+</div>
+
+<!-- LESSON 8 -->
+<div class="lesson-card bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100" data-step="8">
+<div class="grid md:grid-cols-2 gap-10 items-center">
+
+<div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 text-center text-7xl">
+🏁
+</div>
+
+<div>
+    <div class="text-5xl mb-6">🎓</div>
+    <h2 class="text-3xl font-black mb-4">Lesson 8 — Summary</h2>
+
+    <p class="text-slate-600 leading-relaxed mb-6">
+        You now understand clicking, dragging, scrolling, the pointer,
+        the sensor, and how the mouse connects.
+    </p>
+
+    <button
+        onclick="window.location.href='lessons/mouse-practice.html'"
+        class="bg-amber-500 text-white px-8 py-4 rounded-2xl font-black hover:bg-amber-600 transition">
+        Enter Practice Zone →
+    </button>
+</div>
+
+</div>
+</div>
 
 <!-- NAVIGATION -->
 
-<div class="mt-8 flex justify-between">
+<div class="mt-10 flex justify-between">
 
-    <button id="prevBtn"
-        onclick="prevLesson()"
-        class="px-8 py-4 rounded-2xl border border-slate-200 font-bold text-slate-600 hover:bg-slate-50 transition hidden">
-        ← Previous Lesson
-    </button>
+<button id="prevBtn"
+    onclick="prevLesson()"
+    class="px-8 py-4 rounded-2xl border border-slate-200 font-bold text-slate-600 hidden">
+    ← Previous
+</button>
 
-    <button id="nextBtn"
-        onclick="nextLesson()"
-        class="ml-auto px-8 py-4 rounded-2xl bg-amber-500 text-white font-black hover:bg-amber-600 transition">
-        Next Lesson →
-    </button>
+<button id="nextBtn"
+    onclick="nextLesson()"
+    class="ml-auto px-8 py-4 rounded-2xl bg-amber-500 text-white font-black">
+    Next Lesson →
+</button>
 
 </div>
 
@@ -242,7 +405,6 @@
 </section>
 
 <script>
-
 let currentLesson = 1;
 const totalLessons = 8;
 
@@ -258,13 +420,17 @@ function showLesson(step) {
 
     document.getElementById("prevBtn").classList.toggle("hidden", step === 1);
     document.getElementById("nextBtn").classList.toggle("hidden", step === totalLessons);
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
 function nextLesson() {
     if (currentLesson < totalLessons) {
         currentLesson++;
         showLesson(currentLesson);
-        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 }
 
@@ -272,10 +438,8 @@ function prevLesson() {
     if (currentLesson > 1) {
         currentLesson--;
         showLesson(currentLesson);
-        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 }
-
 </script>
 
 </body>
