@@ -1,0 +1,15 @@
+{
+  "levelName": "Elite Innovator",
+  "questions": [
+    {
+      "q": "In AI, what do we call the text we give to a model to get an answer?",
+      "a": ["Command", "Prompt", "Instruction"],
+      "correct": 1
+    },
+    {
+      "q": "What is 'Glassmorphism' in modern UI design?",
+      "a": ["A blurry, glass-like effect", "A transparent background", "A 3D glass icon"],
+      "correct": 0
+    }
+  ]
+}
