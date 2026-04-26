@@ -1,6 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Final Project | Kidventor Academy</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+
+body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:#f8fafc;
+}
+
+.code-font{
+    font-family:'Fira Code',monospace;
+}
+
+.project-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2rem;
+    min-height:calc(100vh - 220px);
+}
+
+@media(max-width:1024px){
+    .project-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+.glass-card{
+    background:white;
+    border:2px solid #e2e8f0;
+    border-radius:2rem;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+}
+
+.preview-bg{
+    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size:20px 20px;
+}
+
+.idea-card{
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.idea-card:hover{
+    transform:translateY(-4px);
+    border-color:#0ea5e9;
+}
+
+.task-complete{
+    border-color:#10b981 !important;
+    background:#ecfdf5;
+}
+
+.progress-bar{
+    transition:0.4s;
+}
+</style>
+</head>
+
+<body class="p-4 md:p-6">
+
+<!-- HEADER -->
+<header class="max-w-[1600px] mx-auto mb-8">
+
+    <div class="flex flex-col lg:flex-row gap-6 justify-between lg:items-center">
+
+        <div>
+            <p class="text-xs font-black uppercase tracking-[0.2em] text-sky-500 mb-2">
+                Final Mission
+            </p>
+
+            <h1 class="text-3xl md:text-5xl font-black text-slate-900">
+                🚀 Build Your First Website
+            </h1>
+
+            <p class="text-slate-500 mt-3 max-w-2xl">
+                This is your graduation project. Use everything you learned —
+                headings, paragraphs, images, links, and creativity —
+                to build your own mini website.
+            </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+
+            <div class="bg-emerald-100 border border-emerald-200 text-emerald-700 px-6 py-4 rounded-2xl font-bold">
+                Quiz Badge:
+                <span id="quiz-status">Level: Beginner</span>
+            </div>
+
+            <button onclick="publishProject()"
+                class="bg-sky-600 hover:bg-sky-700 text-white font-black px-8 py-4 rounded-2xl shadow-lg shadow-sky-100 transition-all">
+                PUBLISH PROJECT 🌍
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+<!-- PROGRESS -->
+<section class="max-w-[1600px] mx-auto mb-8">
+    <div class="bg-white rounded-3xl border border-slate-200 p-6">
+
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="font-black text-slate-800">
+                Project Progress
+            </h2>
+
+            <span id="progress-text" class="text-sm font-bold text-slate-500">
+                0% Complete
+            </span>
+        </div>
+
+        <div class="w-full h-4 bg-slate-100 rounded-full overflow-hidden">
+            <div id="progress-bar"
+                class="progress-bar h-full bg-sky-500 rounded-full"
+                style="width:0%">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN GRID -->
+<main class="max-w-[1600px] mx-auto project-grid">
+
+    <!-- LEFT: EDITOR -->
+    <div class="glass-card border-4 border-slate-900">
+
+        <div class="bg-slate-900 p-4 flex justify-between items-center">
+            <div class="flex gap-2">
+                <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+            </div>
+
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest code-font">
+                index.html
+            </span>
+        </div>
+
+        <textarea
+            id="project-code"
+            class="flex-1 p-8 bg-slate-900 text-sky-300 code-font text-base md:text-lg outline-none resize-none min-h-[500px]"
+            spellcheck="false"
+            placeholder="<h1>Welcome to My World</h1>
+
+<p>Hello! My name is Ada.</p>
+
+<img src='https://placehold.co/300x200' alt='My photo'>
+
+<a href='https://google.com'>Visit Google</a>"
+        ></textarea>
+
+    </div>
+
+    <!-- RIGHT: LIVE PREVIEW -->
+    <div class="glass-card shadow-2xl">
+
+        <div class="bg-slate-100 p-4 border-b border-slate-200 flex items-center gap-4">
+            <div class="flex gap-1">
+                <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+                <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+            </div>
+
+            <div class="bg-white px-4 py-2 rounded-lg text-xs text-slate-400 flex-1 truncate border border-slate-200">
+                https://my-awesome-site.kidventor.app
+            </div>
+        </div>
+
+        <iframe
+            id="output-frame"
+            class="w-full flex-1 min-h-[500px] bg-white preview-bg">
+        </iframe>
+
+    </div>
+
+</main>
+
+<!-- PROJECT CHECKLIST -->
+<section class="max-w-[1600px] mx-auto mt-10">
+
+    <h2 class="text-2xl font-black mb-6">
+        Project Checklist ✅
+    </h2>
+
+    <div class="grid md:grid-cols-4 gap-5">
+
+        <div id="check-heading" class="bg-white p-6 rounded-3xl border border-slate-200">
+            <p class="text-xs font-black text-sky-600 uppercase mb-2">Step 1</p>
+            <h3 class="font-bold">Add a Heading</h3>
+            <p class="text-sm text-slate-500 mt-2">
+                Use &lt;h1&gt; to create your title.
+            </p>
+        </div>
+
+        <div id="check-paragraph" class="bg-white p-6 rounded-3xl border border-slate-200">
+            <p class="text-xs font-black text-purple-600 uppercase mb-2">Step 2</p>
+            <h3 class="font-bold">Write a Paragraph</h3>
+            <p class="text-sm text-slate-500 mt-2">
+                Use &lt;p&gt; to tell your story.
+            </p>
+        </div>
+
+        <div id="check-image" class="bg-white p-6 rounded-3xl border border-slate-200">
+            <p class="text-xs font-black text-amber-600 uppercase mb-2">Step 3</p>
+            <h3 class="font-bold">Insert an Image</h3>
+            <p class="text-sm text-slate-500 mt-2">
+                Use &lt;img&gt; to show visuals.
+            </p>
+        </div>
+
+        <div id="check-link" class="bg-white p-6 rounded-3xl border border-slate-200">
+            <p class="text-xs font-black text-emerald-600 uppercase mb-2">Step 4</p>
+            <h3 class="font-bold">Create a Link</h3>
+            <p class="text-sm text-slate-500 mt-2">
+                Use &lt;a&gt; so visitors can click.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- PROJECT IDEAS -->
+<section class="max-w-[1600px] mx-auto mt-12">
+
+    <h2 class="text-2xl font-black mb-6">
+        Need Ideas? Pick One 💡
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+        <div class="idea-card bg-white p-6 rounded-3xl border border-slate-200"
+            onclick="loadIdea('about')">
+            <h3 class="font-black text-lg mb-2">👤 About Me Page</h3>
+            <p class="text-sm text-slate-500">
+                Introduce yourself and your hobbies.
+            </p>
+        </div>
+
+        <div class="idea-card bg-white p-6 rounded-3xl border border-slate-200"
+            onclick="loadIdea('pets')">
+            <h3 class="font-black text-lg mb-2">🐶 My Favorite Animal</h3>
+            <p class="text-sm text-slate-500">
+                Build a page about animals you love.
+            </p>
+        </div>
+
+        <div class="idea-card bg-white p-6 rounded-3xl border border-slate-200"
+            onclick="loadIdea('dream')">
+            <h3 class="font-black text-lg mb-2">🚀 My Dream Job</h3>
+            <p class="text-sm text-slate-500">
+                Share what you want to become.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+const editor = document.getElementById("project-code");
+const frame = document.getElementById("output-frame");
+const statusBadge = document.getElementById("quiz-status");
+const progressBar = document.getElementById("progress-bar");
+const progressText = document.getElementById("progress-text");
+
+const fails = localStorage.getItem("kidventor_fails") || 0;
+
+if (fails == 0) {
+    statusBadge.innerText = "Certified Developer 🏆";
+} else if (fails <= 2) {
+    statusBadge.innerText = "Rising Coder ⭐";
+} else {
+    statusBadge.innerText = "Level: Beginner";
+}
+
+function updatePreview() {
+    const code = editor.value;
+
+    const content = `
+        <html>
+            <head>
+                <script src="https://cdn.tailwindcss.com"><\/script>
+                <style>
+                    body{
+                        font-family:sans-serif;
+                        padding:20px;
+                    }
+                </style>
+            </head>
+            <body>
+                ${code || "<h2>Start building your website ✨</h2>"}
+            </body>
+        </html>
+    `;
+
+    frame.srcdoc = content;
+    updateChecklist(code.toLowerCase());
+}
+
+function updateChecklist(code) {
+    let progress = 0;
+
+    const checks = [
+        { id: "check-heading", valid: code.includes("<h1") },
+        { id: "check-paragraph", valid: code.includes("<p") },
+        { id: "check-image", valid: code.includes("<img") },
+        { id: "check-link", valid: code.includes("<a") }
+    ];
+
+    checks.forEach(item => {
+        const box = document.getElementById(item.id);
+
+        if (item.valid) {
+            box.classList.add("task-complete");
+            progress += 25;
+        } else {
+            box.classList.remove("task-complete");
+        }
+    });
+
+    progressBar.style.width = progress + "%";
+    progressText.innerText = progress + "% Complete";
+
+    if (progress === 100) {
+        confetti({
+            particleCount: 200,
+            spread: 100,
+            origin: { y: 0.6 }
+        });
+    }
+}
+
+function publishProject() {
+    const code = editor.value;
+
+    if (!code.trim()) {
+        alert("Please write some code first!");
+        return;
+    }
+
+    const fullHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Kidventor Project</title>
+</head>
+<body>
+${code}
+</body>
+</html>
+`;
+
+    const blob = new Blob([fullHTML], {
+        type: "text/html"
+    });
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "my-kidventor-project.html";
+    a.click();
+}
+
+function loadIdea(type) {
+    let template = "";
+
+    if (type === "about") {
+        template = `<h1>About Me</h1>
+
+<p>Hello! My name is Sarah.</p>
+
+<p>I love reading books and coding websites.</p>
+
+<img src="https://placehold.co/300x200" alt="My Photo">
+
+<a href="https://google.com">Visit My Favorite Website</a>`;
+    }
+
+    if (type === "pets") {
+        template = `<h1>My Favorite Animal</h1>
+
+<p>My favorite animal is a dog.</p>
+
+<p>Dogs are friendly and playful.</p>
+
+<img src="https://placehold.co/300x200" alt="Dog">
+
+<a href="https://wikipedia.org">Learn More</a>`;
+    }
+
+    if (type === "dream") {
+        template = `<h1>My Dream Job</h1>
+
+<p>I want to become a software engineer.</p>
+
+<p>I want to build amazing apps for children.</p>
+
+<img src="https://placehold.co/300x200" alt="Dream Job">
+
+<a href="https://github.com">Visit GitHub</a>`;
+    }
+
+    editor.value = template;
+    updatePreview();
+    editor.focus();
+}
+
+editor.addEventListener("input", updatePreview);
+
+updatePreview();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Project | Kidventor Academy</title>
