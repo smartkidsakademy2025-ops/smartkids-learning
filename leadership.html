@@ -195,46 +195,55 @@ MAIN CONTENT
 
 
     <!-- =========================
-    SECTION 3: LEADERSHIP QUIZ
-    ========================= -->
-    <section class="bg-slate-900 rounded-[3rem] p-10 md:p-14 text-white">
+SECTION 3: LEADERSHIP QUIZ
+========================= -->
+<section class="bg-slate-900 rounded-[3rem] p-10 md:p-14 text-white">
 
-        <h2 class="text-3xl font-black text-center mb-8">
-            Quick Leadership Check 🎯
-        </h2>
+    <h2 class="text-3xl font-black text-center mb-4">
+        Leadership Challenge Quiz 🎯
+    </h2>
 
-        <div class="max-w-2xl mx-auto">
+    <p class="text-center text-slate-400 mb-10">
+        Choose the best leadership action. Correct answers will unlock the next question!
+    </p>
 
-            <p class="text-slate-300 mb-6 text-center">
-                Your friend forgets homework and feels sad.
-                What should a leader do?
-            </p>
+    <div class="max-w-2xl mx-auto">
 
-            <div class="grid gap-4">
+        <!-- Question Box -->
+        <div id="quizBox" class="bg-white/5 border border-white/10 rounded-3xl p-8">
 
-                <button onclick="showAnswer('wrong')"
-                    class="bg-white/5 hover:bg-red-500 transition border border-white/10 rounded-xl p-4 text-left">
+            <h3 id="questionText" class="text-xl font-bold mb-8 text-center">
+                Your classmate forgot homework and feels sad. What should a leader do?
+            </h3>
+
+            <div id="answerButtons" class="grid gap-4">
+
+                <button onclick="checkAnswer(false)"
+                    class="quiz-btn bg-white/5 hover:bg-red-500 transition border border-white/10 rounded-xl p-4 text-left">
                     A. Laugh at them
                 </button>
 
-                <button onclick="showAnswer('correct')"
-                    class="bg-white/5 hover:bg-emerald-500 transition border border-white/10 rounded-xl p-4 text-left">
+                <button onclick="checkAnswer(true)"
+                    class="quiz-btn bg-white/5 hover:bg-emerald-500 transition border border-white/10 rounded-xl p-4 text-left">
                     B. Help and encourage them
                 </button>
 
-                <button onclick="showAnswer('wrong')"
-                    class="bg-white/5 hover:bg-red-500 transition border border-white/10 rounded-xl p-4 text-left">
+                <button onclick="checkAnswer(false)"
+                    class="quiz-btn bg-white/5 hover:bg-red-500 transition border border-white/10 rounded-xl p-4 text-left">
                     C. Ignore them
                 </button>
 
             </div>
 
-            <div id="quizResult" class="mt-6 text-center font-bold text-lg"></div>
+            <!-- Feedback -->
+            <div id="quizFeedback"
+                class="mt-8 text-center font-bold text-lg">
+            </div>
 
         </div>
-    </section>
 
-
+    </div>
+</section>
     <!-- =========================
     SECTION 4: CONFLICT FIXER
     ========================= -->
@@ -336,17 +345,99 @@ FOOTER
 JAVASCRIPT
 ========================= -->
 <script>
-function showAnswer(type) {
-    const result = document.getElementById("quizResult");
+const leadershipQuestions = [
+    {
+        question: "Your classmate forgot homework and feels sad. What should a leader do?",
+        answers: [
+            { text: "A. Laugh at them", correct: false },
+            { text: "B. Help and encourage them", correct: true },
+            { text: "C. Ignore them", correct: false }
+        ]
+    },
+    {
+        question: "Your team project is failing because nobody is talking. What should a leader do?",
+        answers: [
+            { text: "A. Blame everyone", correct: false },
+            { text: "B. Start a calm discussion and help organize the team", correct: true },
+            { text: "C. Leave the group", correct: false }
+        ]
+    },
+    {
+        question: "You notice a new student sitting alone during lunch. What should a leader do?",
+        answers: [
+            { text: "A. Invite them to join and make them feel welcome", correct: true },
+            { text: "B. Pretend not to notice", correct: false },
+            { text: "C. Tell others to avoid them", correct: false }
+        ]
+    }
+];
 
-    if (type === "correct") {
-        result.innerHTML = "✅ Correct! Real leaders help people grow.";
-        result.className = "mt-6 text-center font-bold text-lg text-emerald-400";
+let currentQuestion = 0;
+
+function loadQuestion() {
+    const questionText = document.getElementById("questionText");
+    const answerButtons = document.getElementById("answerButtons");
+    const feedback = document.getElementById("quizFeedback");
+
+    feedback.innerHTML = "";
+    feedback.className = "mt-8 text-center font-bold text-lg";
+
+    const current = leadershipQuestions[currentQuestion];
+    questionText.innerText = current.question;
+
+    answerButtons.innerHTML = "";
+
+    current.answers.forEach(answer => {
+        const button = document.createElement("button");
+
+        button.innerText = answer.text;
+        button.className =
+            "bg-white/5 hover:bg-white/10 transition border border-white/10 rounded-xl p-4 text-left";
+
+        button.onclick = () => checkAnswer(answer.correct);
+
+        answerButtons.appendChild(button);
+    });
+}
+
+function checkAnswer(isCorrect) {
+    const feedback = document.getElementById("quizFeedback");
+
+    if (isCorrect) {
+        feedback.innerHTML = "✅ Correct! Great leadership choice.";
+
+        feedback.className =
+            "mt-8 text-center font-bold text-lg text-emerald-400";
+
+        setTimeout(() => {
+            currentQuestion++;
+
+            if (currentQuestion < leadershipQuestions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById("quizBox").innerHTML = `
+                    <div class="text-center py-8">
+                        <h3 class="text-3xl font-black text-emerald-400 mb-4">
+                            🎉 Leadership Champion!
+                        </h3>
+                        <p class="text-slate-300 text-lg">
+                            You answered all 3 leadership questions correctly.
+                            You are thinking like a true leader!
+                        </p>
+                    </div>
+                `;
+            }
+        }, 1200);
+
     } else {
-        result.innerHTML = "❌ Try again! Leaders help, not hurt.";
-        result.className = "mt-6 text-center font-bold text-lg text-red-400";
+        feedback.innerHTML = "❌ Try another option. Great leaders help, listen, and solve problems.";
+
+        feedback.className =
+            "mt-8 text-center font-bold text-lg text-red-400";
     }
 }
+
+loadQuestion();
 
 let progress = 0;
 
