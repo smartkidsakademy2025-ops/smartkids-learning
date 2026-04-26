@@ -105,7 +105,26 @@
                     </button>
                 </div>
             </div>
+<div class="flex flex-col sm:flex-row gap-3">
+    <!-- HINT BOX -->
+<div id="hint-box" class="bg-amber-50 border-2 border-amber-200 rounded-[2rem] p-6">
+    <div class="flex items-center justify-between mb-3">
+        <h3 class="font-black text-amber-900 text-sm uppercase tracking-widest">
+            Helpful Hint 💡
+        </h3>
 
+        <button onclick="showExample()" 
+            class="text-xs font-black bg-white border border-amber-200 px-4 py-2 rounded-xl hover:bg-amber-100 transition">
+            SHOW EXAMPLE
+        </button>
+    </div>
+
+    <p id="hint-text" class="text-sm text-amber-800 leading-relaxed">
+        Start with a heading tag.
+        Example:
+        <strong>&lt;h1&gt;My First Website&lt;/h1&gt;</strong>
+    </p>
+</div>
             <!-- RIGHT: PREVIEW -->
             <div class="lg:col-span-4 space-y-4">
                 <h2 class="font-black text-xs uppercase tracking-[0.2em] text-slate-400 ml-2">Live Preview</h2>
@@ -131,8 +150,200 @@
             </div>
         </div>
     </main>
+<script>
+const htmlInput = document.getElementById('html-input');
+const livePreview = document.getElementById('live-preview');
+const hintText = document.getElementById('hint-text');
 
-    <script>
+let currentTask = 1;
+
+/* ---------------------------
+LIVE PREVIEW
+---------------------------- */
+htmlInput.addEventListener('input', () => {
+    livePreview.innerHTML = htmlInput.value || `
+        <div class="text-slate-300 text-center mt-20 italic">
+            Start typing code to see the magic!
+        </div>
+    `;
+});
+
+/* ---------------------------
+INSERT TAG
+---------------------------- */
+function insertTag(open, close) {
+    const start = htmlInput.selectionStart;
+    const end = htmlInput.selectionEnd;
+    const text = htmlInput.value;
+
+    htmlInput.value =
+        text.substring(0, start) +
+        open +
+        close +
+        text.substring(end);
+
+    htmlInput.dispatchEvent(new Event('input'));
+    htmlInput.focus();
+}
+
+/* ---------------------------
+SHOW EXAMPLE
+---------------------------- */
+function showExample() {
+    if (currentTask === 1) {
+        htmlInput.value = "<h1>My First Website</h1>";
+        hintText.innerHTML = "Great! This is how a heading works.";
+    }
+
+    if (currentTask === 2) {
+        htmlInput.value += `
+
+<img src="https://placehold.co/200x150" alt="My image">`;
+        hintText.innerHTML = "Awesome! Images use the img tag.";
+    }
+
+    if (currentTask === 3) {
+        htmlInput.value += `
+
+<a href="#">Click Me</a>`;
+        hintText.innerHTML = "Perfect! Links use the anchor tag.";
+    }
+
+    htmlInput.dispatchEvent(new Event('input'));
+}
+
+/* ---------------------------
+CHECK CODE
+---------------------------- */
+function checkCode() {
+    const code = htmlInput.value.toLowerCase();
+
+    if (currentTask === 1) {
+        if (code.includes("<h1>") && code.includes("</h1>")) {
+            completeTask(
+                1,
+                2,
+                "Level 2: Visuals",
+                "Excellent! 🎉 Now let's add an image using the img tag."
+            );
+        } else {
+            hintText.innerHTML = `
+                You need both opening and closing heading tags.<br><br>
+                Example:<br>
+                <strong>&lt;h1&gt;Welcome&lt;/h1&gt;</strong>
+            `;
+        }
+    }
+
+    else if (currentTask === 2) {
+        if (code.includes("<img")) {
+            completeTask(
+                2,
+                3,
+                "Level 3: Navigation",
+                "Fantastic! 🚀 Now create a clickable link using the a tag."
+            );
+        } else {
+            hintText.innerHTML = `
+                Images use the img tag.<br><br>
+                Example:<br>
+                <strong>&lt;img src='photo.jpg' alt='my image'&gt;</strong>
+            `;
+        }
+    }
+
+    else if (currentTask === 3) {
+        if (code.includes("<a") && code.includes("</a>")) {
+            confetti({
+                particleCount: 200,
+                spread: 80,
+                origin: { y: 0.6 }
+            });
+
+            document.getElementById('task3')
+                .querySelector('.check-icon')
+                .classList.remove('hidden');
+
+            document.getElementById('status-badge').innerText =
+                "Developer Mastered! 🎉";
+
+            document.getElementById('status-badge').className =
+                "text-[10px] font-black bg-emerald-500 text-white px-4 py-1.5 rounded-full uppercase tracking-widest";
+
+            hintText.innerHTML = `
+                <strong class="text-emerald-700">
+                    You did it! 🎉 You are now building real websites!
+                </strong>
+            `;
+        } else {
+            hintText.innerHTML = `
+                Links use the anchor tag.<br><br>
+                Example:<br>
+                <strong>&lt;a href='#'&gt;Click Here&lt;/a&gt;</strong>
+            `;
+        }
+    }
+}
+
+/* ---------------------------
+COMPLETE TASK
+---------------------------- */
+function completeTask(current, next, statusLabel, newHint) {
+    confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+    });
+
+    document.getElementById('task' + current)
+        .classList.remove('active');
+
+    document.getElementById('task' + current)
+        .querySelector('.check-icon')
+        .classList.remove('hidden');
+
+    const nextCard = document.getElementById('task' + next);
+
+    nextCard.classList.add('active');
+
+    nextCard.querySelectorAll('p, span').forEach(el => {
+        el.classList.remove('text-slate-400');
+
+        if (el.tagName === 'SPAN') {
+            el.classList.add('text-sky-600');
+        } else {
+            el.classList.add('text-slate-700');
+        }
+    });
+
+    document.getElementById('status-badge').innerText = statusLabel;
+    hintText.innerHTML = newHint;
+
+    currentTask = next;
+}
+
+/* ---------------------------
+SAVE CODE
+---------------------------- */
+function saveMyCode() {
+    const code = htmlInput.value;
+
+    if (!code) {
+        alert("Write some code first!");
+        return;
+    }
+
+    const blob = new Blob([code], {
+        type: "text/html"
+    });
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "kidventor-project.html";
+    a.click();
+}
+</script>
+  <!--  <script>
         const htmlInput = document.getElementById('html-input');
         const livePreview = document.getElementById('live-preview');
         let currentTask = 1;
@@ -193,6 +404,6 @@
             a.download = "kidventor-project.html";
             a.click();
         }
-    </script>
+    </script>-->
 </body>
 </html>
