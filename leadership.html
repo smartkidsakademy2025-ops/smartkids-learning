@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Young Leaders | Kidventor Academy</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
+
+body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:#fffaf5;
+}
+
+/* Compass Animation */
+@keyframes compassSpin{
+    0%{transform:rotate(0deg);}
+    20%{transform:rotate(-20deg);}
+    80%{transform:rotate(380deg);}
+    100%{transform:rotate(360deg);}
+}
+.animate-compass{
+    animation:compassSpin 4s cubic-bezier(0.68,-0.55,0.265,1.55) infinite;
+}
+
+/* Card Hover */
+.tool-card{
+    transition:all .3s ease;
+}
+.tool-card:hover{
+    transform:translateY(-8px);
+}
+
+/* Progress Bar */
+.progress-fill{
+    transition:width .5s ease;
+}
+</style>
+</head>
+
+<body class="text-slate-900">
+
+<!-- =========================
+NAVBAR
+========================= -->
+<nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-amber-100 py-4 px-6">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center text-white font-black">
+                K
+            </div>
+            <span class="font-extrabold tracking-tighter uppercase text-sm">
+                Kidventor Academy
+            </span>
+        </a>
+
+        <div class="text-[10px] font-black uppercase tracking-widest text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
+            Character & Growth
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- =========================
+HERO SECTION
+========================= -->
+<header class="py-20 px-6 text-center">
+    <div class="max-w-3xl mx-auto">
+
+        <div class="text-7xl mb-6 animate-compass inline-block">
+            🧭
+        </div>
+
+        <h1 class="text-5xl md:text-6xl font-black mb-6 tracking-tight">
+            Real <span class="text-amber-600">Leadership</span>
+        </h1>
+
+        <p class="text-lg text-slate-500 leading-relaxed">
+            You do not need a title to be a leader. 
+            You only need the courage to help others, 
+            solve problems, and make your environment better.
+        </p>
+
+    </div>
+</header>
+
+
+<!-- =========================
+MAIN CONTENT
+========================= -->
+<main class="max-w-6xl mx-auto px-6 pb-24 space-y-20">
+
+
+    <!-- =========================
+    SECTION 1: LEADERS LIFT OTHERS
+    ========================= -->
+    <section class="bg-white p-8 md:p-12 rounded-[3rem] border border-slate-100 shadow-sm">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+
+            <!-- Left -->
+            <div>
+                <h2 class="text-3xl font-black mb-6">
+                    Leaders Lift Others Up 🪜
+                </h2>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    A boss gives orders. A leader gives support.
+                    Real leaders teach, encourage, and help people grow.
+                    In school, at home, and online—leadership means helping others succeed too.
+                </p>
+
+                <div class="space-y-4">
+
+                    <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 flex gap-4">
+                        <div class="text-2xl">🤝</div>
+                        <div>
+                            <h4 class="font-black">Collaboration</h4>
+                            <p class="text-sm text-slate-600">
+                                Work with people, not against them.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-100 rounded-2xl p-4 flex gap-4">
+                        <div class="text-2xl">👂</div>
+                        <div>
+                            <h4 class="font-black">Listening</h4>
+                            <p class="text-sm text-slate-600">
+                                Great leaders listen before they speak.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Right -->
+            <div class="flex justify-center">
+                <div class="w-72 h-72 rounded-[3rem] bg-amber-100 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-300/30 to-transparent"></div>
+                    <div class="text-8xl relative z-10">👑</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================
+    SECTION 2: LEADER TOOLBOX
+    ========================= -->
+    <section>
+        <h2 class="text-3xl font-black text-center mb-10">
+            The Leader’s Toolbelt 🧰
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+
+            <!-- Card 1 -->
+            <div class="tool-card bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
+                <div class="text-4xl mb-4">💎</div>
+                <h3 class="font-black text-xl mb-3">Integrity</h3>
+                <p class="text-slate-500 text-sm">
+                    Doing the right thing even when nobody is watching.
+                    Honesty builds trust.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="tool-card bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
+                <div class="text-4xl mb-4">❤️</div>
+                <h3 class="font-black text-xl mb-3">Empathy</h3>
+                <p class="text-slate-500 text-sm">
+                    Understanding how others feel and helping when they struggle.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="tool-card bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
+                <div class="text-4xl mb-4">🔭</div>
+                <h3 class="font-black text-xl mb-3">Vision</h3>
+                <p class="text-slate-500 text-sm">
+                    Seeing solutions before others do.
+                    Every invention starts with vision.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================
+    SECTION 3: LEADERSHIP QUIZ
+    ========================= -->
+    <section class="bg-slate-900 rounded-[3rem] p-10 md:p-14 text-white">
+
+        <h2 class="text-3xl font-black text-center mb-8">
+            Quick Leadership Check 🎯
+        </h2>
+
+        <div class="max-w-2xl mx-auto">
+
+            <p class="text-slate-300 mb-6 text-center">
+                Your friend forgets homework and feels sad.
+                What should a leader do?
+            </p>
+
+            <div class="grid gap-4">
+
+                <button onclick="showAnswer('wrong')"
+                    class="bg-white/5 hover:bg-red-500 transition border border-white/10 rounded-xl p-4 text-left">
+                    A. Laugh at them
+                </button>
+
+                <button onclick="showAnswer('correct')"
+                    class="bg-white/5 hover:bg-emerald-500 transition border border-white/10 rounded-xl p-4 text-left">
+                    B. Help and encourage them
+                </button>
+
+                <button onclick="showAnswer('wrong')"
+                    class="bg-white/5 hover:bg-red-500 transition border border-white/10 rounded-xl p-4 text-left">
+                    C. Ignore them
+                </button>
+
+            </div>
+
+            <div id="quizResult" class="mt-6 text-center font-bold text-lg"></div>
+
+        </div>
+    </section>
+
+
+    <!-- =========================
+    SECTION 4: CONFLICT FIXER
+    ========================= -->
+    <section class="bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm">
+
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+
+            <div>
+                <h2 class="text-3xl font-black mb-6">
+                    The Conflict Fixer 🛠️
+                </h2>
+
+                <p class="text-slate-600 leading-relaxed mb-6">
+                    Leaders do not run from problems—they solve them.
+                    Use the “I Statement” method instead of blame.
+                </p>
+
+                <div class="bg-amber-50 border border-amber-100 rounded-2xl p-6 italic">
+                    “I feel frustrated when we delay our project.
+                    Can we find a better way to work together?”
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="aspect-square bg-amber-500 rounded-3xl flex items-center justify-center text-4xl">
+                    🕊️
+                </div>
+                <div class="aspect-square bg-slate-100 rounded-3xl flex items-center justify-center text-4xl">
+                    ⚡
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+    SECTION 5: SELF LEADERSHIP TRACKER
+    ========================= -->
+    <section class="bg-amber-100 rounded-[3rem] p-10 border border-amber-200 text-center">
+
+        <h2 class="text-3xl font-black mb-4 text-amber-900">
+            Lead Yourself First
+        </h2>
+
+        <p class="text-amber-800 max-w-2xl mx-auto mb-8">
+            If you can manage your time, finish your work,
+            and stay disciplined—you are already a leader.
+        </p>
+
+        <div class="max-w-xl mx-auto">
+
+            <div class="flex justify-between text-sm font-bold mb-2">
+                <span>Self Leadership Progress</span>
+                <span id="progressText">0%</span>
+            </div>
+
+            <div class="w-full h-4 bg-white rounded-full overflow-hidden">
+                <div id="progressBar"
+                    class="progress-fill h-full bg-amber-500"
+                    style="width:0%">
+                </div>
+            </div>
+
+            <button onclick="increaseProgress()"
+                class="mt-6 bg-amber-600 hover:bg-slate-900 text-white font-black py-4 px-8 rounded-2xl transition">
+                COMPLETE TODAY'S TASK ✅
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+    FINAL CTA
+    ========================= -->
+    <div class="text-center">
+        <button class="bg-amber-600 hover:bg-slate-900 text-white font-black py-6 px-12 rounded-[2rem] transition-all shadow-xl shadow-amber-200">
+            START YOUR FIRST PROJECT 🚀
+        </button>
+    </div>
+
+</main>
+
+
+<!-- =========================
+FOOTER
+========================= -->
+<footer class="bg-white py-12 px-6 text-center border-t border-slate-100">
+    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">
+        © 2026 Kidventor Academy • Leading the Digital Age
+    </p>
+</footer>
+
+
+<!-- =========================
+JAVASCRIPT
+========================= -->
+<script>
+function showAnswer(type) {
+    const result = document.getElementById("quizResult");
+
+    if (type === "correct") {
+        result.innerHTML = "✅ Correct! Real leaders help people grow.";
+        result.className = "mt-6 text-center font-bold text-lg text-emerald-400";
+    } else {
+        result.innerHTML = "❌ Try again! Leaders help, not hurt.";
+        result.className = "mt-6 text-center font-bold text-lg text-red-400";
+    }
+}
+
+let progress = 0;
+
+function increaseProgress() {
+    if (progress < 100) {
+        progress += 20;
+        document.getElementById("progressBar").style.width = progress + "%";
+        document.getElementById("progressText").innerText = progress + "%";
+    }
+}
+</script>
+
+</body>
+</html>
