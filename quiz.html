@@ -1,323 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICT Quiz Arena | Kidventor Academy</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
-body{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    background:#f8fafc;
-}
-
-.level-card{
-    transition: all 0.35s ease;
-}
-
-.level-card:hover{
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-}
-
-.hero-glow{
-    background:
-    radial-gradient(circle at top right, rgba(14,165,233,0.15), transparent 35%),
-    radial-gradient(circle at top left, rgba(99,102,241,0.12), transparent 30%);
-}
-
-.locked{
-    opacity: .55;
-    pointer-events: none;
-}
-
-.progress-bar{
-    transition: width .5s ease;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT Arena | Kidventor Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f1f5f9; }
+        .option-btn { transition: all 0.2s ease; border: 2px solid #e2e8f0; }
+        .option-btn:hover { border-color: #0284c7; background: #f0f9ff; transform: scale(1.02); }
+        .correct { background: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
+        .wrong { background: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
+    </style>
 </head>
-<body class="text-slate-900">
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-<!-- NAVBAR -->
-<nav class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-        <a href="index.html" class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-sky-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg">
-                K
-            </div>
-            <div>
-                <p class="font-black text-sm uppercase tracking-tight">Kidventor Academy</p>
-                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">ICT Quiz Arena</p>
-            </div>
-        </a>
-
-        <div class="hidden md:flex items-center gap-3">
-            <div class="bg-sky-50 text-sky-700 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest">
-                Learn • Practice • Win
-            </div>
-        </div>
+    <div id="loader" class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto"></div>
+        <p class="mt-4 text-slate-500 font-bold">Downloading ICT Module...</p>
     </div>
-</nav>
 
-<!-- HERO -->
-<section class="hero-glow py-20 px-6">
-    <div class="max-w-6xl mx-auto text-center">
-
-        <div class="text-6xl mb-6">
-            🧠⚡💻
+    <main id="quiz-ui" class="hidden w-full max-w-2xl bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-100">
+        
+        <div class="flex justify-between items-center mb-8">
+            <span id="level-name" class="bg-sky-100 text-sky-700 px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest">Level</span>
+            <div class="text-slate-400 font-bold text-sm">Question <span id="q-current" class="text-sky-600">1</span>/<span id="q-total">0</span></div>
         </div>
 
-        <h1 class="text-4xl md:text-6xl font-black leading-tight mb-6">
-            Welcome to the
-            <span class="text-sky-600">ICT Quiz Arena</span>
-        </h1>
-
-        <p class="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed">
-            Technology is bigger than coding.
-            Explore Computer Basics, Internet Safety, Microsoft Office,
-            Graphic Design, Programming, AI, Robotics, and Future Tech —
-            one exciting challenge at a time!
-        </p>
-
-        <div class="mt-10 max-w-xl mx-auto">
-            <div class="flex justify-between text-xs font-black uppercase text-slate-400 mb-2">
-                <span>Your Learning Progress</span>
-                <span id="progress-label">1 / 4 Levels</span>
-            </div>
-
-            <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
-                <div id="progress-fill" class="progress-bar bg-sky-600 h-full rounded-full" style="width:25%"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- QUIZ LEVELS -->
-<main class="max-w-7xl mx-auto px-6 pb-24">
-
-    <div class="mb-10 text-center">
-        <h2 class="text-3xl font-black mb-3">
-            Choose Your Challenge 🚀
+        <h2 id="question-text" class="text-2xl font-extrabold text-slate-800 mb-8 leading-tight text-center">
+            Loading...
         </h2>
-        <p class="text-slate-500 max-w-2xl mx-auto">
-            Pass each level to unlock the next one.
-            Score high, earn badges, and become a true Digital Inventor.
-        </p>
-    </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-        <!-- LEVEL 1 -->
-        <a href="quiz.html?level=level1"
-           class="level-card bg-white rounded-[2.5rem] border border-slate-200 p-8 flex flex-col">
-
-            <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-                🌱
+        <div id="options-grid" class="grid grid-cols-1 gap-4 mb-8">
             </div>
 
-            <h3 class="text-2xl font-black mb-2">
-                Level 1
-            </h3>
+        <div class="pt-6 border-t border-slate-100 flex justify-between items-center">
+            <div class="text-xs font-black text-slate-400 uppercase">Score: <span id="score-val" class="text-sky-600 text-lg">0</span></div>
+            <div id="timer" class="font-mono font-bold text-rose-500 bg-rose-50 px-4 py-1 rounded-lg italic">30s</div>
+        </div>
+    </main>
 
-            <p class="font-bold text-emerald-600 mb-4">
-                Digital Foundations
-            </p>
+    <script>
+        // 1. GET THE LEVEL FROM THE URL
+        const params = new URLSearchParams(window.location.search);
+        const levelKey = params.get('level') || 'level1';
 
-            <p class="text-sm text-slate-500 mb-6 leading-relaxed">
-                Learn computer basics, typing skills,
-                internet safety, file management,
-                and digital confidence.
-            </p>
+        // 2. STATE VARIABLES
+        let quizData = [];
+        let currentIndex = 0;
+        let score = 0;
+        let timer;
 
-            <div class="mt-auto">
-                <div class="bg-emerald-100 text-emerald-700 text-[11px] font-black px-4 py-2 rounded-xl inline-block uppercase tracking-widest mb-4">
-                    25 Questions
+        // 3. THE POPULATOR FUNCTION (Fetch JSON from data folder)
+        async function initQuiz() {
+            try {
+                const response = await fetch(`data/${levelKey}.json`);
+                if (!response.ok) throw new Error("Data not found");
+                
+                const data = await response.json();
+                quizData = data.questions;
+
+                // Update UI Labels
+                document.getElementById('level-name').innerText = data.levelName;
+                document.getElementById('q-total').innerText = quizData.length;
+                
+                // Switch from Loader to Quiz
+                document.getElementById('loader').classList.add('hidden');
+                document.getElementById('quiz-ui').classList.remove('hidden');
+
+                displayQuestion();
+            } catch (err) {
+                document.getElementById('loader').innerHTML = `<p class="text-red-500 font-black">ERROR: data/${levelKey}.json not found!</p>`;
+            }
+        }
+
+        // 4. DISPLAY THE CURRENT QUESTION
+        function displayQuestion() {
+            if (currentIndex >= quizData.length) return endQuiz();
+
+            const q = quizData[currentIndex];
+            document.getElementById('q-current').innerText = currentIndex + 1;
+            document.getElementById('question-text').innerText = q.q;
+
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = ''; // Clear previous level's data
+
+            q.a.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = "option-btn w-full p-5 rounded-2xl font-bold text-left bg-slate-50 text-slate-700";
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(index, btn);
+                grid.appendChild(btn);
+            });
+
+            startTimer();
+        }
+
+        // 5. CHECK THE ANSWER
+        function checkAnswer(selected, btn) {
+            clearInterval(timer);
+            const correct = quizData[currentIndex].correct;
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                score++;
+                document.getElementById('score-val').innerText = score;
+                confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } });
+            } else {
+                btn.classList.add('wrong');
+                buttons[correct].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentIndex++;
+                displayQuestion();
+            }, 1500);
+        }
+
+        // 6. TIMER
+        function startTimer() {
+            clearInterval(timer);
+            let timeLeft = 30;
+            document.getElementById('timer').innerText = timeLeft + "s";
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').innerText = timeLeft + "s";
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    checkAnswer(-1, null);
+                }
+            }, 1000);
+        }
+
+        function endQuiz() {
+            const pass = score >= 5;
+            if(pass) {
+                localStorage.setItem('unlock_' + levelKey, 'true');
+            }
+            
+            document.getElementById('quiz-ui').innerHTML = `
+                <div class="text-center py-10">
+                    <h2 class="text-4xl font-black mb-4">${pass ? 'MISSION COMPLETE! 🏆' : 'RETRY NEEDED ⛔'}</h2>
+                    <p class="text-slate-500 mb-8 leading-relaxed">You scored ${score} out of ${quizData.length}.<br>${pass ? 'The next level is now unlocked in the Arena!' : 'You need at least 5 points to pass.'}</p>
+                    <button onclick="location.href='index.html'" class="bg-sky-600 text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-sky-700 transition-all">Return to Arena</button>
                 </div>
+            `;
+        }
 
-                <div class="w-full text-center py-3 rounded-2xl bg-emerald-600 text-white font-black">
-                    START LEVEL
-                </div>
-            </div>
-        </a>
-
-        <!-- LEVEL 2 -->
-        <a id="link-level2"
-           href="#"
-           class="level-card locked bg-white rounded-[2.5rem] border border-slate-200 p-8 flex flex-col relative">
-
-            <div class="absolute top-6 right-6 text-xl">
-                🔒
-            </div>
-
-            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-                🎨
-            </div>
-
-            <h3 class="text-2xl font-black mb-2">
-                Level 2
-            </h3>
-
-            <p class="font-bold text-blue-600 mb-4">
-                Creative Tech
-            </p>
-
-            <p class="text-sm text-slate-500 mb-6 leading-relaxed">
-                Microsoft Word, PowerPoint,
-                Canva, graphic design basics,
-                presentation skills and creativity.
-            </p>
-
-            <div class="mt-auto">
-                <div class="bg-blue-100 text-blue-700 text-[11px] font-black px-4 py-2 rounded-xl inline-block uppercase tracking-widest mb-4">
-                    30 Questions
-                </div>
-
-                <div class="w-full text-center py-3 rounded-2xl border-2 border-slate-200 font-black text-slate-400">
-                    LOCKED
-                </div>
-            </div>
-        </a>
-
-        <!-- LEVEL 3 -->
-        <a id="link-level3"
-           href="#"
-           class="level-card locked bg-white rounded-[2.5rem] border border-slate-200 p-8 flex flex-col relative">
-
-            <div class="absolute top-6 right-6 text-xl">
-                🔒
-            </div>
-
-            <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-3xl mb-6">
-                ⚡
-            </div>
-
-            <h3 class="text-2xl font-black mb-2">
-                Level 3
-            </h3>
-
-            <p class="font-bold text-amber-600 mb-4">
-                Web + Coding
-            </p>
-
-            <p class="text-sm text-slate-500 mb-6 leading-relaxed">
-                HTML, CSS, JavaScript,
-                websites, logic thinking,
-                problem solving and creation.
-            </p>
-
-            <div class="mt-auto">
-                <div class="bg-amber-100 text-amber-700 text-[11px] font-black px-4 py-2 rounded-xl inline-block uppercase tracking-widest mb-4">
-                    40 Questions
-                </div>
-
-                <div class="w-full text-center py-3 rounded-2xl border-2 border-slate-200 font-black text-slate-400">
-                    LOCKED
-                </div>
-            </div>
-        </a>
-
-        <!-- ADVANCED -->
-        <a id="link-advance"
-           href="#"
-           class="level-card locked bg-slate-900 rounded-[2.5rem] p-8 flex flex-col relative text-white">
-
-            <div class="absolute top-6 right-6 text-xl opacity-30">
-                🔒
-            </div>
-
-            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-3xl mb-6">
-                🤖
-            </div>
-
-            <h3 class="text-2xl font-black mb-2">
-                Elite Level
-            </h3>
-
-            <p class="font-bold text-indigo-300 mb-4">
-                Future Innovator
-            </p>
-
-            <p class="text-sm text-slate-300 mb-6 leading-relaxed">
-                AI tools, robotics,
-                cybersecurity, entrepreneurship,
-                Web3 and tomorrow’s technology.
-            </p>
-
-            <div class="mt-auto">
-                <div class="bg-indigo-500 text-white text-[11px] font-black px-4 py-2 rounded-xl inline-block uppercase tracking-widest mb-4">
-                    50 Questions
-                </div>
-
-                <div class="w-full text-center py-3 rounded-2xl border border-white/20 font-black text-white/50">
-                    LOCKED
-                </div>
-            </div>
-        </a>
-
-    </div>
-
-</main>
-
-<!-- SCRIPT -->
-<script>
-function updateLocks() {
-    const unlockLevel1 = localStorage.getItem("unlock_level1");
-    const unlockLevel2 = localStorage.getItem("unlock_level2");
-    const unlockLevel3 = localStorage.getItem("unlock_level3");
-
-    if (unlockLevel1 === "true") {
-        const level2 = document.getElementById("link-level2");
-        level2.classList.remove("locked");
-        level2.href = "quiz.html?level=level2";
-        level2.querySelector("div:last-child div:last-child").innerText = "START LEVEL";
-        level2.querySelector("div:last-child div:last-child").className =
-            "w-full text-center py-3 rounded-2xl bg-blue-600 text-white font-black";
-    }
-
-    if (unlockLevel2 === "true") {
-        const level3 = document.getElementById("link-level3");
-        level3.classList.remove("locked");
-        level3.href = "quiz.html?level=level3";
-        level3.querySelector("div:last-child div:last-child").innerText = "START LEVEL";
-        level3.querySelector("div:last-child div:last-child").className =
-            "w-full text-center py-3 rounded-2xl bg-amber-500 text-white font-black";
-    }
-
-    if (unlockLevel3 === "true") {
-        const advance = document.getElementById("link-advance");
-        advance.classList.remove("locked");
-        advance.href = "quiz.html?level=advance";
-        advance.querySelector("div:last-child div:last-child").innerText = "START LEVEL";
-        advance.querySelector("div:last-child div:last-child").className =
-            "w-full text-center py-3 rounded-2xl bg-indigo-500 text-white font-black";
-    }
-
-    let progress = 25;
-
-    if (unlockLevel1 === "true") progress = 50;
-    if (unlockLevel2 === "true") progress = 75;
-    if (unlockLevel3 === "true") progress = 100;
-
-    document.getElementById("progress-fill").style.width = progress + "%";
-
-    const labelMap = {
-        25: "1 / 4 Levels",
-        50: "2 / 4 Levels",
-        75: "3 / 4 Levels",
-        100: "4 / 4 Levels"
-    };
-
-    document.getElementById("progress-label").innerText = labelMap[progress];
-}
-
-updateLocks();
-</script>
-
+        initQuiz();
+    </script>
 </body>
 </html>
