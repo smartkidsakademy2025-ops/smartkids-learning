@@ -1,414 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBT Arena | Kidventor Academy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f1f5f9; overflow-x: hidden; }
-        
-        .quiz-container { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .slide-out { transform: translateX(-100vw); opacity: 0; }
-        .slide-in { transform: translateX(100vw); opacity: 0; }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBT Arena | Kidventor Academy</title>
 
-        .option-btn {
-            transition: all 0.2s ease;
-            border: 2px solid #e2e8f0;
-        }
-        .option-btn:hover:not(:disabled) { border-color: #6366f1; background: #f5f3ff; transform: scale(1.01); }
-        .option-btn.correct { border-color: #22c55e; background: #f0fdf4; color: #15803d; }
-        .option-btn.wrong { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
-    </style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:#f8fafc;
+}
+
+.level-card{
+    transition:0.3s;
+}
+
+.level-card:hover{
+    transform:translateY(-6px);
+}
+
+.option-btn{
+    transition:0.2s;
+    border:2px solid #e2e8f0;
+}
+
+.option-btn:hover:not(:disabled){
+    border-color:#6366f1;
+    background:#eef2ff;
+}
+
+.option-btn.correct{
+    border-color:#22c55e;
+    background:#f0fdf4;
+    color:#15803d;
+}
+
+.option-btn.wrong{
+    border-color:#ef4444;
+    background:#fef2f2;
+    color:#b91c1c;
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4">
 
-    <div id="quiz-header" class="fixed top-0 left-0 w-full bg-white border-b border-slate-200 p-4 z-50 hidden">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-2xl font-bold text-sm">
-                    Score: <span id="current-score">0</span> / <span id="total-q-label">0</span>
-                </div>
-                <div class="bg-rose-100 text-rose-700 px-4 py-2 rounded-2xl font-bold text-sm flex items-center gap-2">
-                    ⏱️ <span id="timer">00:30</span>
-                </div>
-            </div>
-            <div id="level-indicator" class="text-slate-400 font-black text-[10px] uppercase tracking-[0.2em]">
-                Loading Level...
-            </div>
+<body class="min-h-screen">
+
+<!-- HEADER -->
+<header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+        <h1 class="text-2xl font-black text-slate-900">
+            🏆 CBT Arena
+        </h1>
+
+        <div class="text-xs font-black uppercase tracking-widest text-indigo-600">
+            Kidventor Academy
         </div>
     </div>
+</header>
 
-    <main class="max-w-6xl mx-auto px-6 pb-24">
+<!-- LEVEL SELECT -->
+<section id="level-screen" class="max-w-7xl mx-auto px-6 py-12">
+
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-black mb-4">
+            Choose Your Challenge
+        </h2>
+
+        <p class="text-slate-500 max-w-2xl mx-auto">
+            Start from Level 1 and unlock higher missions as you grow.
+            Score 5+ to unlock the next level.
+        </p>
+    </div>
+
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        
-        <a href="quiz.html?level=level1" class="level-card group bg-white p-8 rounded-[2.5rem] border border-slate-200 flex flex-col items-center text-center">
-            <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors">🌱</div>
-            <h3 class="text-xl font-black mb-2">Level 1: Web Builder</h3>
-            <div class="bg-emerald-100 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full uppercase mb-4 tracking-widest">25 Questions</div>
-            <p class="text-sm text-slate-500 mb-6">The core of the web: Mastering <strong>HTML structures</strong> and content tags.</p>
-            <div class="mt-auto w-full py-3 rounded-xl border-2 border-slate-100 font-bold text-xs text-slate-400 group-hover:border-emerald-500 group-hover:text-emerald-500 transition-all">START MISSION</div>
+
+        <!-- LEVEL 1 -->
+        <a href="quiz.html?level=level1"
+           class="level-card bg-white p-8 rounded-[2rem] border border-slate-200 text-center shadow-sm">
+
+            <div class="text-5xl mb-5">🌱</div>
+
+            <h3 class="text-xl font-black mb-3">
+                Level 1
+            </h3>
+
+            <p class="text-sm text-slate-500 mb-5">
+                HTML Basics and Structure
+            </p>
+
+            <div class="bg-emerald-100 text-emerald-700 py-3 rounded-xl font-bold text-sm">
+                START
+            </div>
         </a>
 
-        <a id="link-level2" href="#" class="level-card group opacity-50 pointer-events-none bg-white p-8 rounded-[2.5rem] border border-slate-200 flex flex-col items-center text-center relative">
-            <div class="lock-icon absolute top-6 right-6">🔒</div>
-            <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors">🎨</div>
-            <h3 class="text-xl font-black mb-2">Level 2: Stylist</h3>
-            <div class="bg-blue-100 text-blue-700 text-[10px] font-black px-3 py-1 rounded-full uppercase mb-4 tracking-widest">30 Questions</div>
-            <p class="text-sm text-slate-500 mb-6">Making it beautiful: <strong>CSS colors, layouts</strong>, and responsive design.</p>
-            <div class="mt-auto w-full py-3 rounded-xl border-2 border-slate-100 font-bold text-xs text-slate-400 transition-all btn-label">LOCKED</div>
+        <!-- LEVEL 2 -->
+        <a id="level2-card"
+           href="#"
+           class="level-card bg-white p-8 rounded-[2rem] border border-slate-200 text-center shadow-sm opacity-50 pointer-events-none">
+
+            <div class="text-5xl mb-5">🎨</div>
+
+            <h3 class="text-xl font-black mb-3">
+                Level 2
+            </h3>
+
+            <p class="text-sm text-slate-500 mb-5">
+                CSS Styling and Design
+            </p>
+
+            <div class="btn-label bg-slate-100 text-slate-500 py-3 rounded-xl font-bold text-sm">
+                LOCKED 🔒
+            </div>
         </a>
 
-        <a id="link-level3" href="#" class="level-card group opacity-50 pointer-events-none bg-white p-8 rounded-[2.5rem] border border-slate-200 flex flex-col items-center text-center relative">
-            <div class="lock-icon absolute top-6 right-6">🔒</div>
-            <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">⚡</div>
-            <h3 class="text-xl font-black mb-2">Level 3: Coder</h3>
-            <div class="bg-amber-100 text-amber-700 text-[10px] font-black px-3 py-1 rounded-full uppercase mb-4 tracking-widest">40 Questions</div>
-            <p class="text-sm text-slate-500 mb-6">Adding brains: <strong>JavaScript logic</strong>, variables, and interactivity.</p>
-            <div class="mt-auto w-full py-3 rounded-xl border-2 border-slate-100 font-bold text-xs text-slate-400 transition-all btn-label">LOCKED</div>
+        <!-- LEVEL 3 -->
+        <a id="level3-card"
+           href="#"
+           class="level-card bg-white p-8 rounded-[2rem] border border-slate-200 text-center shadow-sm opacity-50 pointer-events-none">
+
+            <div class="text-5xl mb-5">⚡</div>
+
+            <h3 class="text-xl font-black mb-3">
+                Level 3
+            </h3>
+
+            <p class="text-sm text-slate-500 mb-5">
+                JavaScript Logic
+            </p>
+
+            <div class="btn-label bg-slate-100 text-slate-500 py-3 rounded-xl font-bold text-sm">
+                LOCKED 🔒
+            </div>
         </a>
 
-        <a id="link-advance" href="#" class="level-card group opacity-50 pointer-events-none bg-slate-900 p-8 rounded-[2.5rem] flex flex-col items-center text-center relative">
-            <div class="lock-icon absolute top-6 right-6 text-white/20">🔒</div>
-            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-indigo-500 transition-colors">🤖</div>
-            <h3 class="text-xl font-black mb-2 text-white">Elite: Innovator</h3>
-            <div class="bg-indigo-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase mb-4 tracking-widest">50 Questions</div>
-            <p class="text-sm text-slate-400 mb-6">The Frontier: <strong>AI prompting, Web3</strong>, and future technologies.</p>
-            <div class="mt-auto w-full py-3 rounded-xl border-2 border-white/10 font-bold text-xs text-white/40 transition-all btn-label">LOCKED</div>
+        <!-- ADVANCE -->
+        <a id="advance-card"
+           href="#"
+           class="level-card bg-slate-900 text-white p-8 rounded-[2rem] text-center shadow-sm opacity-50 pointer-events-none">
+
+            <div class="text-5xl mb-5">🤖</div>
+
+            <h3 class="text-xl font-black mb-3">
+                Elite Level
+            </h3>
+
+            <p class="text-sm text-slate-300 mb-5">
+                AI + Future Tech
+            </p>
+
+            <div class="btn-label bg-white/10 py-3 rounded-xl font-bold text-sm">
+                LOCKED 🔒
+            </div>
         </a>
 
     </div>
-</main>
-    <script>
-    // CONFIG & STATE
-    const params = new URLSearchParams(window.location.search);
-    const currentLevelKey = params.get('level') || 'level1';
-    
-    let questions = [];
-    let currentIndex = 0;
-    let score = 0;
-    let timer;
-    let timeLeft = 30;
-    let failCount = parseInt(localStorage.getItem('fails_' + currentLevelKey)) || 0;
+</section>
 
-    // 1. FETCH DYNAMIC JSON
-    async function init() {
-        try {
-            // Fetches from the /data/ folder relative to quiz.html
-            const response = await fetch(`data/${currentLevelKey}.json`);
-            const data = await response.json();
-            
-            questions = data.questions;
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('start-screen').classList.remove('hidden');
-            
-            // UI Updates
-            document.getElementById('start-title').innerText = data.levelName;
-            document.getElementById('start-desc').innerText = `${questions.length} Questions • Score 5+ to Unlock Next`;
-            document.getElementById('total-q-label').innerText = questions.length;
-            document.getElementById('level-indicator').innerText = data.levelName;
-        } catch (e) {
-            document.getElementById('loading-screen').innerHTML = "<p class='text-red-500'>Error: Level file not found in /data folder.</p>";
-        }
+<!-- QUIZ SCREEN -->
+<section id="quiz-screen" class="hidden max-w-4xl mx-auto px-6 py-12">
+
+    <div class="bg-white rounded-[2rem] border border-slate-200 p-8 shadow-sm">
+
+        <div class="flex justify-between items-center mb-8">
+            <div class="font-bold">
+                Score:
+                <span id="score">0</span>
+            </div>
+
+            <div class="font-bold text-rose-600">
+                ⏱️ <span id="timer">30</span>s
+            </div>
+        </div>
+
+        <h2 id="question" class="text-2xl font-black mb-8">
+            Loading question...
+        </h2>
+
+        <div id="options" class="grid gap-4"></div>
+
+    </div>
+</section>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const level = params.get("level");
+
+let questions = [];
+let current = 0;
+let score = 0;
+let timer;
+let timeLeft = 30;
+
+function unlockLevels() {
+    if (localStorage.getItem("unlock_level1") === "true") {
+        unlockCard("level2-card", "level2");
     }
 
-    // 2. GAME LOGIC
-    function begin() {
-        document.getElementById('start-screen').classList.add('hidden');
-        document.getElementById('quiz-header').classList.remove('hidden');
-        document.getElementById('quiz-content').classList.remove('hidden');
+    if (localStorage.getItem("unlock_level2") === "true") {
+        unlockCard("level3-card", "level3");
+    }
+
+    if (localStorage.getItem("unlock_level3") === "true") {
+        unlockCard("advance-card", "advance");
+    }
+}
+
+function unlockCard(id, levelName) {
+    const card = document.getElementById(id);
+
+    card.classList.remove("opacity-50", "pointer-events-none");
+    card.href = `quiz.html?level=${levelName}`;
+
+    const btn = card.querySelector(".btn-label");
+    btn.innerText = "START";
+}
+
+async function loadQuiz() {
+    if (!level) return;
+
+    document.getElementById("level-screen").classList.add("hidden");
+    document.getElementById("quiz-screen").classList.remove("hidden");
+
+    try {
+        const response = await fetch(`quiz/${level}.json`);
+        const data = await response.json();
+
+        questions = data.questions;
         showQuestion();
+
+    } catch (err) {
+        document.getElementById("question").innerText =
+            "Quiz file not found. Check your /quiz folder.";
+    }
+}
+
+function showQuestion() {
+    if (current >= questions.length) {
+        finishQuiz();
+        return;
     }
 
-    function showQuestion() {
-        if (currentIndex >= questions.length) return finish();
+    const q = questions[current];
 
-        const q = questions[currentIndex];
-        const content = document.getElementById('quiz-content');
-        
-        // CBT Flip Animation: Out
-        content.classList.add('slide-out');
-        
-        setTimeout(() => {
-            document.getElementById('q-number').innerText = currentIndex + 1;
-            document.getElementById('question-text').innerText = q.q;
-            
-            const grid = document.getElementById('options-grid');
-            grid.innerHTML = '';
-            
-            q.a.forEach((opt, i) => {
-                const b = document.createElement('button');
-                b.className = 'option-btn w-full p-5 rounded-2xl font-bold text-left bg-white';
-                b.innerText = opt;
-                b.onclick = () => check(i, b);
-                grid.appendChild(b);
-            });
+    document.getElementById("question").innerText = q.q;
 
-            // CBT Flip Animation: In
-            content.classList.remove('slide-out');
-            content.classList.add('slide-in');
-            setTimeout(() => content.classList.remove('slide-in'), 50);
-            
-            startTimer();
-        }, 400);
-    }
+    const options = document.getElementById("options");
+    options.innerHTML = "";
 
-    function check(idx, btn) {
-        clearInterval(timer);
-        const correct = questions[currentIndex].correct;
-        const btns = document.querySelectorAll('.option-btn');
-        btns.forEach(b => b.disabled = true);
+    q.a.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn p-5 rounded-2xl font-bold text-left bg-white";
+        btn.innerText = option;
+        btn.onclick = () => checkAnswer(index, btn);
+        options.appendChild(btn);
+    });
 
-        if (idx === correct) {
-            btn.classList.add('correct');
-            score++;
-            document.getElementById('current-score').innerText = score;
-            confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
-        } else {
-            if(btn) btn.classList.add('wrong');
-            btns[correct].classList.add('correct');
-        }
+    startTimer();
+}
 
-        setTimeout(() => {
-            currentIndex++;
-            showQuestion();
-        }, 1200);
-    }
+function checkAnswer(index, btn) {
+    clearInterval(timer);
 
-    function startTimer() {
-        clearInterval(timer);
-        timeLeft = 30;
-        document.getElementById('timer').innerText = "00:30";
-        timer = setInterval(() => {
-            timeLeft--;
-            document.getElementById('timer').innerText = `00:${timeLeft < 10 ? '0' : ''}${timeLeft}`;
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                check(-1, null);
-            }
-        }, 1000);
-    }
+    const correct = questions[current].correct;
+    const allBtns = document.querySelectorAll(".option-btn");
 
-    function finish() {
-        document.getElementById('quiz-header').classList.add('hidden');
-        document.getElementById('quiz-content').classList.add('hidden');
-        document.getElementById('result-screen').classList.remove('hidden');
-        document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+    allBtns.forEach(b => b.disabled = true);
 
-        if (score >= 5) {
-            // SUCCESS: Score 5 or more marks
-            document.getElementById('result-icon').innerText = "🎊";
-            document.getElementById('result-title').innerText = "You Did Well!";
-            document.getElementById('result-msg').innerText = "Challenge mastered. Next level is now open!";
-            
-            // SAVE PROGRESS: Set the unlock key for this specific level
-            localStorage.setItem('unlock_' + currentLevelKey, 'true');
-            localStorage.setItem('fails_' + currentLevelKey, '0'); // Reset fails on success
-            
-            // SHOW NEXT BUTTON
-            const nextBtn = document.getElementById('next-btn');
-            nextBtn.classList.remove('hidden');
-            nextBtn.onclick = () => {
-                const flow = { level1: 'level2', level2: 'level3', level3: 'advance' };
-                const nextLevel = flow[currentLevelKey];
-                if(nextLevel) {
-                    location.href = `quiz.html?level=${nextLevel}`;
-                } else {
-                    location.href = `html-future.html`; // Go to future page if advance is finished
-                }
-            };
-        } else {
-            // FAIL: Score less than 5 marks
-            failCount++;
-            localStorage.setItem('fails_' + currentLevelKey, failCount);
-            
-            if (failCount >= 5) {
-                document.getElementById('result-icon').innerText = "⛔";
-                document.getElementById('result-title').innerText = "Hard Reset";
-                document.getElementById('result-msg').innerText = "5 failed attempts. All progress has been cleared.";
-                localStorage.clear(); // Complete wipe as per request
-            } else {
-                document.getElementById('result-icon').innerText = "⚠️";
-                document.getElementById('result-title').innerText = "Retry Required";
-                document.getElementById('result-msg').innerText = `Scored below 5. Fail count: ${failCount}/5. Try again!`;
-            }
-        }
-    }
+    if (index === correct) {
+        btn.classList.add("correct");
+        score++;
+        document.getElementById("score").innerText = score;
 
-    init();
-</script>
-    <script>
-    function updateLocks() {
-        const levels = ['level2', 'level3', 'advance'];
-        const requirements = { 'level2': 'level1', 'level3': 'level2', 'advance': 'level3' };
-
-        levels.forEach(lvl => {
-            const isUnlocked = localStorage.getItem('unlock_' + requirements[lvl]);
-            const card = document.getElementById('link-' + lvl);
-            
-            // The "if (card)" check prevents the page from breaking
-            if (card && isUnlocked === 'true') {
-                card.classList.remove('opacity-50', 'pointer-events-none');
-                card.href = `quiz.html?level=${lvl}`;
-                
-                const btn = card.querySelector('.mt-auto');
-                if(btn) btn.innerText = "START MISSION";
-            }
+        confetti({
+            particleCount: 40,
+            spread: 60
         });
+    } else {
+        btn.classList.add("wrong");
+        allBtns[correct].classList.add("correct");
     }
-    window.onload = updateLocks;
+
+    setTimeout(() => {
+        current++;
+        showQuestion();
+    }, 1200);
+}
+
+function startTimer() {
+    clearInterval(timer);
+    timeLeft = 30;
+    document.getElementById("timer").innerText = timeLeft;
+
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            current++;
+            showQuestion();
+        }
+    }, 1000);
+}
+
+function finishQuiz() {
+    if (score >= 5) {
+        localStorage.setItem(`unlock_${level}`, "true");
+
+        confetti({
+            particleCount: 200,
+            spread: 100
+        });
+
+        alert("🎉 Level Completed! Next level unlocked.");
+    } else {
+        alert("Try again! Score at least 5 to unlock next level.");
+    }
+
+    location.href = "quiz.html";
+}
+
+unlockLevels();
+loadQuiz();
 </script>
-</body>
-</html>
-
-
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Mission Control | Kidventor Academy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; }
-        
-        .level-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .level-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
-        }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-    </style>
-</head>
-<body class="text-slate-900">
-
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-100 py-4 px-6">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="../index.html" class="flex items-center gap-2">
-                <div class="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-indigo-100">K</div>
-                <span class="font-extrabold uppercase text-sm tracking-tighter">Kidventor Academy</span>
-            </a>
-            <div class="flex items-center gap-4">
-                <span class="text-[10px] font-black bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full uppercase">CBT Exam Center</span>
-            </div>
-        </div>
-    </nav>
-
-    <header class="py-20 px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-7xl mb-6 animate-float inline-block">📝</div>
-            <h1 class="text-5xl md:text-7xl font-black mb-6 tracking-tight">Challenge Your <span class="text-indigo-600">Knowledge</span></h1>
-            <p class="text-lg text-slate-500 leading-relaxed max-w-2xl mx-auto">
-                Select your level and enter the Computer Based Testing (CBT) arena. 
-                Prove your skills and earn your stripes as a Digital Inventor!
-            </p>
-        </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto px-6 pb-24">
-        
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <a href="quiz/level1.html" class="level-card group bg-white p-8 rounded-[2.5rem] border border-slate-200 flex flex-col items-center text-center">
-                <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors">🌱</div>
-                <h3 class="text-xl font-black mb-2">Level 1: Rookie</h3>
-                <div class="bg-emerald-100 text-emerald-700 text-[10px] font-black px-3 py-1 rounded-full uppercase mb-4 tracking-widest">
-                    25 Questions
-                </div>
-                <p class="text-sm text-slate-500 mb-6">Master the basics of HTML and the web.</p>
-                <div class="mt-auto w-full py-3 rounded-xl border-2 border-slate-100 font-bold text-xs text-slate-400 group-hover:border-emerald-500 group-hover:text-emerald-500 transition-all">
-                    START CHALLENGE
-                </div>
-            </a>
-
-            <a href="quiz/level2.html" class="level-card group bg-white p-8 rounded-[2.5rem] border border-slate-200 flex flex-col items-center text-center">
-                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-blue-500 group-hover:text-white transition-colors">🚀</div>
-                <h3 class="text-xl font-black mb-2">Level 2: Pilot</h3>
-                <div class="bg-blue-100 text-blue-700 text-[10px] font-black px-3 py-1 rounded-full uppercase mb-4 tracking-widest">
-                    30 Questions
-                </div>
-                <p class="text-sm text-slate-500 mb-6">Fly higher with images, links, and lists.</p>
-                <div class="mt-auto w-full py-3 rounded-xl border-2 border-slate-100 font-bold text-xs text-slate-400 group-hover:border-blue-500 group-hover:text-blue-500 transition-all">
-                    START CHALLENGE
-                </div>
-            </a>
-
-            <a href="quiz/level3.html" class="level-card group bg-white p-8 rounded-[2.5rem] border border-slate-200 flex flex-col items-center text-center border-b-8 border-b-amber-400">
-                <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">⚔️</div>
-                <h3 class="text-xl font-black mb-2">Level 3: Knight</h3>
-                <div class="bg-amber-100 text-amber-700 text-[10px] font-black px-3 py-1 rounded-full uppercase mb-4 tracking-widest">
-                    40 Questions
-                </div>
-                <p class="text-sm text-slate-500 mb-6">Advanced structures and clean coding habits.</p>
-                <div class="mt-auto w-full py-3 rounded-xl border-2 border-slate-100 font-bold text-xs text-slate-400 group-hover:border-amber-500 group-hover:text-amber-500 transition-all">
-                    START CHALLENGE
-                </div>
-            </a>
-
-            <a href="quiz/advance.html" class="level-card group bg-slate-900 p-8 rounded-[2.5rem] flex flex-col items-center text-center shadow-2xl shadow-indigo-200 border-b-8 border-b-indigo-500">
-                <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-indigo-500 transition-colors">💎</div>
-                <h3 class="text-xl font-black mb-2 text-white">Elite Expert</h3>
-                <div class="bg-indigo-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase mb-4 tracking-widest">
-                    50 Questions
-                </div>
-                <p class="text-sm text-slate-400 mb-6">The ultimate test for future tech leaders.</p>
-                <div class="mt-auto w-full py-3 rounded-xl border-2 border-white/10 font-bold text-xs text-white/40 group-hover:border-indigo-500 group-hover:text-white transition-all">
-                    START FINAL BOSS
-                </div>
-            </a>
-
-        </div>
-
-        <section class="mt-20 bg-white p-10 md:p-16 rounded-[3.5rem] border border-slate-100">
-            <h2 class="text-3xl font-black mb-8 text-center">CBT Success Tips 💡</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="flex gap-4">
-                    <span class="text-2xl">⏳</span>
-                    <div>
-                        <h4 class="font-bold mb-1">Watch the Clock</h4>
-                        <p class="text-xs text-slate-500">Don't spend too long on one question. Every second counts!</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <span class="text-2xl">🖱️</span>
-                    <div>
-                        <h4 class="font-bold mb-1">Click Carefully</h4>
-                        <p class="text-xs text-slate-500">Double-check your choice before hitting "Next."</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <span class="text-2xl">🧘</span>
-                    <div>
-                        <h4 class="font-bold mb-1">Stay Calm</h4>
-                        <p class="text-xs text-slate-500">If you get one wrong, don't worry. Keep moving forward!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-white border-t border-slate-100 py-12 px-6 text-center">
-        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">© 2026 Kidventor Academy • Test Your Talent</p>
-    </footer>
 
 </body>
 </html>
