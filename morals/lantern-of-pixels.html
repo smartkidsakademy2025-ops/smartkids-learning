@@ -1,201 +1,503 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Words of the Old | Digital Wisdom</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;700&family=Plus+Jakarta+Sans:wght@800&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        body { 
-            margin: 0; padding: 0; 
-            font-family: 'Crimson Pro', serif;
-            overflow-x: hidden;
-            background: #1a1a1a; /* Dark background to make paper pop */
-        }
+  <title>The Light of Truth | Kidventor Academy</title>
 
-        #story-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 90vh;
-            padding: 20px;
-        }
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        .book-page { 
-            max-width: 700px;
-            width: 100%;
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            text-align: justify;
-            line-height: 1.8;
-            font-size: 20px;
-            transition: transform 0.5s ease, opacity 0.5s ease;
-            position: relative;
-        }
+  <style>
+    .story-body p {
+      margin-bottom: 1.5rem;
+      line-height: 1.9;
+    }
 
-        .book-page h2 { 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 28px;
-            color: #2c3e50;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid rgba(0,0,0,0.1);
-            padding-bottom: 10px;
-        }
+    .wisdom-gradient {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    }
 
-        .navigation {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 100;
-        }
+    .btn-check {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-        button { 
-            padding: 12px 25px; 
-            font-size: 14px; 
-            font-weight: 800;
-            cursor: pointer; 
-            border: 2px solid #2c3e50;
-            background: transparent;
-            color: #2c3e50;
-            border-radius: 25px; 
-            transition: all 0.3s;
-            text-transform: uppercase;
-        }
+    .btn-check:hover {
+      transform: scale(1.02);
+      background: #1d4ed8;
+      color: white;
+    }
 
-        button:hover {
-            background: #2c3e50;
-            color: white;
-        }
+    .fade-in {
+      animation: fadeIn 0.7s ease;
+    }
 
-        button:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        .progress-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-        }
-
-        #progress-bar {
-            height: 100%;
-            width: 0%;
-            background: #3498db;
-            transition: width 0.3s ease;
-        }
-
-        .chapter-number {
-            font-weight: bold;
-            color: #7f8c8d;
-            margin-bottom: 10px;
-            display: block;
-        }
-    </style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
-<body>
 
-    <div class="progress-container"><div id="progress-bar"></div></div>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
 
-    <div id="story-container">
+  <!-- NAVBAR -->
+  <nav class="bg-white/90 backdrop-blur-md border-b py-4 px-6 sticky top-0 z-50 shadow-sm">
+    <div class="max-w-5xl mx-auto flex justify-between items-center">
+
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black group-hover:rotate-12 transition-transform">
+          K
         </div>
+        <span class="font-black text-lg tracking-tighter uppercase">
+          Kidventor
+        </span>
+      </a>
 
-    <div class="navigation">
-        <button id="prevBtn" onclick="prevChapter()">← Back</button>
-        <button id="nextBtn" onclick="nextChapter()">Continue →</button>
+      <a href="../morals.html" class="text-[10px] font-black uppercase tracking-widest text-blue-600 hover:text-blue-700 transition">
+        ← Back to Ethics Hub
+      </a>
+
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="max-w-4xl mx-auto pt-20 px-6">
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+
+      <span class="bg-blue-100 text-blue-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-[0.2em] border border-blue-200">
+        Virtue 05: Digital Responsibility
+      </span>
+
+      <span class="text-slate-300 text-xs">—</span>
+
+      <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+        Theme: Your Digital Footprint
+      </span>
+
     </div>
 
-    <script>
+    <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter mb-8 leading-tight">
+      The Light of <br>
+      <span class="text-blue-600">Truth</span>
+    </h1>
+
+    <div class="w-20 h-2 bg-blue-500 rounded-full mb-12"></div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-4xl mx-auto px-6 pb-32">
+    <div class="grid lg:grid-cols-12 gap-12">
+
+      <!-- STORY AREA -->
+      <article class="lg:col-span-8">
+
+        <div id="story-content" class="fade-in"></div>
+
+        <!-- NAVIGATION -->
+        <div class="flex gap-4 mt-12">
+          <button
+            id="prevBtn"
+            onclick="prevChapter()"
+            class="px-6 py-4 rounded-2xl border border-slate-300 font-black text-sm hover:bg-slate-100 transition"
+          >
+            ← Previous
+          </button>
+
+          <button
+            id="nextBtn"
+            onclick="nextChapter()"
+            class="px-6 py-4 rounded-2xl bg-blue-600 text-white font-black text-sm hover:bg-blue-700 transition"
+          >
+            Continue →
+          </button>
+        </div>
+
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="lg:col-span-4">
+        <div class="sticky top-24 space-y-6">
+
+          <!-- TECH LINK -->
+          <div class="bg-slate-900 text-white p-8 rounded-[2rem] shadow-2xl relative overflow-hidden">
+            <h3 class="font-black uppercase text-xs tracking-[0.2em] text-blue-400 mb-4">
+              The Tech Link
+            </h3>
+
+            <p class="text-sm leading-relaxed opacity-90 relative z-10">
+              Messages, pictures, comments, and posts online may disappear from your screen—but they often remain somewhere forever.
+              Your digital footprint is your online shadow.
+              Always type with wisdom.
+            </p>
+
+            <div class="absolute -right-4 -bottom-4 text-6xl opacity-10">
+              💻
+            </div>
+          </div>
+
+          <!-- REFLECTION -->
+          <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
+            <h3 class="font-black uppercase text-xs tracking-[0.2em] text-slate-400 mb-4">
+              Wisdom Check
+            </h3>
+
+            <p class="text-[11px] font-bold text-slate-600 mb-6 uppercase tracking-widest">
+              Scenario: You post something hurtful, then delete it.
+            </p>
+
+            <div class="space-y-3">
+
+              <button
+                onclick="alert('Not correct. Deleted words can still leave a footprint!')"
+                class="btn-check w-full text-left p-4 rounded-2xl border text-[11px] font-black uppercase tracking-tighter text-slate-400"
+              >
+                Option A: It is gone forever.
+              </button>
+
+              <button
+                onclick="alert('Excellent! Digital footprints remain even after deletion.')"
+                class="btn-check w-full text-left p-4 rounded-2xl border border-blue-200 bg-blue-50 text-blue-700 text-[11px] font-black uppercase tracking-tighter"
+              >
+                Option B: Actions online still matter.
+              </button>
+
+            </div>
+          </div>
+
+          <!-- PROGRESS -->
+          <div class="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm">
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3">
+              Story Progress
+            </p>
+
+            <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden">
+              <div
+                id="progress-bar"
+                class="h-full bg-blue-500 rounded-full transition-all duration-500"
+                style="width: 0%;"
+              ></div>
+            </div>
+
+            <p
+              id="chapter-label"
+              class="text-xs font-bold text-slate-500 mt-3"
+            >
+              Chapter 1 of 6
+            </p>
+          </div>
+
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 text-slate-500 py-16 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 border-b border-slate-900 pb-12">
+
+      <div class="text-center md:text-left">
+        <div class="flex items-center justify-center md:justify-start gap-2 text-white mb-4">
+          <div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center font-black text-[10px]">
+            K
+          </div>
+          <span class="font-black tracking-tighter uppercase">
+            Kidventor Academy
+          </span>
+        </div>
+
+        <p id="footer-typing" class="text-xs font-mono text-blue-400 h-4"></p>
+      </div>
+
+      <nav class="flex gap-8 text-[10px] font-black uppercase tracking-widest">
+        <a href="../about.html" class="hover:text-white transition">
+          The Mission
+        </a>
+        <a href="../privacy.html" class="hover:text-white transition">
+          Security
+        </a>
+      </nav>
+
+    </div>
+
+    <p class="text-center mt-8 text-[10px] uppercase tracking-[0.4em] font-bold">
+      © 2026 Kidventor Academy • Ethics Archive
+    </p>
+  </footer>
+
+  <script>
     const chapters = [
       {
-        title: 'The Secret of Ever-Ink',
-        content: 'Deep within the shimmering valleys of Silicon Grove lived a young cub named Leo. Leo was a builder of worlds, a dreamer of codes. In Silicon Grove, everyone used "Ever-Ink"—a magical substance that allowed messages to fly through the air. Leo loved Ever-Ink because, with a single tap, the ink would vanish from his screen. "Poof!" Leo would laugh, watching his harsh words and silly pranks disappear into the thin blue air. He believed that because he could no longer see his mistakes, the world had forgotten them too.'
+        title: "Chapter 1: The Secret of Ever-Ink",
+        content: `
+          <p class="text-2xl font-medium text-slate-900 leading-snug mb-10 italic">
+            In the shining valley of Silicon Grove, words could fly.
+          </p>
+
+          <p>
+            Young Leo the Lion Cub loved building things—tiny robots, glowing gadgets, and smart machines.
+            But his favorite invention was something called Ever-Ink.
+          </p>
+
+          <p>
+            Ever-Ink was magical. It allowed messages to float through the air and appear instantly on someone else's screen.
+            Even better, with one tap, the message disappeared.
+          </p>
+
+          <p>
+            “Poof!” Leo laughed. “Gone forever!”
+          </p>
+
+          <p>
+            He believed if he could no longer see his words, then nobody else could either.
+          </p>
+        `
       },
+
       {
-        title: 'The Echo of the Unseen',
-        content: 'Leo began to use his Ever-Ink carelessly. When he was angry at Kira the Koala for winning the math trophy, he sent a message: "You only won because the teacher felt sorry for you." Later, he took a photo of Boby the Bear tripping over a vine and shared it with everyone, laughing as the screen cleared. "It’s gone now," Leo whispered to the stars. He didn’t realize that in Silicon Grove, the air doesn’t swallow secrets—it stores them in a place called the Great Archive, hidden behind the clouds.'
+        title: "Chapter 2: The Hidden Archive",
+        content: `
+          <p>
+            One day, Leo became jealous when Kira the Koala won the mathematics trophy.
+          </p>
+
+          <p>
+            In anger, he sent a message:
+            <strong>“You only won because the teacher felt sorry for you.”</strong>
+          </p>
+
+          <p>
+            Another day, he took a funny picture of Bobby the Bear slipping near the river
+            and shared it with everyone.
+          </p>
+
+          <p>
+            Everyone laughed.
+          </p>
+
+          <p>
+            Leo smiled and deleted it quickly.
+          </p>
+
+          <p>
+            “It’s gone now,” he whispered.
+          </p>
+
+          <p>
+            But above the clouds was a place Leo did not know—the Great Archive,
+            where every digital action was quietly stored.
+          </p>
+        `
       },
+
       {
-        title: 'The Light of Truth',
-        content: 'One evening, the Elder Owl, a master of ancient wisdom and modern logic, called a meeting at the Great Oak. He held a silver lantern that glowed with a strange, pulsing light. "This," the Elder announced, "is the Light of Truth. It reveals what the eyes try to hide." Leo sat in the front row, his heart beating like a drum. The Elder turned the lantern toward the empty space above the crowd. Suddenly, the air was no longer empty. Glowing in bright, neon colors were Leo’s messages from weeks ago.'
+        title: "Chapter 3: The Elder Owl",
+        content: `
+          <p>
+            One evening, the wise Elder Owl called everyone to the Great Oak Tree.
+          </p>
+
+          <p>
+            In his wings, he carried a silver lantern glowing with strange blue light.
+          </p>
+
+          <p>
+            “This,” he said, “is the Light of Truth.”
+          </p>
+
+          <p>
+            “It reveals what people think has disappeared.”
+          </p>
+
+          <p>
+            Leo’s heart began to beat faster.
+          </p>
+
+          <p>
+            The Elder raised the lantern toward the empty sky.
+          </p>
+
+          <p>
+            Suddenly, glowing words appeared in the air.
+          </p>
+        `
       },
+
       {
-        title: 'The Reappearing Words',
-        content: '"You only won because the teacher felt sorry for you," the air screamed in bright orange letters. The photo of Boby falling appeared, frozen in time for all to see. Leo felt small, his fur prickling with shame. The audience went silent. Kira looked away, her eyes filling with tears. Boby looked down at his paws, embarrassed all over again. Leo realized that his "invisible ink" had never truly vanished; it had simply been waiting for the right light to show its face.'
+        title: "Chapter 4: The Reappearing Words",
+        content: `
+          <p>
+            Bright orange letters filled the sky:
+          </p>
+
+          <div class="wisdom-gradient p-8 rounded-[2.5rem] my-10 border border-blue-200 shadow-xl shadow-blue-100/50 text-center">
+            <p class="font-black text-blue-900 italic text-xl leading-relaxed">
+              “You only won because the teacher felt sorry for you.”
+            </p>
+          </div>
+
+          <p>
+            Then Bobby’s embarrassing picture appeared for everyone to see.
+          </p>
+
+          <p>
+            Silence covered the crowd.
+          </p>
+
+          <p>
+            Kira looked down sadly.
+            Bobby’s face turned red with shame.
+          </p>
+
+          <p>
+            Leo wished he could disappear too.
+          </p>
+
+          <p>
+            His deleted words had returned.
+          </p>
+        `
       },
+
       {
-        title: 'The Lesson of the Footprint',
-        content: 'The Elder Owl lowered his lantern. "Young ones," he said softly, "everything you write with Ever-Ink leaves a footprint in the sand of time. Even if you wipe your screen, the footprint remains. Once a word leaves your fingers, it no longer belongs to you—it belongs to the world." Leo approached Kira and Boby, his head bowed. He realized that being an inventor wasn’t just about making things fly or glow; it was about the responsibility of the trail he left behind.'
+        title: "Chapter 5: The Lesson",
+        content: `
+          <p>
+            The Elder Owl lowered his lantern and spoke softly.
+          </p>
+
+          <p>
+            “Every digital word leaves a footprint.”
+          </p>
+
+          <p>
+            “Even if you delete it, the mark remains.”
+          </p>
+
+          <p>
+            “Once your words leave your fingers,
+            they no longer belong only to you—
+            they belong to the world.”
+          </p>
+
+          <p>
+            Leo walked to Kira and Bobby with tears in his eyes.
+          </p>
+
+          <p>
+            “I am sorry,” he said.
+          </p>
+
+          <p>
+            For the first time, he understood:
+            being smart is not enough—kindness matters too.
+          </p>
+        `
       },
+
       {
-        title: 'The New Code',
-        content: 'From that day on, Leo became the guardian of Silicon Grove. He taught the other cubs a new rule: "Think twice, type once." He realized that digital words are like seeds—once planted, you cannot un-plant them. He spent his days using Ever-Ink to spread encouragement and build bridges instead of walls. The "Light of Truth" no longer scared him, for he knew that if the Elder Owl ever shone the light behind him again, all anyone would see were words of kindness and light.'
+        title: "Chapter 6: The New Code",
+        content: `
+          <p>
+            From that day forward, Leo created a new rule for Silicon Grove:
+          </p>
+
+          <div class="wisdom-gradient p-8 rounded-[2.5rem] my-10 border border-blue-200 shadow-xl shadow-blue-100/50 text-center">
+            <p class="font-black text-blue-900 italic text-xl leading-relaxed">
+              “Think Twice, Type Once.”
+            </p>
+          </div>
+
+          <p>
+            He used Ever-Ink to encourage others, solve problems, and build friendships.
+          </p>
+
+          <p>
+            The Light of Truth no longer frightened him.
+          </p>
+
+          <p>
+            Because now, if the lantern shone behind him,
+            everyone would see kindness, honesty, and light.
+          </p>
+
+          <p>
+            And that became Leo’s greatest invention of all.
+          </p>
+        `
       }
     ];
 
-    const bgColors = ['#fdf6e3', '#eef2f3', '#fff5f5', '#f0f4f8', '#f9f7ff', '#ffffff'];
     let currentChapter = 0;
 
-    function renderChapter(index) {
-        const container = document.getElementById("story-container");
-        const chapter = chapters[index];
-        
-        // Progress Bar
-        const progress = ((index + 1) / chapters.length) * 100;
-        document.getElementById('progress-bar').style.width = progress + '%';
+    function renderChapter() {
+      const story = chapters[currentChapter];
 
-        // Nav Buttons
-        document.getElementById('prevBtn').disabled = index === 0;
-        document.getElementById('nextBtn').innerText = index === chapters.length - 1 ? "Finish Story" : "Continue →";
+      document.getElementById("story-content").innerHTML = `
+        <div class="story-body fade-in">
+          <h2 class="text-3xl font-black text-slate-900 mb-8">
+            ${story.title}
+          </h2>
+          ${story.content}
+        </div>
+      `;
 
-        container.innerHTML = `
-            <div class="book-page" style="background-color:${bgColors[index]}; opacity: 0; transform: translateY(20px);">
-                <span class="chapter-number">PART 0${index + 1}</span>
-                <h2>${chapter.title}</h2>
-                <p>${chapter.content}</p>
-            </div>
-        `;
+      document.getElementById("prevBtn").disabled = currentChapter === 0;
 
-        // Trigger Fade-In effect
-        setTimeout(() => {
-            const page = container.querySelector('.book-page');
-            page.style.opacity = '1';
-            page.style.transform = 'translateY(0)';
-        }, 50);
+      document.getElementById("nextBtn").innerText =
+        currentChapter === chapters.length - 1
+          ? "Finish Story"
+          : "Continue →";
+
+      const progress = ((currentChapter + 1) / chapters.length) * 100;
+      document.getElementById("progress-bar").style.width = progress + "%";
+
+      document.getElementById("chapter-label").innerText =
+        `Chapter ${currentChapter + 1} of ${chapters.length}`;
     }
 
     function nextChapter() {
-        if (currentChapter < chapters.length - 1) {
-            currentChapter++;
-            renderChapter(currentChapter);
-        } else {
-            alert("Congratulations! You've learned the secret of the Digital Footprint.");
-            window.location.href = "index.html"; // Go back to lobby
-        }
+      if (currentChapter < chapters.length - 1) {
+        currentChapter++;
+        renderChapter();
+      } else {
+        alert("Congratulations! You have learned the power of your Digital Footprint.");
+        window.location.href = "../morals.html";
+      }
     }
 
     function prevChapter() {
-        if (currentChapter > 0) {
-            currentChapter--;
-            renderChapter(currentChapter);
-        }
+      if (currentChapter > 0) {
+        currentChapter--;
+        renderChapter();
+      }
     }
 
-    renderChapter(currentChapter);
-    </script>
+    const footerMsg = "Think twice, type once.";
+    let charIndex = 0;
+
+    function typeFooter() {
+      const el = document.getElementById("footer-typing");
+
+      if (charIndex < footerMsg.length) {
+        el.innerHTML += footerMsg.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeFooter, 70);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderChapter();
+      typeFooter();
+    });
+  </script>
+
 </body>
 </html>
